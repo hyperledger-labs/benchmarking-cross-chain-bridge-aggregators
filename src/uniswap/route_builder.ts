@@ -5,22 +5,30 @@ import {
     SwapType,
 } from '@uniswap/smart-order-router'
 
-import { ChainId, TradeType, CurrencyAmount, Percent, Token, Ether, NativeCurrency } from '@uniswap/sdk-core'
+import { ChainId, TradeType, CurrencyAmount, Percent, Token, Ether } from '@uniswap/sdk-core'
 import { getProvider } from '../helper/provider';
+import { token_map } from './constants';
 
 import dotenv from "dotenv";
 dotenv.config();
 
 const { KEY_PRIVATE, KEY_PUBLIC, ALCHEMY_KEY_GOERLI } = process.env;
 
-export async function build_route(): Promise<SwapRoute> {
+export async function build_route(chainId: number, fromToken: string, toToken: string, amount: string): Promise<SwapRoute> {
+
+    // check if from_token and to_token are valid
+    if (!token_map[fromToken] && fromToken !== 'ETH') {
+        throw new Error('Invalid from_token');
+    } else if (!token_map[toToken] && toToken !== 'ETH') {
+        throw new Error('Invalid to_token');
+    }
 
     if (!KEY_PRIVATE || !KEY_PUBLIC) {
         throw new Error('Missing private or public key');
     }
 
     const router: AlphaRouter = new AlphaRouter({
-        chainId: ChainId.GOERLI,
+        chainId: chainId,
         provider: getProvider('goerli', 'alchemy'),
     })
 
@@ -31,12 +39,26 @@ export async function build_route(): Promise<SwapRoute> {
         type: SwapType.SWAP_ROUTER_02,
     }
 
+    let from_token: Token | Ether;
+    if (fromToken === 'ETH') {
+        from_token = Ether.onChain(chainId);
+    } else {
+        from_token = token_map[fromToken];
+    }
+
+    let to_token: Token | Ether;
+    if (toToken === 'ETH') {
+        to_token = Ether.onChain(chainId);
+    } else {
+        to_token = token_map[toToken];
+    }
+
     const route: SwapRoute = await router.route(
         CurrencyAmount.fromRawAmount(
-            Ether.onChain(ChainId.GOERLI),
-            '1000000000000000000'
+            from_token,
+            amount
         ),
-        new Token(ChainId.GOERLI, '0x07865c6E87B9F70255377e024ace6630C1Eaa37F', 18),
+        to_token,
         TradeType.EXACT_INPUT,
         options
     ).catch((error) => {
