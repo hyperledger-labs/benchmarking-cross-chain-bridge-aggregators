@@ -7,7 +7,7 @@ import {
 
 import { ChainId, TradeType, CurrencyAmount, Percent, Token, Ether } from '@uniswap/sdk-core'
 import { getProvider } from '../helper/provider';
-import { token_map } from './constants';
+import { TOKEN_MAP } from './constants_local';
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -17,9 +17,9 @@ const { KEY_PRIVATE, KEY_PUBLIC, ALCHEMY_KEY_GOERLI } = process.env;
 export async function build_route(chainId: number, fromToken: string, toToken: string, amount: string): Promise<SwapRoute> {
 
     // check if from_token and to_token are valid
-    if (!token_map[fromToken] && fromToken !== 'ETH') {
+    if (!TOKEN_MAP[chainId][fromToken] && fromToken !== 'ETH') {
         throw new Error('Invalid from_token');
-    } else if (!token_map[toToken] && toToken !== 'ETH') {
+    } else if (!TOKEN_MAP[chainId][toToken] && toToken !== 'ETH') {
         throw new Error('Invalid to_token');
     }
 
@@ -43,14 +43,14 @@ export async function build_route(chainId: number, fromToken: string, toToken: s
     if (fromToken === 'ETH') {
         from_token = Ether.onChain(chainId);
     } else {
-        from_token = token_map[fromToken];
+        from_token = TOKEN_MAP[chainId][fromToken];
     }
 
     let to_token: Token | Ether;
     if (toToken === 'ETH') {
         to_token = Ether.onChain(chainId);
     } else {
-        to_token = token_map[toToken];
+        to_token = TOKEN_MAP[chainId][toToken];
     }
 
     const route: SwapRoute = await router.route(
