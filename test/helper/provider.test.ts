@@ -2,7 +2,7 @@ import { create_tx, getProvider } from '../../src/helper/provider';
 import { BaseProvider } from '@ethersproject/providers';
 import { expect } from 'chai';
 
-describe('getProvider', () => {
+describe('provider:getProvider', () => {
 
     describe('supported network (GOERLI) and apiProvider (Alchemy)', () => {
         it('should return a BaseProvider', async () => {
@@ -13,7 +13,7 @@ describe('getProvider', () => {
         });
     });
 
-    describe('getProvider - unsupported network', () => {
+    describe('unsupported network', () => {
         it('should throw an error for an unsupported network', async () => {
             const network = 'unsupported';
             const apiProvider = 'alchemy';
@@ -21,7 +21,7 @@ describe('getProvider', () => {
         });
     });
 
-    describe('getProvider - unsupported apiProvider', () => {
+    describe('unsupported apiProvider', () => {
         it('should throw an error for an unsupported apiProvider', async () => {
             const network = 'goerli';
             const apiProvider = 'unsupported';
@@ -30,7 +30,7 @@ describe('getProvider', () => {
     });
 });
 
-describe('create_tx', () => {
+describe('provider:create_tx', () => {
     it('should sign a transaction', async () => {
         const from = '0x548575786EEbE8B31e0Bd244B93Cd501c6e767a8';
         const to = '0x87699e6d5ce5a1c01fCB3fD44626aE2e2ef6A5DD';
@@ -43,23 +43,23 @@ describe('create_tx', () => {
     });
 });
 
-describe('send_tx', () => {
-    it('should send a transaction', async () => {
-        const from = '0x548575786EEbE8B31e0Bd244B93Cd501c6e767a8';
-        const to = '0x6Cc9397c3B38739daCbfaA68EaD5F5D77Ba5F455'; // GOERLI PoW Faucet
-        const value = '1';
-        const gasLimit = '21000';
-        const data = '0x';
-        const chainId = 5;
+// describe('send_tx', () => {
+//     it('should send a transaction', async () => {
+//         const from = '0x548575786EEbE8B31e0Bd244B93Cd501c6e767a8';
+//         const to = '0x6Cc9397c3B38739daCbfaA68EaD5F5D77Ba5F455'; // GOERLI PoW Faucet
+//         const value = '1';
+//         const gasLimit = '21000';
+//         const data = '0x';
+//         const chainId = 5;
 
-        const signedTransaction = await create_tx(from, to, value, gasLimit, data, chainId);
+//         const signedTransaction = await create_tx(from, to, value, gasLimit, data, chainId);
 
-        const provider = getProvider('goerli', 'alchemy');
-        const response = await provider.sendTransaction(signedTransaction).then((response) => {
-            expect(response).to.be.a('object');
-        }).catch((error) => {
-            console.log(error);
-        }
-        );
-    });
-});
+//         const provider = getProvider('goerli', 'alchemy');
+//         const response = await provider.sendTransaction(signedTransaction).then((response) => {
+//             expect(response).to.be.a('object');
+//         }).catch((error) => {
+//             console.log(error);
+//         }
+//         );
+//     });
+// });

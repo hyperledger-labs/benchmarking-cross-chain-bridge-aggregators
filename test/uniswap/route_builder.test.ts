@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import { SwapRoute } from '@uniswap/smart-order-router';
 import { ChainId } from '@uniswap/sdk-core';
 
-describe('Router', () => {
+describe('UNISWAP:Router', () => {
 
     describe('buildRoute', () => {
         it('should return a SwapRoute Object for a GOERLI ETH to USDC swap', (done) => {

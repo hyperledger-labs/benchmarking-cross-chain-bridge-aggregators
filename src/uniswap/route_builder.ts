@@ -23,7 +23,7 @@ export async function build_route(chainId: number, fromToken: string, toToken: s
         throw new Error('Invalid to_token');
     }
 
-    if (!KEY_PRIVATE || !KEY_PUBLIC) {
+    if (!KEY_PUBLIC) {
         throw new Error('Missing private or public key');
     }
 
