@@ -7,7 +7,9 @@
     "test": "test"
   },
   "scripts": {
+    "socket:route": "npx ts-node src/socket/route_builder.ts*",
     "uniswap:route": "npx ts-node src/uniswap/route_builder.ts*",
+    "test:socket": "mocha --require ts-node/register 'test/socket/*.test.ts' --timeout 20000",
     "test:uniswap": "mocha --require ts-node/register 'test/uniswap/*.test.ts' --timeout 20000",
     "test:helper": "mocha --require ts-node/register 'test/helper/*.test.ts' --timeout 20000",
     "test:all": "mocha --require ts-node/register 'test/**/*.test.ts' --timeout 20000"
