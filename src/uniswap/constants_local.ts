@@ -1,7 +1,7 @@
 // This file stores web3 related constants such as addresses, token definitions, ETH currency references and ABI's
 
-import { ChainId, Ether, Token } from '@uniswap/sdk-core'
-import { CHAINS, TOKENS } from '../helper/constants_global';
+import { Ether, Token } from '@uniswap/sdk-core'
+import { CHAINS } from '../helper/constants_global';
 // Addresses
 
 export const V3_SWAP_ROUTER_ADDRESS = '0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45'
