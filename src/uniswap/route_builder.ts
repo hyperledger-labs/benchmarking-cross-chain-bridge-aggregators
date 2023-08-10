@@ -6,7 +6,7 @@ import {
 
 import { TradeType, CurrencyAmount, Token, Ether } from '@uniswap/sdk-core'
 
-import { validate_tokens, validate_chain } from '../helper/inp_validator';
+import { validate_chain, validate_tokens } from '../helper/inp_validator';
 import { TOKEN_MAP } from './constants_local';
 import { create_router, create_swap_options } from './config';
 /**
