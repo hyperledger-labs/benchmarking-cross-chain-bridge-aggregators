@@ -39,18 +39,21 @@ export function validate_keys(only_pub: boolean): string[] {
 }
 
 
-export function validate_api_key(protocol_name: string): boolean {
+export function validate_api_key(protocol_name: string): string {
+    let api_key = '';
     switch (protocol_name) {
         case 'SOCKET':
             if (!SOCKET_API_KEY) {
                 throw new Error('Missing Socket API Key. Get it from the Socket Docs.');
+            } else {
+                api_key = SOCKET_API_KEY;
             }
             break;
         default:
             throw new Error(`Invalid protocol name: ${protocol_name}`);
     }
 
-    return true;
+    return api_key;
 }
 
 export function validate_rpc_url(protocol_name: string, network: string): string[] {
