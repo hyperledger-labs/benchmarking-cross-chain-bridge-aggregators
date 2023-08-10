@@ -1,14 +1,14 @@
-import { create_tx, getProvider } from '../../src/helper/provider';
+import { create_tx, get_provider } from '../../src/helper/provider';
 import { BaseProvider } from '@ethersproject/providers';
 import { expect } from 'chai';
 
-describe('provider:getProvider', () => {
+describe('provider:get_provider', () => {
 
-    describe('supported network (GOERLI) and apiProvider (Alchemy)', () => {
+    describe('supported network (GOERLI) and api_provider (Alchemy)', () => {
         it('should return a BaseProvider', async () => {
             const network = 'GOERLI';
-            const apiProvider = 'ALCHEMY';
-            const provider: BaseProvider = getProvider(network, apiProvider);
+            const api_provider = 'ALCHEMY';
+            const provider: BaseProvider = get_provider(network, api_provider);
             expect(provider).to.be.instanceOf(BaseProvider);
         });
     });
@@ -16,46 +16,44 @@ describe('provider:getProvider', () => {
     describe('unsupported network', () => {
         it('should throw an error for an unsupported network', async () => {
             const network = 'unsupported';
-            const apiProvider = 'ALCHEMY';
-            expect(() => getProvider(network, apiProvider)).to.throw('RPC URL not found for ALCHEMY and unsupported');
+            const api_provider = 'ALCHEMY';
+            expect(() => get_provider(network, api_provider)).to.throw('RPC URL not found for ALCHEMY and unsupported');
         });
     });
 
-    describe('unsupported apiProvider', () => {
-        it('should throw an error for an unsupported apiProvider', async () => {
+    describe('unsupported api_provider', () => {
+        it('should throw an error for an unsupported api_provider', async () => {
             const network = 'GOERLI';
-            const apiProvider = 'unsupported';
-            expect(() => getProvider(network, apiProvider)).to.throw('RPC URL not found for unsupported and GOERLI');
+            const api_provider = 'unsupported';
+            expect(() => get_provider(network, api_provider)).to.throw('RPC URL not found for unsupported and GOERLI');
         });
     });
 });
 
 describe('provider:create_tx', () => {
     it('should sign a transaction', async () => {
-        const from = '0x548575786EEbE8B31e0Bd244B93Cd501c6e767a8';
         const to = '0x87699e6d5ce5a1c01fCB3fD44626aE2e2ef6A5DD';
         const value = '100';
-        const gasLimit = '100000';
+        const gas_limit = '100000';
         const data = '0x';
-        const chainId = 5;
-        const signedTransaction = await create_tx(from, to, value, gasLimit, data, chainId);
-        expect(signedTransaction).to.be.a('string');
+        const chain_id = 5;
+        const signed_transaction = await create_tx(to, value, gas_limit, data, chain_id);
+        expect(signed_transaction).to.be.a('string');
     });
 });
 
 // describe('send_tx', () => {
 //     it('should send a transaction', async () => {
-//         const from = '0x548575786EEbE8B31e0Bd244B93Cd501c6e767a8';
 //         const to = '0x6Cc9397c3B38739daCbfaA68EaD5F5D77Ba5F455'; // GOERLI PoW Faucet
 //         const value = '1';
-//         const gasLimit = '21000';
+//         const gas_limit = '21000';
 //         const data = '0x';
-//         const chainId = 5;
+//         const chain_id = 5;
 
-//         const signedTransaction = await create_tx(from, to, value, gasLimit, data, chainId);
+//         const signed_transaction = await create_tx(to, value, gas_limit, data, chain_id);
 
-//         const provider = getProvider('GOERLI', 'ALCHEMY');
-//         const response = await provider.sendTransaction(signedTransaction).then((response) => {
+//         const provider = get_provider('GOERLI', 'ALCHEMY');
+//         const response = await provider.sendTransaction(signed_transaction).then((response) => {
 //             expect(response).to.be.a('object');
 //         }).catch((error) => {
 //             console.log(error);

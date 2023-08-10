@@ -2,48 +2,55 @@ import { ethers } from 'ethers';
 import { BaseProvider } from '@ethersproject/providers';
 import { Alchemy, Network, Wallet, Utils } from "alchemy-sdk";
 
-import dotenv from 'dotenv';
-dotenv.config();
+import { validate_rpc_url, validate_keys } from './inp_validator';
+import { CHAIN_ID_MAP } from './constants_global';
 
-const { KEY_PRIVATE, ALCHEMY_KEY_GOERLI } = process.env;
-
-const config = {
-    apiKey: ALCHEMY_KEY_GOERLI,
+const rpc_data = validate_rpc_url('ALCHEMY', 'GOERLI');
+let config = {
+    apiKey: rpc_data[1],
     network: Network.ETH_GOERLI,
 };
 
-export function getProvider(network: string, apiProvider: string): BaseProvider {
-    const rpc_url: string | undefined = process.env[apiProvider.toUpperCase() + '_RPC_' + network.toUpperCase()];
-
-    if (!rpc_url) {
-        throw new Error(`RPC URL not found for ${apiProvider} and ${network}`);
-    }
+export function get_provider(network: string, api_provider: string): BaseProvider {
+    const rpc_url = validate_rpc_url(api_provider, network)[0];
 
     const rpc = new ethers.providers.JsonRpcProvider(rpc_url);
 
     return rpc as BaseProvider;
 }
 
-export async function create_tx(from: string, to: string, value: string, gasLimit: string, data: string, chainId: number): Promise<string> {
+export async function create_tx(to: string, value: string, gas_limit: string, data: string, chain_id: number): Promise<string> {
 
-    if (!KEY_PRIVATE) {
-        throw new Error('Missing private key');
-    }
+    const KEYS = validate_keys(false);
+
+    const KEY_PUBLIC = KEYS[0];
+    const KEY_PRIVATE = KEYS[1];
+
+    const chain_name = CHAIN_ID_MAP[chain_id];
+    const rpc_data = validate_rpc_url('ALCHEMY', chain_name);
+
+    const ALCHEMY_KEY = rpc_data[1];
+    const ALCHEMY_NETWORK = rpc_data[2] as Network;
+
+    config = {
+        apiKey: ALCHEMY_KEY,
+        network: ALCHEMY_NETWORK,
+    };
 
     const ALCHEMY = new Alchemy(config);
     const wallet = new Wallet(KEY_PRIVATE)
 
     const rawTransaction = {
-        from: from,
+        from: KEY_PUBLIC,
         to: to,
         value: value,
-        gasLimit: gasLimit,
+        gasLimit: gas_limit,
         maxPriorityFeePerGas: Utils.parseUnits("5", "gwei"),
         maxFeePerGas: Utils.parseUnits("20", "gwei"),
         data: data,
         nonce: await ALCHEMY.core.getTransactionCount(wallet.getAddress()),
         type: 2,
-        chainId: chainId,
+        chainId: chain_id,
     };
 
     const signedTransaction = await wallet.signTransaction(rawTransaction);
@@ -51,10 +58,10 @@ export async function create_tx(from: string, to: string, value: string, gasLimi
     return signedTransaction;
 };
 
-export async function send_tx(signedTransaction: string): Promise<ethers.providers.TransactionResponse> {
+export async function send_tx(signed_transaction: string): Promise<ethers.providers.TransactionResponse> {
     const alchemy = new Alchemy(config);
 
-    const response = await alchemy.transact.sendTransaction(signedTransaction);
+    const response = await alchemy.transact.sendTransaction(signed_transaction);
 
     return response;
 };

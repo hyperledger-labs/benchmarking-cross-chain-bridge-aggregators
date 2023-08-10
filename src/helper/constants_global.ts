@@ -1,4 +1,4 @@
-interface CHAIN {
+export interface CHAIN {
     chainId: number,
     name: string,
     token_map: { [key: string]: string },
@@ -24,18 +24,24 @@ export const MAINNET: CHAIN = {
     },
 };
 
-export const CHAINS: { [key: string]: CHAIN } = {
-    "GOERLI": GOERLI,
-    "MAINNET": MAINNET,
-};
-
-export const TOKENS: string[] = [
+export const SUPPORTED_TOKENS: string[] = [
     "USDC",
     "DAI",
     "WETH",
 ];
 
-export const CHAIN_MAP: { [key: number]: string } = {
+export const SUPPORTED_CHAINS: { [key: string]: string[] } = {
+    "UNISWAP": ["MAINNET", "GOERLI"],
+    "SOCKET": ["MAINNET"],
+    "LIFI": ["MAINNET"],
+}
+
+export const CHAIN_ID_MAP: { [key: number]: string } = {
     [GOERLI.chainId]: "GOERLI",
     [MAINNET.chainId]: "MAINNET",
+};
+
+export const CHAIN_MAP: { [key: string]: CHAIN } = {
+    "GOERLI": GOERLI,
+    "MAINNET": MAINNET,
 };
