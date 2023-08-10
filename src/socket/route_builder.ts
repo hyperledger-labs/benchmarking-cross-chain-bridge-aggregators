@@ -21,8 +21,11 @@ export async function build_route(from_chain_id: number, from_token: string, to_
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         }
+    }).then((response) => {
+        return response;
+    }).catch((error) => {
+        throw error;
     });
 
-    const json = await response.json();
-    return json;
+    return response.json;
 }

@@ -1,19 +1,22 @@
 Project structure:
 
+```
 src
-|---helper
-    |---config
-    |---constants_global
-    |---provider
-    |---inp_validator
-|---benchmarked protocol
-    |---config
-    |---constants_local
-    |---routing
+├── helper
+│   ├── constants_global.ts
+│   ├── inp_validator.ts
+│   ├── provider.ts
+└── benchmark protocol
+    ├── config.ts
+    ├── constants_local.ts
+    └── route_builder.ts
 
 test
-|---benchmark protocol
-    |---route test
+├── helper
+│   └── provider.test.ts
+└── benchmark protocol
+    └── route_builder.test.ts
+```
 
 Run: <br>
  `yarn run test:all`
