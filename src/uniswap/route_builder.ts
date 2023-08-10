@@ -6,7 +6,7 @@ import {
 
 import { TradeType, CurrencyAmount, Token, Ether } from '@uniswap/sdk-core'
 
-import { validate_tokens } from '../helper/inp_validator';
+import { validate_tokens, validate_chain } from '../helper/inp_validator';
 import { TOKEN_MAP } from './constants_local';
 import { create_router, create_swap_options } from './config';
 /**
@@ -21,6 +21,7 @@ import { create_router, create_swap_options } from './config';
 export async function build_route(chainId: number, fromToken: string, toToken: string, amount: string): Promise<SwapRoute> {
 
     validate_tokens(fromToken, toToken);
+    validate_chain('UNISWAP', chainId, chainId);
 
     // Create a router for the input chain with the Alchemy provider
     // using the default configuring in config.ts
