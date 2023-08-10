@@ -25,9 +25,10 @@ export const MAINNET: CHAIN = {
 };
 
 export const SUPPORTED_TOKENS: string[] = [
+    "ETH",
+    "WETH",
     "USDC",
     "DAI",
-    "WETH",
 ];
 
 export const SUPPORTED_CHAINS: { [key: string]: string[] } = {

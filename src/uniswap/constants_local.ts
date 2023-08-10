@@ -1,7 +1,8 @@
 // This file stores web3 related constants such as addresses, token definitions, ETH currency references and ABI's
 
 import { Ether, Token } from '@uniswap/sdk-core'
-import { CHAINS } from '../helper/constants_global';
+
+import { CHAIN_MAP } from '../helper/constants_global';
 // Addresses
 
 export const V3_SWAP_ROUTER_ADDRESS = '0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45'
@@ -13,8 +14,8 @@ export const ETH_NATIVE = Ether;
 
 function USDC_TOKEN(chainName: string): Token {
     return (new Token(
-        CHAINS[chainName].chainId,
-        CHAINS[chainName].token_map['USDC'],
+        CHAIN_MAP[chainName].chainId,
+        CHAIN_MAP[chainName].token_map['USDC'],
         6,
         'USDC',
         'USD//C'
@@ -23,8 +24,8 @@ function USDC_TOKEN(chainName: string): Token {
 
 function DAI_TOKEN(chainName: string): Token {
     return (new Token(
-        CHAINS[chainName].chainId,
-        CHAINS[chainName].token_map['DAI'],
+        CHAIN_MAP[chainName].chainId,
+        CHAIN_MAP[chainName].token_map['DAI'],
         18,
         'DAI',
         'Dai Stablecoin'
@@ -33,8 +34,8 @@ function DAI_TOKEN(chainName: string): Token {
 
 function WETH_TOKEN(chainName: string): Token {
     return (new Token(
-        CHAINS[chainName].chainId,
-        CHAINS[chainName].token_map['WETH'],
+        CHAIN_MAP[chainName].chainId,
+        CHAIN_MAP[chainName].token_map['WETH'],
         18,
         'WETH',
         'Wrapped Ether'
@@ -53,7 +54,6 @@ export const TOKEN_MAP: { [key: number]: { [key: string]: Token } } = {
     1: create_tokens('MAINNET'),
     5: create_tokens('GOERLI'),
 };
-
 
 // ABI's
 

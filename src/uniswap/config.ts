@@ -5,26 +5,20 @@ import {
 } from '@uniswap/smart-order-router'
 
 import { Percent } from '@uniswap/sdk-core'
-import { getProvider } from '../helper/provider';
-import { CHAIN_MAP } from '../helper/constants_global';
 
-import dotenv from "dotenv";
-dotenv.config();
-
-const { KEY_PUBLIC } = process.env;
+import { get_provider } from '../helper/provider';
+import { CHAIN_ID_MAP } from '../helper/constants_global';
+import { validate_keys } from '../helper/inp_validator';
 
 export function create_router(chainId: number): AlphaRouter {
     return new AlphaRouter({
         chainId: chainId,
-        provider: getProvider(CHAIN_MAP[chainId], 'ALCHEMY'),
+        provider: get_provider(CHAIN_ID_MAP[chainId], 'ALCHEMY'),
     });
 }
 
 export function create_swap_options(): SwapOptionsSwapRouter02 {
-    // Check for public key
-    if (!KEY_PUBLIC) {
-        throw new Error('Couldn\'t find KEY_PUBLIC (public key) in .env file');
-    }
+    const KEY_PUBLIC = validate_keys(true)[0];
 
     return {
         recipient: KEY_PUBLIC,
