@@ -30,7 +30,7 @@ export async function create_tx(from: string, to: string, value: string, gasLimi
         throw new Error('Missing private key');
     }
 
-    const alchemy = new Alchemy(config);
+    const ALCHEMY = new Alchemy(config);
     const wallet = new Wallet(KEY_PRIVATE)
 
     const rawTransaction = {
@@ -41,7 +41,7 @@ export async function create_tx(from: string, to: string, value: string, gasLimi
         maxPriorityFeePerGas: Utils.parseUnits("5", "gwei"),
         maxFeePerGas: Utils.parseUnits("20", "gwei"),
         data: data,
-        nonce: await alchemy.core.getTransactionCount(wallet.getAddress()),
+        nonce: await ALCHEMY.core.getTransactionCount(wallet.getAddress()),
         type: 2,
         chainId: chainId,
     };

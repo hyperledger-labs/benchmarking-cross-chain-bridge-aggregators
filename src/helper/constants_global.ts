@@ -6,7 +6,7 @@ interface CHAIN {
 
 export const GOERLI: CHAIN = {
     chainId: 5,
-    name: 'goerli',
+    name: 'GOERLI',
     token_map: {
         "USDC": "0x07865c6E87B9F70255377e024ace6630C1Eaa37F",
         "DAI": "0x11fE4B6AE13d2a6055C8D9cF65c55bac32B5d844",

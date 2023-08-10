@@ -29,7 +29,7 @@ export async function build_route(chainId: number, fromToken: string, toToken: s
 
     const router: AlphaRouter = new AlphaRouter({
         chainId: chainId,
-        provider: getProvider('goerli', 'alchemy'),
+        provider: getProvider('GOERLI', 'ALCHEMY'),
     })
 
     const options: SwapOptionsSwapRouter02 = {

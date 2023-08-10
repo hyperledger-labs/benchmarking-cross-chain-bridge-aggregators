@@ -6,8 +6,8 @@ describe('provider:getProvider', () => {
 
     describe('supported network (GOERLI) and apiProvider (Alchemy)', () => {
         it('should return a BaseProvider', async () => {
-            const network = 'goerli';
-            const apiProvider = 'alchemy';
+            const network = 'GOERLI';
+            const apiProvider = 'ALCHEMY';
             const provider: BaseProvider = getProvider(network, apiProvider);
             expect(provider).to.be.instanceOf(BaseProvider);
         });
@@ -16,16 +16,16 @@ describe('provider:getProvider', () => {
     describe('unsupported network', () => {
         it('should throw an error for an unsupported network', async () => {
             const network = 'unsupported';
-            const apiProvider = 'alchemy';
-            expect(() => getProvider(network, apiProvider)).to.throw('RPC URL not found for alchemy and unsupported');
+            const apiProvider = 'ALCHEMY';
+            expect(() => getProvider(network, apiProvider)).to.throw('RPC URL not found for ALCHEMY and unsupported');
         });
     });
 
     describe('unsupported apiProvider', () => {
         it('should throw an error for an unsupported apiProvider', async () => {
-            const network = 'goerli';
+            const network = 'GOERLI';
             const apiProvider = 'unsupported';
-            expect(() => getProvider(network, apiProvider)).to.throw('RPC URL not found for unsupported and goerli');
+            expect(() => getProvider(network, apiProvider)).to.throw('RPC URL not found for unsupported and GOERLI');
         });
     });
 });
@@ -54,7 +54,7 @@ describe('provider:create_tx', () => {
 
 //         const signedTransaction = await create_tx(from, to, value, gasLimit, data, chainId);
 
-//         const provider = getProvider('goerli', 'alchemy');
+//         const provider = getProvider('GOERLI', 'ALCHEMY');
 //         const response = await provider.sendTransaction(signedTransaction).then((response) => {
 //             expect(response).to.be.a('object');
 //         }).catch((error) => {
