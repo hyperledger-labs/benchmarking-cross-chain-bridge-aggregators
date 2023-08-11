@@ -1,37 +1,31 @@
 import { Order } from '@lifi/sdk';
 import { lifi } from './config';
-import { exit } from 'process';
 
+import fetch from 'cross-fetch';
 import { validate_chain, validate_tokens } from '../helper/inp_validator';
 import { TOKEN_MAP } from './constants_local';
 
-export async function build_route(from_chain_id: number, from_token: string, to_chain_id: number, to_token: string, amount: string) {
 
-    try {
-        validate_chain('LIFI', from_chain_id, to_chain_id);
-        validate_tokens(from_token, to_token);
-    } catch (error) {
-        throw error;
-    }
+export async function build_route(fromChain: string, toChain: string, fromToken: string, toToken: string, fromAmount: string) {
+    const fromAddress = '0x548575786EEbE8B31e0Bd244B93Cd501c6e767a8';
 
-    const from_token_address = TOKEN_MAP[from_chain_id][from_token];
-    const to_token_address = TOKEN_MAP[to_chain_id][to_token];
-
-    const result = await lifi.getRoutes({
-        fromChainId: from_chain_id,
-        fromTokenAddress: from_token_address,
-        toChainId: to_chain_id,
-        toTokenAddress: to_token_address,
-        fromAmount: amount,
-        options: {
-            slippage: 3 / 100,
-            order: 'SAFEST' as Order,
-        },
-    }).then((result) => {
-        return result;
-    }).catch((error) => {
-        throw error;
+    const queryParams = new URLSearchParams({
+        fromChain: fromChain,
+        toChain: toChain,
+        fromToken: fromToken,
+        toToken: toToken,
+        fromAmount: fromAmount,
+        fromAddress: fromAddress,
     });
 
-    return result.routes;
+    const url = `https://li.quest/v1/quote?${queryParams.toString()}`;
+
+    const response = await fetch(url);
+
+    if (!response.ok) {
+        throw new Error(`Request failed with status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
 }
