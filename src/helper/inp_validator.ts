@@ -21,6 +21,8 @@ export function validate_tokens(from_token: string, to_token: string): boolean {
         throw new Error(`Invalid from_token: ${from_token}`);
     } else if (!SUPPORTED_TOKENS.includes(to_token)) {
         throw new Error(`Invalid to_token: ${to_token}`);
+    } else if (from_token === to_token) {
+        throw new Error(`from_token and to_token cannot be the same`);
     }
 
     return true;
