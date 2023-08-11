@@ -5,7 +5,7 @@ import fetch from 'cross-fetch';
 import { validate_chain, validate_tokens } from '../helper/inp_validator';
 import { TOKEN_MAP } from './constants_local';
 
-
+// Test without rate limiting at : https://apidocs.li.fi/reference/get_quote
 export async function build_route(fromChain: string, toChain: string, fromToken: string, toToken: string, fromAmount: string) {
     const fromAddress = '0x548575786EEbE8B31e0Bd244B93Cd501c6e767a8';
 
@@ -16,6 +16,7 @@ export async function build_route(fromChain: string, toChain: string, fromToken:
         toToken: toToken,
         fromAmount: fromAmount,
         fromAddress: fromAddress,
+        order: 'RECOMMENDED'
     });
 
     const url = `https://li.quest/v1/quote?${queryParams.toString()}`;
