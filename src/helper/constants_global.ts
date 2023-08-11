@@ -24,6 +24,16 @@ export const MAINNET: CHAIN = {
     },
 };
 
+export const MATIC: CHAIN = {
+    chainId: 137,
+    name: 'MATIC',
+    token_map: {
+        "USDC": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+        "DAI": "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
+        "WETH": "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
+    },
+};
+
 export const SUPPORTED_TOKENS: string[] = [
     "ETH",
     "WETH",
@@ -33,16 +43,18 @@ export const SUPPORTED_TOKENS: string[] = [
 
 export const SUPPORTED_CHAINS: { [key: string]: string[] } = {
     "UNISWAP": ["MAINNET", "GOERLI"],
-    "SOCKET": ["MAINNET"],
+    "SOCKET": ["MAINNET", "MATIC"],
     "LIFI": ["MAINNET"],
 }
 
 export const CHAIN_ID_MAP: { [key: number]: string } = {
     [GOERLI.chainId]: "GOERLI",
     [MAINNET.chainId]: "MAINNET",
+    [MATIC.chainId]: "MATIC",
 };
 
 export const CHAIN_MAP: { [key: string]: CHAIN } = {
     "GOERLI": GOERLI,
     "MAINNET": MAINNET,
+    "MATIC": MATIC,
 };
