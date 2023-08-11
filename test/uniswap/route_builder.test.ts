@@ -1,8 +1,7 @@
-import { build_route } from '../../src/uniswap/route_builder';
-import { ethers, providers } from 'ethers';
 import { expect } from 'chai';
-import { SwapRoute } from '@uniswap/smart-order-router';
 import { ChainId } from '@uniswap/sdk-core';
+
+import { build_route } from '../../src/uniswap/route_builder';
 
 describe('UNISWAP:Router', () => {
 
@@ -85,6 +84,19 @@ describe('UNISWAP:Router', () => {
                 done(new Error('Expected an error, but got a route.'));
             }).catch((error) => {
                 expect(error.message).to.equal('Route not found');
+                done();
+            });
+        });
+
+        it('should fail a MAINNET USDC to USDC swap', (done) => {
+            const chainId = ChainId.MAINNET;
+            const from_token = 'MATIC';
+            const to_token = 'USDC';
+            const amount = (10 ** 6).toString();
+            build_route(chainId, from_token, to_token, amount).then((route) => {
+                done(new Error('Expected an error, but got a route.'));
+            }).catch((error) => {
+                expect(error.message).to.equal('Invalid from_token: MATIC');
                 done();
             });
         });

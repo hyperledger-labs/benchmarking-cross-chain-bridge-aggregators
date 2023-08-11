@@ -42,22 +42,22 @@ describe('provider:create_tx', () => {
     });
 });
 
-// describe('send_tx', () => {
-//     it('should send a transaction', async () => {
-//         const to = '0x6Cc9397c3B38739daCbfaA68EaD5F5D77Ba5F455'; // GOERLI PoW Faucet
-//         const value = '1';
-//         const gas_limit = '21000';
-//         const data = '0x';
-//         const chain_id = 5;
+describe('send_tx', () => {
+    it.skip('should send a transaction', async () => {
+        const to = '0x6Cc9397c3B38739daCbfaA68EaD5F5D77Ba5F455'; // GOERLI PoW Faucet
+        const value = '1';
+        const gas_limit = '21000';
+        const data = '0x';
+        const chain_id = 5;
 
-//         const signed_transaction = await create_tx(to, value, gas_limit, data, chain_id);
+        const signed_transaction = await create_tx(to, value, gas_limit, data, chain_id);
 
-//         const provider = get_provider('GOERLI', 'ALCHEMY');
-//         const response = await provider.sendTransaction(signed_transaction).then((response) => {
-//             expect(response).to.be.a('object');
-//         }).catch((error) => {
-//             console.log(error);
-//         }
-//         );
-//     });
-// });
+        const provider = get_provider('GOERLI', 'ALCHEMY');
+        const response = await provider.sendTransaction(signed_transaction).then((response) => {
+            expect(response).to.be.a('object');
+        }).catch((error) => {
+            console.log(error);
+        }
+        );
+    });
+});
