@@ -2,16 +2,20 @@ import { Order } from '@lifi/sdk';
 import { lifi } from './config';
 
 import fetch from 'cross-fetch';
-import { validate_chain, validate_tokens } from '../helper/inp_validator';
-import { TOKEN_MAP } from './constants_local';
+import { validate_chain, validate_tokens, validate_keys } from '../helper/inp_validator';
+import { TOKEN_MAP, get_socket_url } from './constants_local';
 
 // Test without rate limiting at : https://apidocs.li.fi/reference/get_quote
-export async function build_route(fromChain: string, toChain: string, fromToken: string, toToken: string, fromAmount: string) {
-    const fromAddress = '0x548575786EEbE8B31e0Bd244B93Cd501c6e767a8';
+export async function build_route(fromChain: number, toChain: number, fromToken: string, toToken: string, fromAmount: string) {
+    validate_chain('LIFI', fromChain, toChain);
+    validate_tokens(fromToken, toToken);
+
+    const fromAddress = validate_keys(true)[0];
+    const socket_url = get_socket_url(fromChain);
 
     const queryParams = new URLSearchParams({
-        fromChain: fromChain,
-        toChain: toChain,
+        fromChain: fromChain.toString(),
+        toChain: toChain.toString(),
         fromToken: fromToken,
         toToken: toToken,
         fromAmount: fromAmount,
@@ -19,7 +23,7 @@ export async function build_route(fromChain: string, toChain: string, fromToken:
         order: 'RECOMMENDED'
     });
 
-    const url = `https://li.quest/v1/quote?${queryParams.toString()}`;
+    const url = `${socket_url}/quote?${queryParams.toString()}`;
 
     const response = await fetch(url);
 
