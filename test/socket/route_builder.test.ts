@@ -9,12 +9,11 @@ describe('Socket:Router', () => {
             const to_chain_id = 1;
             const from_token_address = 'WETH';
             const to_token_address = 'USDC';
-            const user_address = '0x58Daefe2A4224966535dfbBca1f3c90D09919c2D';
             const amount = (1 * 10 ** 18).toString();
             const unique_routes = true;
             const sort = 'gas';
 
-            build_route(from_chain_id, from_token_address, to_chain_id, to_token_address, amount, user_address, unique_routes, sort).then((route) => {
+            build_route(from_chain_id, from_token_address, to_chain_id, to_token_address, amount, unique_routes, sort).then((route) => {
                 expect(route).to.not.equal(null);
                 done();
             }
@@ -28,12 +27,11 @@ describe('Socket:Router', () => {
             const to_chain_id = 137;
             const from_token_address = 'WETH';
             const to_token_address = 'USDC';
-            const user_address = '0x58Daefe2A4224966535dfbBca1f3c90D09919c2D';
             const amount = (1 * 10 ** 18).toString();
             const unique_routes = true;
             const sort = 'gas';
 
-            build_route(from_chain_id, from_token_address, to_chain_id, to_token_address, amount, user_address, unique_routes, sort).then((route) => {
+            build_route(from_chain_id, from_token_address, to_chain_id, to_token_address, amount, unique_routes, sort).then((route) => {
                 expect(route).to.not.equal(null);
                 done();
             }
@@ -42,22 +40,21 @@ describe('Socket:Router', () => {
             });
         });
 
-        it('should fail a MAINNET DOGE to USDC swap route', (done) => {
+        it('should fail a MAINNET DOGECOIN to USDC swap route', (done) => {
             const from_chain_id = 1;
             const to_chain_id = 137;
-            const from_token_address = 'DOGE';
+            const from_token_address = 'DOGECOIN';
             const to_token_address = 'USDC';
-            const user_address = '0x58Daefe2A4224966535dfbBca1f3c90D09919c2D';
             const amount = (1 * 10 ** 18).toString();
             const unique_routes = true;
             const sort = 'gas';
 
-            build_route(from_chain_id, from_token_address, to_chain_id, to_token_address, amount, user_address, unique_routes, sort).then((route) => {
+            build_route(from_chain_id, from_token_address, to_chain_id, to_token_address, amount, unique_routes, sort).then((route) => {
                 expect(route).to.not.equal(null);
                 done();
             }
             ).catch((error) => {
-                expect(error.message).to.equal('Invalid from_token: DOGE');
+                expect(error.message).to.equal('Invalid from_token: DOGECOIN');
                 done();
             });
         });
@@ -67,12 +64,11 @@ describe('Socket:Router', () => {
             const to_chain_id = 5;
             const from_token_address = 'WETH';
             const to_token_address = 'USDC';
-            const user_address = '0x58Daefe2A4224966535dfbBca1f3c90D09919c2D';
             const amount = (1 * 10 ** 18).toString();
             const unique_routes = true; // Returns the best route for a given DEX / bridge combination
             const sort = 'gas';
 
-            build_route(from_chain_id, from_token_address, to_chain_id, to_token_address, amount, user_address, unique_routes, sort).then((route) => {
+            build_route(from_chain_id, from_token_address, to_chain_id, to_token_address, amount, unique_routes, sort).then((route) => {
                 expect(route).to.not.equal(null);
                 done();
             }
