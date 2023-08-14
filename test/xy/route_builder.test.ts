@@ -1,0 +1,68 @@
+import { expect } from 'chai';
+
+import { build_route } from '../../src/xy/route_builder';
+
+describe('XY:Router', () => {
+    describe('build_route - should return route', () => {
+        it('should return a quote for a MAINNET WETH to MAINNET USDC swap', (done) => {
+            const fromChain = 1;
+            const fromToken = 'WETH';
+            const toChain = 1;
+            const toToken = 'USDC';
+            const fromAmount = (1 * 10 ** 18).toString();
+
+            build_route(fromChain, toChain, fromToken, toToken, fromAmount).then((route) => {
+                expect(route.success).to.equal(true);
+                done();
+            }).catch((error) => {
+                done(error);
+            });
+        });
+
+        it('should return a quote for a MAINNET WETH to MATIC USDC swap', (done) => {
+            const fromChain = 1;
+            const fromToken = 'WETH';
+            const toChain = 137;
+            const toToken = 'USDC';
+            const fromAmount = (1 * 10 ** 18).toString();
+
+            build_route(fromChain, toChain, fromToken, toToken, fromAmount).then((route) => {
+                expect(route.success).to.equal(true);
+                done();
+            }).catch((error) => {
+                done(error);
+            });
+        });
+
+        it('should return a quote for a MATIC WETH to MAINNET USDC swap', (done) => {
+            const fromChain = 137;
+            const fromToken = 'WETH';
+            const toChain = 1;
+            const toToken = 'USDC';
+            const fromAmount = (1 * 10 ** 18).toString();
+
+            build_route(fromChain, toChain, fromToken, toToken, fromAmount).then((route) => {
+                expect(route.success).to.equal(true);
+                done();
+            }).catch((error) => {
+                done(error);
+            });
+        });
+
+        it('should fail to return a quote for a GOERLI WETH to USDC swap', (done) => {
+            const fromChain = 5;
+            const fromToken = 'WETH';
+            const toChain = 5;
+            const toToken = 'USDC';
+            const fromAmount = (1 * 10 ** 18).toString();
+
+            build_route(fromChain, toChain, fromToken, toToken, fromAmount).then((route) => {
+                expect(route.success).to.equal(false);
+                done();
+            }).catch((error) => {
+                expect(error.message).to.equal('Invalid chain_id: 5 for protocol: XY');
+                done();
+            });
+        });
+    });
+});

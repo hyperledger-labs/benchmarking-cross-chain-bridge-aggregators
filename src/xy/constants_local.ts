@@ -1,0 +1,10 @@
+import { CHAIN_MAP } from '../helper/constants_global';
+
+function create_tokens(chain_name: string): { [key: string]: string } {
+    return CHAIN_MAP[chain_name].token_map;
+}
+
+export const TOKEN_MAP: { [key: number]: { [key: string]: string } } = {
+    1: create_tokens('MAINNET'),
+    137: create_tokens('POLYGON'),
+};

@@ -2,7 +2,7 @@
   "name": "benchmarking-cross-chain-bridges",
   "version": "1.0.0",
   "description": "benchmarking aggregators",
-  "main": "index.js",
+  "main": "index.ts",
   "directories": {
     "test": "test"
   },
@@ -12,6 +12,7 @@
     "test:socket": "mocha --require ts-node/register 'test/socket/*.test.ts' --timeout 20000",
     "test:sushiswap": "mocha --require ts-node/register 'test/sushiswap/*.test.ts' --timeout 20000",
     "test:uniswap": "mocha --require ts-node/register 'test/uniswap/*.test.ts' --timeout 20000",
+    "test:xy": "mocha --require ts-node/register 'test/xy/*.test.ts' --timeout 20000",
     "test:helper": "mocha --require ts-node/register 'test/helper/*.test.ts' --timeout 20000",
     "test:all": "mocha --require ts-node/register 'test/**/*.test.ts' --timeout 20000"
   },

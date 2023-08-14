@@ -55,6 +55,7 @@ export const SUPPORTED_CHAINS: { [key: string]: string[] } = {
     "UNISWAP": ["MAINNET", "GOERLI", "POLYGON"],
     "COW": ["MAINNET", "GOERLI", "POLYGON"],
     "SUSHI": ["MAINNET", "GOERLI", "POLYGON"],
+    "XY": ["MAINNET", "POLYGON"],
 }
 
 export const CHAIN_ID_MAP: { [key: number]: string } = {
