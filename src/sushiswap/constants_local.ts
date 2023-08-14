@@ -3,10 +3,6 @@
 import { Ether, Token } from '@sushiswap/sdk'
 
 import { CHAIN_MAP } from '../helper/constants_global';
-// Addresses
-
-export const V3_SWAP_ROUTER_ADDRESS = '0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45'
-export const WETH_CONTRACT_ADDRESS = '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6'
 
 // Currencies and Tokens
 
@@ -53,6 +49,7 @@ function create_tokens(chainName: string): { [key: string]: Token } {
 export const TOKEN_MAP: { [key: number]: { [key: string]: Token } } = {
     1: create_tokens('MAINNET'),
     5: create_tokens('GOERLI'),
+    137: create_tokens('POLYGON'),
 };
 
 // ABI's

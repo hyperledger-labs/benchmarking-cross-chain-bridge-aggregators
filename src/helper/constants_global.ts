@@ -31,9 +31,9 @@ export const MAINNET: CHAIN = {
     },
 };
 
-export const MATIC: CHAIN = {
+export const POLYGON: CHAIN = {
     chainId: 137,
-    name: 'MATIC',
+    name: 'POLYGON',
     token_map: {
         "MATIC": "0x0000000000000000000000000000000000000000",
         "USDC": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
@@ -50,21 +50,21 @@ export const SUPPORTED_TOKENS: string[] = [
 ];
 
 export const SUPPORTED_CHAINS: { [key: string]: string[] } = {
-    "LIFI": ["MAINNET", "GOERLI", "MATIC"],
-    "SOCKET": ["MAINNET", "MATIC"],
-    "UNISWAP": ["MAINNET", "GOERLI", "MATIC"],
-    "COW": ["MAINNET", "GOERLI", "MATIC"],
-    "SUSHI": ["MAINNET", "GOERLI", "MATIC"],
+    "LIFI": ["MAINNET", "GOERLI", "POLYGON"],
+    "SOCKET": ["MAINNET", "POLYGON"],
+    "UNISWAP": ["MAINNET", "GOERLI", "POLYGON"],
+    "COW": ["MAINNET", "GOERLI", "POLYGON"],
+    "SUSHI": ["MAINNET", "GOERLI", "POLYGON"],
 }
 
 export const CHAIN_ID_MAP: { [key: number]: string } = {
     [GOERLI.chainId]: "GOERLI",
     [MAINNET.chainId]: "MAINNET",
-    [MATIC.chainId]: "MATIC",
+    [POLYGON.chainId]: "POLYGON",
 };
 
 export const CHAIN_MAP: { [key: string]: CHAIN } = {
     "GOERLI": GOERLI,
     "MAINNET": MAINNET,
-    "MATIC": MATIC,
+    "POLYGON": POLYGON,
 };
