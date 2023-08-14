@@ -12,7 +12,7 @@ describe('LiFi:Router', () => {
             const toToken = 'USDC';
             const fromAmount = (1 * 10 ** 18).toString();
 
-            const result = build_route(fromChain, toChain, fromToken, toToken, fromAmount).then((route) => {
+            build_route(fromChain, toChain, fromToken, toToken, fromAmount).then((route) => {
                 expect(route).to.not.equal(null);
                 done();
             }).catch((error) => {
@@ -33,7 +33,7 @@ describe('LiFi:Router', () => {
             const toToken = 'USDC';
             const fromAmount = (1 * 10 ** 18).toString();
 
-            const result = build_route(fromChain, toChain, fromToken, toToken, fromAmount).then((route) => {
+            build_route(fromChain, toChain, fromToken, toToken, fromAmount).then((route) => {
                 expect(route).to.not.equal(null);
                 done();
             }).catch((error) => {
@@ -54,7 +54,7 @@ describe('LiFi:Router', () => {
             const toToken = 'USDC';
             const fromAmount = (1 * 10 ** 18).toString();
 
-            const result = build_route(fromChain, toChain, fromToken, toToken, fromAmount).then((route) => {
+            build_route(fromChain, toChain, fromToken, toToken, fromAmount).then((route) => {
                 expect(route).to.not.equal(null);
                 done();
             }).catch((error) => {
@@ -75,7 +75,7 @@ describe('LiFi:Router', () => {
             const toToken = 'USDC';
             const fromAmount = (1 * 10 ** 18).toString();
 
-            const result = build_route(fromChain, toChain, fromToken, toToken, fromAmount).then((route) => {
+            build_route(fromChain, toChain, fromToken, toToken, fromAmount).then((route) => {
                 expect(route).to.not.equal(null);
                 done();
             }).catch((error) => {
@@ -88,6 +88,5 @@ describe('LiFi:Router', () => {
                 }
             });
         });
-
     });
 });
