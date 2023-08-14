@@ -18,28 +18,32 @@ import { create_router, create_swap_options } from './config';
  * @returns A Promise that resolves to a SwapRoute object.
  * @throws An error if the fromToken or toToken is invalid, or if the private or public key is missing.
  */
-export async function build_route(chainId: number, fromToken: string, toToken: string, amount: string): Promise<SwapRoute> {
+export async function build_route(from_chain_id: number, to_chain_id: number, fromToken: string, toToken: string, amount: string): Promise<SwapRoute> {
 
     validate_tokens(fromToken, toToken);
-    validate_chain('UNISWAP', chainId, chainId);
+    validate_chain('UNISWAP', from_chain_id, to_chain_id);
+
+    if (from_chain_id !== to_chain_id) {
+        throw new Error("UNISWAP: Only same chain swaps are supported");
+    }
 
     // Create a router for the input chain with the Alchemy provider
     // using the default configuring in config.ts
-    const router: AlphaRouter = create_router(chainId);
+    const router: AlphaRouter = create_router(from_chain_id);
     const options: SwapOptionsSwapRouter02 = create_swap_options();
 
     let from_token: Token | Ether;
     if (fromToken === 'ETH') {
-        from_token = Ether.onChain(chainId);
+        from_token = Ether.onChain(from_chain_id);
     } else {
-        from_token = TOKEN_MAP[chainId][fromToken];
+        from_token = TOKEN_MAP[from_chain_id][fromToken];
     }
 
     let to_token: Token | Ether;
     if (toToken === 'ETH') {
-        to_token = Ether.onChain(chainId);
+        to_token = Ether.onChain(from_chain_id);
     } else {
-        to_token = TOKEN_MAP[chainId][toToken];
+        to_token = TOKEN_MAP[from_chain_id][toToken];
     }
 
     const route: SwapRoute = await router.route(
