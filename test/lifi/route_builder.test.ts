@@ -5,7 +5,7 @@ import { skip } from 'node:test';
 
 describe('LiFi:Router', () => {
     describe('build_route - return quote OR status 429 (rate limit)', () => {
-        it('should return a quote for a GOERLI WETH to MATIC USDC swap', (done) => {
+        it('should return a quote for a GOERLI WETH to GOERLI USDC swap', (done) => {
             const fromChain = 5;
             const fromToken = 'WETH';
             const toChain = 5;

@@ -2,7 +2,7 @@ import { Order } from '@lifi/sdk';
 import { lifi } from './config';
 
 import { validate_chain, validate_tokens, validate_keys } from '../helper/inp_validator';
-import { TOKEN_MAP, get_socket_url } from './constants_local';
+import { TOKEN_MAP, get_lifi_url } from './constants_local';
 
 // Test without rate limiting at : https://apidocs.li.fi/reference/get_quote
 export async function build_route(fromChain: number, toChain: number, fromToken: string, toToken: string, fromAmount: string) {
@@ -10,7 +10,7 @@ export async function build_route(fromChain: number, toChain: number, fromToken:
     validate_tokens(fromToken, toToken);
 
     const fromAddress = validate_keys().public;
-    const socket_url = get_socket_url(fromChain);
+    const lifi_url = get_lifi_url(fromChain);
 
     const queryParams = new URLSearchParams({
         fromChain: fromChain.toString(),
@@ -22,7 +22,7 @@ export async function build_route(fromChain: number, toChain: number, fromToken:
         order: 'RECOMMENDED'
     });
 
-    const url = `${socket_url}/quote?${queryParams.toString()}`;
+    const url = `${lifi_url}/quote?${queryParams.toString()}`;
 
     const response = await fetch(url);
 
