@@ -10,6 +10,7 @@
     "lifi:route": "npx ts-node src/lifi/route_builder.ts*",
     "socket:route": "npx ts-node src/socket/route_builder.ts*",
     "uniswap:route": "npx ts-node src/uniswap/route_builder.ts*",
+    "test:cowswap": "mocha --require ts-node/register 'test/cowswap/*.test.ts' --timeout 20000",
     "test:lifi": "mocha --require ts-node/register 'test/lifi/*.test.ts' --timeout 20000",
     "test:socket": "mocha --require ts-node/register 'test/socket/*.test.ts' --timeout 20000",
     "test:uniswap": "mocha --require ts-node/register 'test/uniswap/*.test.ts' --timeout 20000",
