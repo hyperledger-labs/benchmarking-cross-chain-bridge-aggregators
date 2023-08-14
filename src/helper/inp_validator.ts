@@ -40,6 +40,13 @@ export function validate_keys(): KEY_PAIR {
     return { public: KEY_PUBLIC, private: KEY_PRIVATE };
 }
 
+export function validate_amount(amount: string): string {
+    if (parseInt(amount) > 0) {
+        throw new Error('Amount need to be greater than 0')
+    };
+
+    return amount;
+}
 
 export function validate_api_key(protocol_name: string): string {
     let api_key = '';
