@@ -14,7 +14,7 @@ describe('Socket:Router', () => {
             const sort = 'gas';
 
             build_route(from_chain_id, from_token_address, to_chain_id, to_token_address, amount, unique_routes, sort).then((route) => {
-                expect(route).to.not.equal(null);
+                expect(route.success).to.equal(true);
                 done();
             }
             ).catch((error) => {
@@ -32,7 +32,7 @@ describe('Socket:Router', () => {
             const sort = 'gas';
 
             build_route(from_chain_id, from_token_address, to_chain_id, to_token_address, amount, unique_routes, sort).then((route) => {
-                expect(route).to.not.equal(null);
+                expect(route.success).to.equal(true);
                 done();
             }
             ).catch((error) => {
@@ -50,7 +50,7 @@ describe('Socket:Router', () => {
             const sort = 'gas';
 
             build_route(from_chain_id, from_token_address, to_chain_id, to_token_address, amount, unique_routes, sort).then((route) => {
-                expect(route).to.not.equal(null);
+                expect(route.success).to.equal(true);
                 done();
             }
             ).catch((error) => {
@@ -65,11 +65,11 @@ describe('Socket:Router', () => {
             const from_token_address = 'WETH';
             const to_token_address = 'USDC';
             const amount = (1 * 10 ** 18).toString();
-            const unique_routes = true; // Returns the best route for a given DEX / bridge combination
+            const unique_routes = true;
             const sort = 'gas';
 
             build_route(from_chain_id, from_token_address, to_chain_id, to_token_address, amount, unique_routes, sort).then((route) => {
-                expect(route).to.not.equal(null);
+                expect(route.success).to.equal(true);
                 done();
             }
             ).catch((error) => {
