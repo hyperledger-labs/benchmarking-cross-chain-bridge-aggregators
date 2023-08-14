@@ -2,7 +2,7 @@ import { Network } from 'alchemy-sdk';
 import dotenv from 'dotenv';
 dotenv.config();
 
-import { SUPPORTED_CHAINS, SUPPORTED_TOKENS, CHAIN_ID_MAP, CHAIN, CHAIN_MAP } from './constants_global';
+import { SUPPORTED_CHAINS, SUPPORTED_TOKENS, CHAIN_ID_MAP, CHAIN, CHAIN_MAP, KEY_PAIR } from './constants_global';
 
 let { KEY_PUBLIC, KEY_PRIVATE, SOCKET_API_KEY } = process.env;
 
@@ -28,16 +28,16 @@ export function validate_tokens(from_token: string, to_token: string): boolean {
     return true;
 }
 
-export function validate_keys(only_pub: boolean): string[] {
+export function validate_keys(): KEY_PAIR {
     if (!KEY_PUBLIC) {
         throw new Error('Missing public key');
     }
 
-    if (!only_pub && !KEY_PRIVATE) {
+    if (!KEY_PRIVATE) {
         throw new Error('Missing private key');
     }
 
-    return [KEY_PUBLIC, KEY_PRIVATE || ''];
+    return { public: KEY_PUBLIC, private: KEY_PRIVATE };
 }
 
 

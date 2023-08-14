@@ -21,10 +21,10 @@ export function get_provider(network: string, api_provider: string): BaseProvide
 
 export async function create_tx(to: string, value: string, gas_limit: string, data: string, chain_id: number): Promise<string> {
 
-    const KEYS = validate_keys(false);
+    const KEY_PAIR = validate_keys();
 
-    const KEY_PUBLIC = KEYS[0];
-    const KEY_PRIVATE = KEYS[1];
+    const KEY_PUBLIC = KEY_PAIR.public;
+    const KEY_PRIVATE = KEY_PAIR.private;
 
     const chain_name = CHAIN_ID_MAP[chain_id];
     const rpc_data = validate_rpc_url('ALCHEMY', chain_name);

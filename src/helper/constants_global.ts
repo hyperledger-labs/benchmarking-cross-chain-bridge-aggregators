@@ -1,3 +1,8 @@
+export interface KEY_PAIR {
+    public: string,
+    private: string,
+}
+
 export interface CHAIN {
     chainId: number,
     name: string,
@@ -48,6 +53,7 @@ export const SUPPORTED_CHAINS: { [key: string]: string[] } = {
     "LIFI": ["MAINNET", "GOERLI", "MATIC"],
     "SOCKET": ["MAINNET", "MATIC"],
     "UNISWAP": ["MAINNET", "GOERLI", "MATIC"],
+    "COW": ["MAINNET", "GOERLI", "MATIC"],
 }
 
 export const CHAIN_ID_MAP: { [key: number]: string } = {

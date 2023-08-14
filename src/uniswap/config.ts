@@ -18,7 +18,7 @@ export function create_router(chainId: number): AlphaRouter {
 }
 
 export function create_swap_options(): SwapOptionsSwapRouter02 {
-    const KEY_PUBLIC = validate_keys(true)[0];
+    const KEY_PUBLIC = validate_keys().public;
 
     return {
         recipient: KEY_PUBLIC,

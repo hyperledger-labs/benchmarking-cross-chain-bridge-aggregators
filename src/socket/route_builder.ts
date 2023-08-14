@@ -1,4 +1,3 @@
-import fetch from 'cross-fetch';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -10,7 +9,7 @@ export async function build_route(from_chain_id: number, from_token: string, to_
     const SOCKET_API_KEY = validate_api_key('SOCKET');
     validate_chain('SOCKET', from_chain_id, to_chain_id);
     validate_tokens(from_token, to_token);
-    const user_address = validate_keys(true)[0];
+    const user_address = validate_keys().public;
 
     const from_token_address = TOKEN_MAP[from_chain_id][from_token];
     const to_token_address = TOKEN_MAP[to_chain_id][to_token];

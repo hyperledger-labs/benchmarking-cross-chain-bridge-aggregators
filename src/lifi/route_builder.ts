@@ -1,7 +1,6 @@
 import { Order } from '@lifi/sdk';
 import { lifi } from './config';
 
-import fetch from 'cross-fetch';
 import { validate_chain, validate_tokens, validate_keys } from '../helper/inp_validator';
 import { TOKEN_MAP, get_socket_url } from './constants_local';
 
@@ -10,7 +9,7 @@ export async function build_route(fromChain: number, toChain: number, fromToken:
     validate_chain('LIFI', fromChain, toChain);
     validate_tokens(fromToken, toToken);
 
-    const fromAddress = validate_keys(true)[0];
+    const fromAddress = validate_keys().public;
     const socket_url = get_socket_url(fromChain);
 
     const queryParams = new URLSearchParams({
