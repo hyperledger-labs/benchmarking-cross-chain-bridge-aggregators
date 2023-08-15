@@ -16,7 +16,9 @@
     "test:helper": "mocha --require ts-node/register --require tsconfig-paths/register 'test/helper/*.test.ts' --timeout 20000",
     "test:token-aggregators": "mocha --require ts-node/register --require tsconfig-paths/register 'test/token-aggregators/**/*.test.ts' --timeout 20000",
     "test:bridge-aggregators": "mocha --require ts-node/register --require tsconfig-paths/register 'test/bridge-aggregators/**/*.test.ts' --timeout 20000",
-    "test:all": "mocha --require ts-node/register --require tsconfig-paths/register 'test/**/*.test.ts' --timeout 20000"
+    "test:aggregators": "mocha --require ts-node/register --require tsconfig-paths/register 'test/**/*.test.ts' --timeout 20000",
+    "test:contracts": "forge test",
+    "test": "npm run test:token-aggregators && npm run test:contracts"
   },
   "repository": {
     "type": "git",
@@ -34,7 +36,6 @@
     "@types/node": "^20.4.8",
     "@uniswap/sdk-core": "^4.0.6",
     "@uniswap/smart-order-router": "^3.15.0",
-    "@uniswap/v3-sdk": "^3.10.0",
     "alchemy-sdk": "^2.9.2",
     "cross-fetch": "^4.0.0",
     "dotenv": "^16.3.1",
@@ -46,7 +47,6 @@
     "@types/chai": "^4.3.5",
     "@types/mocha": "^10.0.1",
     "chai": "^4.3.7",
-    "jest": "^29.6.2",
     "mocha": "^10.2.0",
     "ts-node": "^10.9.1"
   }
