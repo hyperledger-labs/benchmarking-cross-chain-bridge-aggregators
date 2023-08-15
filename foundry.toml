@@ -1,0 +1,15 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = [
+    "lib",
+    "node_modules",
+]
+remappings = [
+    "@openzeppelin/=node_modules/@openzeppelin/",
+    "@sushiswap/=node_modules/@sushiswap/",
+    "@uniswap/=node_modules/@uniswap/",
+    "base64-sol/=node_modules/base64-sol/",
+]
+
+# See more config options https://github.com/foundry-rs/foundry/tree/master/crates/config
