@@ -7,14 +7,15 @@
     "test": "test"
   },
   "scripts": {
-    "test:cowswap": "mocha --require ts-node/register 'test/cowswap/*.test.ts' --timeout 20000",
-    "test:lifi": "mocha --require ts-node/register 'test/lifi/*.test.ts' --timeout 20000",
-    "test:socket": "mocha --require ts-node/register 'test/socket/*.test.ts' --timeout 20000",
-    "test:sushiswap": "mocha --require ts-node/register 'test/sushiswap/*.test.ts' --timeout 20000",
-    "test:uniswap": "mocha --require ts-node/register 'test/uniswap/*.test.ts' --timeout 20000",
-    "test:xy": "mocha --require ts-node/register 'test/xy/*.test.ts' --timeout 20000",
-    "test:helper": "mocha --require ts-node/register 'test/helper/*.test.ts' --timeout 20000",
-    "test:all": "mocha --require ts-node/register 'test/**/*.test.ts' --timeout 20000"
+    "test:cowswap": "mocha --require ts-node/register --require tsconfig-paths/register 'test/token-aggregators/cowswap/*.test.ts' --timeout 20000",
+    "test:lifi": "mocha --require ts-node/register --require tsconfig-paths/register 'test/token-aggregators/lifi/*.test.ts' --timeout 20000",
+    "test:socket": "mocha --require ts-node/register --require tsconfig-paths/register 'test/token-aggregators/socket/*.test.ts' --timeout 20000",
+    "test:sushiswap": "mocha --require ts-node/register --require tsconfig-paths/register 'test/token-aggregators/sushiswap/*.test.ts' --timeout 20000",
+    "test:uniswap": "mocha --require ts-node/register --require tsconfig-paths/register 'test/token-aggregators/uniswap/*.test.ts' --timeout 20000",
+    "test:xy": "mocha --require ts-node/register --require tsconfig-paths/register 'test/token-aggregators/xy/*.test.ts' --timeout 20000",
+    "test:helper": "mocha --require ts-node/register --require tsconfig-paths/register 'test/token-aggregators/helper/*.test.ts' --timeout 20000",
+    "test:token-aggregators": "mocha --require ts-node/register --require tsconfig-paths/register 'test/token-aggregators/**/*.test.ts' --timeout 20000",
+    "test:all": "mocha --require ts-node/register --require tsconfig-paths/register 'test/**/*.test.ts' --timeout 20000"
   },
   "repository": {
     "type": "git",
@@ -37,6 +38,7 @@
     "cross-fetch": "^4.0.0",
     "dotenv": "^16.3.1",
     "ethers": "^5.7.0",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.1.6"
   },
   "devDependencies": {
