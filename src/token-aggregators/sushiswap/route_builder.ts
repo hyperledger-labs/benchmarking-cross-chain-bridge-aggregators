@@ -1,6 +1,6 @@
 import { Token, Pair, CurrencyAmount, Trade, TradeType } from '@sushiswap/sdk';
 
-import { validate_chain, validate_tokens, validate_keys } from '../helper/inp_validator';
+import { validate_chain, validate_tokens, validate_keys } from '../../helper/inp_validator';
 import { TOKEN_MAP } from '../sushiswap/constants_local';
 
 export async function build_route(from_chain_id: number, to_chain_id: number, from_token: string, to_token: string, amount: string): Promise<Trade<Token, Token, TradeType.EXACT_INPUT>[]> {

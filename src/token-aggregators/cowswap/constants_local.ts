@@ -1,4 +1,4 @@
-import { CHAIN_MAP } from '../helper/constants_global';
+import { CHAIN_MAP } from '../../helper/token-constants_global';
 
 function create_tokens(chain_name: string): { [key: string]: string } {
     return CHAIN_MAP[chain_name].token_map;

@@ -1,4 +1,4 @@
-import { CHAIN_MAP } from '../helper/constants_global';
+import { CHAIN_MAP } from '../../helper/token-constants_global';
 
 enum LIFI_URLS {
     MAINNET = 'https://li.quest/v1',

@@ -13,8 +13,9 @@
     "test:sushiswap": "mocha --require ts-node/register --require tsconfig-paths/register 'test/token-aggregators/sushiswap/*.test.ts' --timeout 20000",
     "test:uniswap": "mocha --require ts-node/register --require tsconfig-paths/register 'test/token-aggregators/uniswap/*.test.ts' --timeout 20000",
     "test:xy": "mocha --require ts-node/register --require tsconfig-paths/register 'test/token-aggregators/xy/*.test.ts' --timeout 20000",
-    "test:helper": "mocha --require ts-node/register --require tsconfig-paths/register 'test/token-aggregators/helper/*.test.ts' --timeout 20000",
+    "test:helper": "mocha --require ts-node/register --require tsconfig-paths/register 'test/helper/*.test.ts' --timeout 20000",
     "test:token-aggregators": "mocha --require ts-node/register --require tsconfig-paths/register 'test/token-aggregators/**/*.test.ts' --timeout 20000",
+    "test:bridge-aggregators": "mocha --require ts-node/register --require tsconfig-paths/register 'test/bridge-aggregators/**/*.test.ts' --timeout 20000",
     "test:all": "mocha --require ts-node/register --require tsconfig-paths/register 'test/**/*.test.ts' --timeout 20000"
   },
   "repository": {

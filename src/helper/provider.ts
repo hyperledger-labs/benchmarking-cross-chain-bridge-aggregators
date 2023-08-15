@@ -3,7 +3,7 @@ import { BaseProvider } from '@ethersproject/providers';
 import { Alchemy, Network, Wallet, Utils } from "alchemy-sdk";
 
 import { validate_rpc_url, validate_keys } from './inp_validator';
-import { CHAIN_ID_MAP } from './constants_global';
+import { CHAIN_ID_MAP } from './token-constants_global';
 
 const rpc_data = validate_rpc_url('ALCHEMY', 'GOERLI');
 let config = {
