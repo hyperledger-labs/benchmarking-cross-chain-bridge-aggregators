@@ -1,10 +1,10 @@
 import { expect } from 'chai';
 
-import { build_route } from '../../src/cowswap/route_builder';
+import { build_route } from '@benchmarking-cross-chain-bridges/token-aggregators/cowswap/route_builder';
 
-describe('CoW:Router', () => {
+describe('Cowswap:Router', () => {
     describe('build_route', () => {
-        it('should return a quote for a MAINNET WETH to USDC swap', (done) => {
+        it('should return a route for a MAINNET WETH to USDC swap', (done) => {
             const fromChain = 1;
             const fromToken = 'WETH';
             const toChain = 1;
@@ -19,7 +19,7 @@ describe('CoW:Router', () => {
             });
         });
 
-        it('should return a quote for a GOERLI WETH to USDC swap', (done) => {
+        it('should return a route for a GOERLI WETH to USDC swap', (done) => {
             const fromChain = 5;
             const fromToken = 'WETH';
             const toChain = 5;

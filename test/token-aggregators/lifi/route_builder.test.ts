@@ -1,11 +1,11 @@
 import { expect } from 'chai';
 
-import { build_route } from '../../src/lifi/route_builder';
+import { build_route } from '@benchmarking-cross-chain-bridges/token-aggregators/lifi/route_builder';
 import { skip } from 'node:test';
 
 describe('LiFi:Router', () => {
-    describe('build_route - return quote OR status 429 (rate limit)', () => {
-        it('should return a quote for a GOERLI WETH to GOERLI USDC swap', (done) => {
+    describe('build_route - return route OR status 429 (rate limit)', () => {
+        it('should return a route for a GOERLI WETH to GOERLI USDC swap', (done) => {
             const fromChain = 5;
             const fromToken = 'WETH';
             const toChain = 5;
@@ -26,7 +26,7 @@ describe('LiFi:Router', () => {
             });
         });
 
-        it('should return a quote for a MAINNET WETH to MATIC USDC swap', (done) => {
+        it('should return a route for a MAINNET WETH to MATIC USDC swap', (done) => {
             const fromChain = 1;
             const fromToken = 'WETH';
             const toChain = 137;
@@ -47,7 +47,7 @@ describe('LiFi:Router', () => {
             });
         });
 
-        it('should return a quote for a MAINNET WETH to USDC swap', (done) => {
+        it('should return a route for a MAINNET WETH to USDC swap', (done) => {
             const fromChain = 1;
             const fromToken = 'WETH';
             const toChain = 1;
@@ -68,7 +68,7 @@ describe('LiFi:Router', () => {
             });
         });
 
-        it('should return a quote for a MATIC WETH to MAINNET USDC swap', (done) => {
+        it('should return a route for a MATIC WETH to MAINNET USDC swap', (done) => {
             const fromChain = 137;
             const fromToken = 'WETH';
             const toChain = 1;

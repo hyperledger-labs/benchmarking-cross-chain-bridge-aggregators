@@ -1,64 +1,60 @@
 import { expect } from 'chai';
-import { ChainId } from '@uniswap/sdk-core';
+import { ChainId } from '@sushiswap/sdk';
 
-import { build_route } from '../../src/uniswap/route_builder';
+import { build_route } from '@benchmarking-cross-chain-bridges/token-aggregators/sushiswap/route_builder';
 
-describe('UNISWAP:Router', () => {
+describe('Sushiswap:Router', () => {
     describe('build_route', () => {
-        it('should return a SwapRoute Object for a GOERLI ETH to USDC swap', (done) => {
-            const from_chain_id = ChainId.GOERLI;
-            const to_chain_id = ChainId.GOERLI;
-            const from_token = 'ETH';
+        it('should return a route for a GOERLI WETH to USDC swap', (done) => {
+            const from_chain_id = ChainId.GÖRLI;
+            const to_chain_id = ChainId.GÖRLI;
+            const from_token = 'WETH';
             const to_token = 'USDC';
             const amount = (1 * 10 ** 18).toString();
             build_route(from_chain_id, to_chain_id, from_token, to_token, amount).then((route) => {
-                const blockNumber = parseInt(route.blockNumber._hex, 16);
-                expect(blockNumber).to.be.greaterThan(0);
+                expect(route.length).to.be.greaterThan(0);
                 done();
             }).catch((error) => {
                 done(error);
             });
         });
 
-        it('should return a SwapRoute Object for a MAINNET WETH to USDC swap', (done) => {
+        it('should return a route for a MAINNET WETH to USDC swap', (done) => {
             const from_chain_id = ChainId.MAINNET;
             const to_chain_id = ChainId.MAINNET;
-            const from_token = 'ETH';
+            const from_token = 'WETH';
             const to_token = 'USDC';
             const amount = (1 * 10 ** 18).toString();
             build_route(from_chain_id, to_chain_id, from_token, to_token, amount).then((route) => {
-                const blockNumber = parseInt(route.blockNumber._hex, 16);
-                expect(blockNumber).to.be.greaterThan(0);
+                expect(route.length).to.be.greaterThan(0);
                 done();
             }).catch((error) => {
                 done(error);
             });
         });
 
-        it('should return a SwapRoute Object for a MAINNET USDC to ETH swap', (done) => {
-            const from_chain_id = ChainId.MAINNET;
-            const to_chain_id = ChainId.MAINNET;
-            const from_token = 'USDC';
-            const to_token = 'ETH';
-            const amount = (1 * 10 ** 6).toString();
-            build_route(from_chain_id, to_chain_id, from_token, to_token, amount).then((route) => {
-                const blockNumber = parseInt(route.blockNumber._hex, 16);
-                expect(blockNumber).to.be.greaterThan(0);
-                done();
-            }).catch((error) => {
-                done(error);
-            });
-        });
-
-        it('should return a SwapRoute Object for a MAINNET USDC to WETH swap', (done) => {
+        it('should return a route for a MAINNET USDC to WETH swap', (done) => {
             const from_chain_id = ChainId.MAINNET;
             const to_chain_id = ChainId.MAINNET;
             const from_token = 'USDC';
             const to_token = 'WETH';
             const amount = (1 * 10 ** 6).toString();
             build_route(from_chain_id, to_chain_id, from_token, to_token, amount).then((route) => {
-                const blockNumber = parseInt(route.blockNumber._hex, 16);
-                expect(blockNumber).to.be.greaterThan(0);
+                expect(route.length).to.be.greaterThan(0);
+                done();
+            }).catch((error) => {
+                done(error);
+            });
+        });
+
+        it('should return a route for a MAINNET USDC to WETH swap', (done) => {
+            const from_chain_id = ChainId.MAINNET;
+            const to_chain_id = ChainId.MAINNET;
+            const from_token = 'USDC';
+            const to_token = 'WETH';
+            const amount = (1 * 10 ** 6).toString();
+            build_route(from_chain_id, to_chain_id, from_token, to_token, amount).then((route) => {
+                expect(route.length).to.be.greaterThan(0);
                 done();
             }).catch((error) => {
                 done(error);

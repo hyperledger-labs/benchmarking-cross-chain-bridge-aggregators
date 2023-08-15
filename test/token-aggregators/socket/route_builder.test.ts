@@ -1,10 +1,10 @@
 import { expect } from 'chai';
 
-import { build_route } from '../../src/socket/route_builder';
+import { build_route } from '@benchmarking-cross-chain-bridges/token-aggregators/socket/route_builder';
 
 describe('Socket:Router', () => {
     describe('build_route', () => {
-        it('should pass a MAINNET WETH to USDC swap route', (done) => {
+        it('should return a route for a MAINNET WETH to USDC swap route', (done) => {
             const from_chain_id = 1;
             const to_chain_id = 1;
             const from_token_address = 'WETH';
@@ -22,7 +22,7 @@ describe('Socket:Router', () => {
             });
         });
 
-        it('should pass a MAINNET WETH to MATIC USDC swap route', (done) => {
+        it('should return a route for a MAINNET WETH to MATIC USDC swap route', (done) => {
             const from_chain_id = 1;
             const to_chain_id = 137;
             const from_token_address = 'WETH';
@@ -40,7 +40,7 @@ describe('Socket:Router', () => {
             });
         });
 
-        it('should fail a MAINNET DOGECOIN to USDC swap route', (done) => {
+        it('should return a route for a MAINNET DOGECOIN to USDC swap route', (done) => {
             const from_chain_id = 1;
             const to_chain_id = 137;
             const from_token_address = 'DOGECOIN';

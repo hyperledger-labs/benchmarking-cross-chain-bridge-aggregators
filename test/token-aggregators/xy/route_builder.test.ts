@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { build_route } from '../../src/xy/route_builder';
+import { build_route } from '@benchmarking-cross-chain-bridges/token-aggregators/xy/route_builder';
 
 describe('XY:Router', () => {
     describe('build_route - should return route', () => {

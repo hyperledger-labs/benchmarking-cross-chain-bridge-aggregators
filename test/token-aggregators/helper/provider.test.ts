@@ -1,4 +1,4 @@
-import { create_tx, get_provider } from '../../src/helper/provider';
+import { create_tx, get_provider } from '@benchmarking-cross-chain-bridges/token-aggregators/helper/provider';
 import { BaseProvider } from '@ethersproject/providers';
 import { expect } from 'chai';
 
