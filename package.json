@@ -7,6 +7,7 @@
     "test": "test"
   },
   "scripts": {
+    "hyperlane:deploy": "./src/message-aggregators/hyperlane/deployer.sh",
     "test:cowswap": "mocha --require ts-node/register --require tsconfig-paths/register 'test/token-aggregators/cowswap/*.test.ts' --timeout 20000",
     "test:lifi": "mocha --require ts-node/register --require tsconfig-paths/register 'test/token-aggregators/lifi/*.test.ts' --timeout 20000",
     "test:socket": "mocha --require ts-node/register --require tsconfig-paths/register 'test/token-aggregators/socket/*.test.ts' --timeout 20000",
