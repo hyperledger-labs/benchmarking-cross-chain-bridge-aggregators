@@ -1,66 +1,55 @@
-## Foundry
+## Project Structure
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+```
+scripts
+└── benchmark message protocol
+        └── contracts.s.sol
 
-Foundry consists of:
+src
+├── contracts
+├── helper
+│   ├── inp_validator.ts
+│   ├── provider.ts
+│   ├── token-constants_global.ts
+│   └── token-misc.ts
+├── token aggregator
+│   └── benchmark protocol
+│       ├── config.ts
+│       ├── constants_local.ts
+│       └── route_builder.ts
+└─ message aggregator
+    └── benchmark protocol
+        └── counter.sh
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
-
-## Documentation
-
-https://book.getfoundry.sh/
-
-## Usage
-
-### Build
-
-```shell
-$ forge build
+test
+├── helper
+│   └── provider.test.ts
+├── token aggregator
+│   └── benchmark protocol
+│       └── route_builder.test.ts
+└── message aggregator
+    └── benchmark protocol
+        └── counter.test.sh
 ```
 
-### Test
+## Testing
+ ```shell
+ yarn run test:all # runs tests for token and message aggregators
+ ```
+ ```shell
+ yarn run test:token-aggregators # runs tests for token aggregators
+ ```
+ ```shell
+ yarn run test:message-aggregators # runs tests for message aggregators
+ ```
+
+### Run Transactions
 
 ```shell
-$ forge test
+yarn run:hyperlane # creates a hyperlane transaction on the goerli network
 ```
-
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
+### Clear Run Logs
 
 ```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
+yarn clear:dry-run # clears foundry run logs
 ```
