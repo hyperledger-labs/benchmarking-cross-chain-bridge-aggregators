@@ -17,10 +17,10 @@
     "test:xy": "mocha --require ts-node/register --require tsconfig-paths/register 'test/token-aggregators/xy/*.test.ts' --timeout 20000",
     "test:helper": "mocha --require ts-node/register --require tsconfig-paths/register 'test/helper/*.test.ts' --timeout 20000",
     "test:token-aggregators": "mocha --require ts-node/register --require tsconfig-paths/register 'test/token-aggregators/**/*.test.ts' --timeout 20000",
-    "test:bridge-aggregators": "mocha --require ts-node/register --require tsconfig-paths/register 'test/bridge-aggregators/**/*.test.ts' --timeout 20000",
-    "test:aggregators": "mocha --require ts-node/register --require tsconfig-paths/register 'test/**/*.test.ts' --timeout 20000",
+    "test:message-aggregators": "./test/message-aggregators/**/*.test.sh",
     "test:contracts": "forge test",
-    "test": "npm run test:token-aggregators && npm run test:contracts"
+    "test": "npm run test:token-aggregators && npm run test:message-aggregators",
+    "clear:dry-run": "rm -rf broadcast/*/*/dry-run"
   },
   "repository": {
     "type": "git",
