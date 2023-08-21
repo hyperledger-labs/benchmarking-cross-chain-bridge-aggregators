@@ -15,7 +15,7 @@ contract CounterScript is Script {
     uint256 deployerPrivateKey;
 
     function setUp() public {
-        deployerPrivateKey = vm.envUint("TEST_KEY_PRIVATE");
+        deployerPrivateKey = vm.envUint("KEY_PRIVATE");
         hyperlane = new HyperlaneHelperScript();
         MAILBOX = vm.envAddress("MAILBOX_ADDRESS_GOERLI");
         DESTINATION_DOMAIN = uint32(vm.envUint("DESTINATION_DOMAIN_GOERLI"));
