@@ -1,12 +1,12 @@
 [profile.default]
 src = "src/foundry-contracts"
 out = "out"
-libs = [
-    "lib",
-    "node_modules",
-]
-remappings = [
-    "@benchmarking-cross-chain-bridges/=src/contracts",
-]
+libs = ["lib", "node_modules"]
+remappings = ["@benchmarking-cross-chain-bridges/=src/contracts"]
 
 # See more config options https://github.com/foundry-rs/foundry/tree/master/crates/config
+[rpc_endpoints]
+goerli = "${ALCHEMY_RPC_GOERLI}"
+
+[etherscan]
+goerli = { key = "${ETHERSCAN_API_KEY}" }
