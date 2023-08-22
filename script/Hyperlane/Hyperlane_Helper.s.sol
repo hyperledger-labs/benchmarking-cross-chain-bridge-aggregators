@@ -12,7 +12,7 @@ contract HyperlaneHelperScript is Script {
             root,
             "/broadcast/Counter_source_tx.s.sol/",
             vm.envString("HYPERLANE_SOURCE_DOMAIN"),
-            "/run-latest.json"
+            "/dry-run/run-latest.json"
         );
 
     function create_source_tx(

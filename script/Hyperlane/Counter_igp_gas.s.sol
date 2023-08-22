@@ -8,23 +8,60 @@ import {HyperlaneHelperScript} from "./Hyperlane_Helper.s.sol";
 
 contract CounterIGPPayScript is Script {
     uint256 deployerPrivateKey;
+    address sender;
+    address IGP;
     string DESTINATION_DOMAIN;
+    uint32 DESTINATION_DOMAIN_INT;
+    uint GAS_AMOUNT;
     HyperlaneHelperScript hyperlane;
 
     function setUp() public {
         deployerPrivateKey = vm.envUint("KEY_PRIVATE");
-        DESTINATION_DOMAIN = vm.envString(
-            "HYPERLANE_DESTINATION_DOMAIN_GOERLI"
+        sender = vm.envAddress("KEY_PUBLIC");
+        DESTINATION_DOMAIN = vm.envString("HYPERLANE_DESTINATION_DOMAIN");
+        DESTINATION_DOMAIN_INT = uint32(
+            vm.envUint("HYPERLANE_DESTINATION_DOMAIN")
         );
-
+        IGP = vm.envAddress("HYPERLANE_IGP_ADDRESS");
+        GAS_AMOUNT = vm.envUint("HYPERLANE_GAS_AMOUNT");
         hyperlane = new HyperlaneHelperScript();
     }
 
     function run() public {
-        bytes memory transactionHash = hyperlane.get_tx_data(
-            ".transactions[1].hash"
+        bytes32 hyperlane_message_id = abi.decode(
+            hyperlane.get_tx_data(".receipts[1].logs[1].topics[1]"),
+            (bytes32)
         );
 
-        console2.logBytes(transactionHash);
+        console2.log("hyperlane_message_id: ");
+        console2.logBytes32(hyperlane_message_id);
+
+        bytes memory igp_quote = hyperlane.get_igp_quote(
+            DESTINATION_DOMAIN_INT,
+            GAS_AMOUNT
+        );
+        vm.startBroadcast(deployerPrivateKey);
+
+        (bool success, bytes memory data) = IGP.call(igp_quote);
+
+        uint256 GAS_PAYMENT_QUOTE = abi.decode(data, (uint256));
+
+        require(success, "CounterIGPPayScript: failed to get quote");
+
+        console2.log("GAS_PAYMENT_QUOTE: ", GAS_PAYMENT_QUOTE);
+        vm.stopBroadcast();
+
+        bytes memory igp_payment = hyperlane.create_igp_payment(
+            hyperlane_message_id,
+            DESTINATION_DOMAIN_INT,
+            GAS_AMOUNT,
+            sender
+        );
+
+        vm.startBroadcast(deployerPrivateKey);
+        (success, ) = IGP.call{value: GAS_PAYMENT_QUOTE}(igp_payment);
+
+        require(success, "CounterIGPPayScript: failed to pay for gas");
+        vm.stopBroadcast();
     }
 }

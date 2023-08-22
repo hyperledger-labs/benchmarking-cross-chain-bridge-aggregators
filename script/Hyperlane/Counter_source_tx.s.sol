@@ -19,13 +19,13 @@ contract CounterSourceScript is Script {
         hyperlane = new HyperlaneHelperScript();
         MAILBOX = vm.envAddress("HYPERLANE_MAILBOX_ADDRESS");
         DESTINATION_DOMAIN = uint32(vm.envUint("HYPERLANE_DESTINATION_DOMAIN"));
-
-        vm.startBroadcast(deployerPrivateKey);
-        counter = new Hyperlane_Counter();
-        vm.stopBroadcast();
     }
 
     function run() public {
+        vm.startBroadcast(deployerPrivateKey);
+        counter = new Hyperlane_Counter();
+        vm.stopBroadcast();
+
         console2.log("Counter deployed at address: %s", address(counter));
 
         bytes memory send_tx = hyperlane.create_source_tx(
