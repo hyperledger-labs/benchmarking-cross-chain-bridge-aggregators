@@ -10,4 +10,5 @@ echo "Testing Contracts"
 forge test --match-path="test/contracts/Hyperlane/*"
 
 echo "Testing Scripts (dry-run)"
-forge script script/Hyperlane/Counter.s.sol --fork-url $ALCHEMY_RPC_GOERLI -vvvv
+forge script script/Hyperlane/Counter_source_tx.s.sol:CounterSourceScript --fork-url $ALCHEMY_RPC_GOERLI
+forge script script/Hyperlane/Counter_igp_gas.s.sol:CounterIGPPayScript --fork-url $ALCHEMY_RPC_GOERLI
