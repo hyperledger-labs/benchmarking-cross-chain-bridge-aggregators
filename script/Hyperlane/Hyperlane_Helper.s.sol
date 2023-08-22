@@ -11,11 +11,11 @@ contract HyperlaneHelperScript is Script {
         string.concat(
             root,
             "/broadcast/Counter_source_tx.s.sol/",
-            vm.envString("HYPERLANE_DESTINATION_DOMAIN_GOERLI"),
+            vm.envString("HYPERLANE_SOURCE_DOMAIN"),
             "/run-latest.json"
         );
 
-    function create_tx(
+    function create_source_tx(
         uint32 _destDomain,
         address _recipient,
         uint256 _number
@@ -29,6 +29,36 @@ contract HyperlaneHelperScript is Script {
                 _destDomain,
                 paddedRecipient,
                 body
+            )
+        );
+    }
+
+    function get_igp_quote(
+        uint32 _destDomain,
+        uint256 _gasAmount
+    ) public pure returns (bytes memory) {
+        return (
+            abi.encodeWithSignature(
+                "quoteGasPayment(uint32,uint256)",
+                _destDomain,
+                _gasAmount
+            )
+        );
+    }
+
+    function create_igp_payment(
+        bytes32 _hyperlane_message_id,
+        uint32 _destDomain,
+        uint256 _gasAmount,
+        address _sender
+    ) public pure returns (bytes memory) {
+        return (
+            abi.encodeWithSignature(
+                "payForGas(bytes32,uint32,uint256,address)",
+                _hyperlane_message_id,
+                _destDomain,
+                _gasAmount,
+                _sender
             )
         );
     }
