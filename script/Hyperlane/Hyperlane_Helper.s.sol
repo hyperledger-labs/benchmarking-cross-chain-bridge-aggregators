@@ -1,7 +1,20 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
+import {Script} from "forge-std/Script.sol";
+import {stdJson} from "forge-std/StdJson.sol";
 
-contract HyperlaneHelperScript {
+using stdJson for string;
+
+contract HyperlaneHelperScript is Script {
+    string root = vm.projectRoot();
+    string path =
+        string.concat(
+            root,
+            "/broadcast/Counter_source_tx.s.sol/",
+            vm.envString("HYPERLANE_DESTINATION_DOMAIN_GOERLI"),
+            "/run-latest.json"
+        );
+
     function create_tx(
         uint32 _destDomain,
         address _recipient,
@@ -18,6 +31,15 @@ contract HyperlaneHelperScript {
                 body
             )
         );
+    }
+
+    function get_tx_data(
+        string memory _key
+    ) public view returns (bytes memory) {
+        string memory json = vm.readFile(path);
+
+        bytes memory transactionHash = json.parseRaw(_key);
+        return transactionHash;
     }
 
     function leftPadAddressToBytes32(

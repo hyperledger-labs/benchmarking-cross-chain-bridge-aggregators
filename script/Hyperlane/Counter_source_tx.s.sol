@@ -17,8 +17,8 @@ contract CounterSourceScript is Script {
     function setUp() public {
         deployerPrivateKey = vm.envUint("KEY_PRIVATE");
         hyperlane = new HyperlaneHelperScript();
-        MAILBOX = vm.envAddress("MAILBOX_ADDRESS_GOERLI");
-        DESTINATION_DOMAIN = uint32(vm.envUint("DESTINATION_DOMAIN_GOERLI"));
+        MAILBOX = vm.envAddress("HYPERLANE_MAILBOX_ADDRESS_GOERLI");
+        DESTINATION_DOMAIN = uint32(vm.envUint("HYPERLANE_DESTINATION_DOMAIN_GOERLI"));
 
         vm.startBroadcast(deployerPrivateKey);
         counter = new Hyperlane_Counter();
