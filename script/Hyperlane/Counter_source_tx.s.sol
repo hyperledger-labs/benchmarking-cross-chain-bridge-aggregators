@@ -7,7 +7,7 @@ import {Hyperlane_Counter} from "@benchmarking-cross-chain-bridges/Hyperlane/Cou
 import {DeployerScript} from "./Deployer.s.sol";
 import {HyperlaneHelperScript} from "./Hyperlane_Helper.s.sol";
 
-contract CounterScript is Script {
+contract CounterSourceScript is Script {
     Hyperlane_Counter counter;
     HyperlaneHelperScript hyperlane;
     address MAILBOX;
