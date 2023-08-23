@@ -7,13 +7,7 @@ using stdJson for string;
 
 contract HyperlaneHelperScript is Script {
     string root = vm.projectRoot();
-    string path =
-        string.concat(
-            root,
-            "/broadcast/Counter_source_tx.s.sol/",
-            vm.envString("HYPERLANE_SOURCE_DOMAIN"),
-            "/dry-run/run-latest.json"
-        );
+    string path = string.concat(root, "/broadcast/");
 
     function create_source_tx(
         uint32 _destDomain,
@@ -64,9 +58,19 @@ contract HyperlaneHelperScript is Script {
     }
 
     function get_tx_data(
+        string memory _contract_file_name,
+        string memory _chain_id,
         string memory _key
     ) public view returns (bytes memory) {
-        string memory json = vm.readFile(path);
+        string memory new_path = string.concat(
+            path,
+            _contract_file_name,
+            ".s.sol/",
+            _chain_id,
+            "/run-latest.json"
+        );
+
+        string memory json = vm.readFile(new_path);
 
         bytes memory transactionHash = json.parseRaw(_key);
         return transactionHash;
