@@ -4,12 +4,14 @@ pragma solidity ^0.8.13;
 import {Script} from "forge-std/Script.sol";
 import {console2} from "forge-std/console2.sol";
 import {Hyperlane_Counter} from "@benchmarking-cross-chain-bridges/Hyperlane/Counter.sol";
-import {HyperlaneHelperScript} from "./Hyperlane_Helper.s.sol";
+import {HyperlaneHelperScript} from "./HyperlaneHelper.s.sol";
 
-contract CounterIGPPayScript is Script {
+contract CounterIGPGasScript is Script {
     uint256 deployerPrivateKey;
     address sender;
+    address MAILBOX;
     address IGP;
+    string SOURCE_DOMAIN;
     string DESTINATION_DOMAIN;
     uint32 DESTINATION_DOMAIN_INT;
     uint GAS_AMOUNT;
@@ -18,18 +20,30 @@ contract CounterIGPPayScript is Script {
     function setUp() public {
         deployerPrivateKey = vm.envUint("KEY_PRIVATE");
         sender = vm.envAddress("KEY_PUBLIC");
+
+        MAILBOX = vm.envAddress("HYPERLANE_MAILBOX_ADDRESS");
+        IGP = vm.envAddress("HYPERLANE_IGP_ADDRESS");
+
+        SOURCE_DOMAIN = vm.envString("HYPERLANE_SOURCE_DOMAIN");
         DESTINATION_DOMAIN = vm.envString("HYPERLANE_DESTINATION_DOMAIN");
         DESTINATION_DOMAIN_INT = uint32(
             vm.envUint("HYPERLANE_DESTINATION_DOMAIN")
         );
-        IGP = vm.envAddress("HYPERLANE_IGP_ADDRESS");
+
         GAS_AMOUNT = vm.envUint("HYPERLANE_GAS_AMOUNT");
+
         hyperlane = new HyperlaneHelperScript();
     }
 
     function run() public {
+        string memory pathModifier = "/";
+
         bytes32 hyperlane_message_id = abi.decode(
-            hyperlane.get_tx_data(".receipts[1].logs[1].topics[1]"),
+            hyperlane.get_tx_data(
+                "Counter_igp_gas",
+                pathModifier,
+                ".receipts[1].logs[1].topics[1]"
+            ),
             (bytes32)
         );
 
