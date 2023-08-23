@@ -24,17 +24,13 @@ contract Hyperlane_Counter is IMessageRecipient {
         bytes32 _sender,
         bytes calldata _body
     ) external override {
-        uint256 _number = abi.decode(_body, (uint256));
-        setNumber(_number);
+        uint256 _addNumber = abi.decode(_body, (uint256));
+        increment(_addNumber);
         emit Received(_origin, bytes32ToAddress(_sender), _body);
     }
 
-    function setNumber(uint256 newNumber) public {
-        number = newNumber;
-    }
-
-    function increment() public {
-        number++;
+    function increment(uint256 _addNumber) internal {
+        number = number + _addNumber;
     }
 
     function bytes32ToAddress(bytes32 _buf) internal pure returns (address) {

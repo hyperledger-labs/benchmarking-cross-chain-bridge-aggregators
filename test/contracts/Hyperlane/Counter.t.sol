@@ -9,7 +9,6 @@ contract CounterTest is Test {
 
     function setUp() public {
         counter = new Hyperlane_Counter();
-        counter.setNumber(0);
     }
 
     function testFuzz_handle(uint256 x) public {
@@ -23,7 +22,10 @@ contract CounterTest is Test {
         }
         bytes memory body = abi.encode(x);
 
+        uint256 initialNumber = counter.number();
+
         counter.handle(origin, sender, body);
-        assertEq(counter.number(), x);
+
+        assertEq(counter.number(), initialNumber + x);
     }
 }
