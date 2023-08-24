@@ -7,8 +7,8 @@
     "test": "test"
   },
   "scripts": {
-    "run:hyperlane": "./src/message-aggregators/hyperlane/counter.sh",
-    "test:hyperlane": "./test/message-aggregators/hyperlane/counter.test.sh",
+    "run:hyperlane": "./src/message-aggregators/hyperlane/counter.sh 80001 5",
+    "test:hyperlane": "./test/message-aggregators/hyperlane/counter.test.sh 80001 5",
     "test:cowswap": "mocha --require ts-node/register --require tsconfig-paths/register 'test/token-aggregators/cowswap/*.test.ts' --timeout 20000",
     "test:lifi": "mocha --require ts-node/register --require tsconfig-paths/register 'test/token-aggregators/lifi/*.test.ts' --timeout 20000",
     "test:socket": "mocha --require ts-node/register --require tsconfig-paths/register 'test/token-aggregators/socket/*.test.ts' --timeout 20000",
