@@ -18,8 +18,8 @@ echo "Sending the source transaction"
 echo "Testing Scripts (dry-run)"
 echo "Deploying the counter contract"
 
-forge script script/Hyperlane/DeployCounter.s.sol:DeployCounterScript --rpc-url $ALCHEMY_RPC_GOERLI -vvvv
-forge script script/Hyperlane/CounterSourceTx.s.sol:CounterSourceTxScript --rpc-url $ALCHEMY_RPC_MUMBAI -vvvv
+forge script script/Hyperlane/DeployCounter.s.sol:DeployCounterScript --rpc-url $ALCHEMY_RPC_GOERLI
+forge script script/Hyperlane/CounterSourceTx.s.sol:CounterSourceTxScript --rpc-url $ALCHEMY_RPC_MUMBAI
 
 
 echo "Goerli contract: https://goerli.etherscan.io/address/0x17c1bc8c169449228584b9c04b2472602e9423e1"

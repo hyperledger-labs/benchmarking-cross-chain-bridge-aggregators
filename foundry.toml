@@ -4,6 +4,7 @@ out = "out"
 libs = ["lib", "node_modules"]
 remappings = ["@benchmarking-cross-chain-bridges/=src/contracts","@hashi/=lib/hashi/packages/evm/contracts"]
 fs_permissions = [{ access = "read", path = "./" }]
+verbosity = 4
 
 # See more config options https://github.com/foundry-rs/foundry/tree/master/crates/config
 [rpc_endpoints]
