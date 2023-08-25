@@ -1,22 +1,14 @@
 import { ethers } from 'ethers';
-import { BaseProvider } from '@ethersproject/providers';
-import { Alchemy, Network, Wallet, Utils } from "alchemy-sdk";
 
 import { validate_rpc_url, validate_keys } from './inp_validator';
 import { CHAIN_ID_MAP } from './token-constants_global';
 
-const rpc_data = validate_rpc_url('ALCHEMY', 'GOERLI');
-let config = {
-    apiKey: rpc_data[1],
-    network: Network.ETH_GOERLI,
-};
-
-export function get_provider(network: string, api_provider: string): BaseProvider {
-    const rpc_url = validate_rpc_url(api_provider, network)[0];
+export function get_provider(chain_name: string) {
+    const rpc_url = validate_rpc_url(chain_name);
 
     const rpc = new ethers.providers.JsonRpcProvider(rpc_url);
 
-    return rpc as BaseProvider;
+    return rpc;
 }
 
 export async function create_tx(to: string, value: string, gas_limit: string, data: string, chain_id: number): Promise<string> {
@@ -27,41 +19,38 @@ export async function create_tx(to: string, value: string, gas_limit: string, da
     const KEY_PRIVATE = KEY_PAIR.private;
 
     const chain_name = CHAIN_ID_MAP[chain_id];
-    const rpc_data = validate_rpc_url('ALCHEMY', chain_name);
 
-    const ALCHEMY_KEY = rpc_data[1];
-    const ALCHEMY_NETWORK = rpc_data[2] as Network;
+    const provider = get_provider(chain_name);
+    const txCount = await provider.getTransactionCount(KEY_PUBLIC);
+    const wallet = new ethers.Wallet(KEY_PRIVATE, provider);
 
-    config = {
-        apiKey: ALCHEMY_KEY,
-        network: ALCHEMY_NETWORK,
-    };
-
-    const ALCHEMY = new Alchemy(config);
-    const wallet = new Wallet(KEY_PRIVATE)
-
-    const rawTransaction = {
+    const rawTransaction: ethers.providers.TransactionRequest = {
         from: KEY_PUBLIC,
         to: to,
-        value: value,
-        gasLimit: gas_limit,
-        maxPriorityFeePerGas: Utils.parseUnits("5", "gwei"),
-        maxFeePerGas: Utils.parseUnits("20", "gwei"),
-        data: data,
-        nonce: await ALCHEMY.core.getTransactionCount(wallet.getAddress()),
+        value: ethers.utils.parseUnits(value, "wei"),
+        gasLimit: ethers.BigNumber.from(gas_limit),
+        maxPriorityFeePerGas: ethers.utils.parseUnits("5", "gwei"),
+        maxFeePerGas: ethers.utils.parseUnits("20", "gwei"),
+        nonce: ethers.BigNumber.from(txCount.toString()),
         type: 2,
         chainId: chain_id,
     };
 
-    const signedTransaction = await wallet.signTransaction(rawTransaction);
+    const signedTransaction = wallet.signTransaction(rawTransaction);
 
     return signedTransaction;
 };
 
-export async function send_tx(signed_transaction: string): Promise<ethers.providers.TransactionResponse> {
-    const alchemy = new Alchemy(config);
+export async function send_tx(signed_transaction: any, chain_id: number): Promise<ethers.providers.TransactionResponse> {
+    const chain_name = CHAIN_ID_MAP[chain_id];
 
-    const response = await alchemy.transact.sendTransaction(signed_transaction);
+    const provider = get_provider(chain_name);
 
-    return response;
+    try {
+        const txResponse = await provider.sendTransaction(signed_transaction);
+        return txResponse;
+    } catch (error) {
+        console.error('Error sending transaction:', error);
+        throw error;
+    }
 };

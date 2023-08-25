@@ -20,7 +20,7 @@
     "test:token-aggregators": "mocha --require ts-node/register --require tsconfig-paths/register 'test/token-aggregators/**/*.test.ts' --timeout 20000",
     "test:message-aggregators": "./test/message-aggregators/**/*.test.sh 80001 5",
     "test:contracts": "forge test",
-    "test": "yarn run test:token-aggregators && yarn run test:message-aggregators",
+    "test": "yarn run test:helper && yarn run test:token-aggregators && yarn run test:message-aggregators",
     "clear:dry-run": "rm -rf broadcast/*/*/dry-run"
   },
   "repository": {
@@ -39,7 +39,6 @@
     "@types/node": "^20.4.8",
     "@uniswap/sdk-core": "^4.0.6",
     "@uniswap/smart-order-router": "^3.15.0",
-    "alchemy-sdk": "^2.9.2",
     "cross-fetch": "^4.0.0",
     "dotenv": "^16.3.1",
     "ethers": "^5.7.0",

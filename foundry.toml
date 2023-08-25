@@ -8,7 +8,7 @@ verbosity = 4
 
 # See more config options https://github.com/foundry-rs/foundry/tree/master/crates/config
 [rpc_endpoints]
-goerli = "${ALCHEMY_RPC_GOERLI}"
+goerli = "${RPC_GOERLI}"
 
 [etherscan]
 goerli = { key = "${ETHERSCAN_API_KEY}" }

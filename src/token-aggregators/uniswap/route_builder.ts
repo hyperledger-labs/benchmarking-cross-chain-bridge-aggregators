@@ -27,7 +27,7 @@ export async function build_route(from_chain_id: number, to_chain_id: number, fr
         throw new Error("UNISWAP: Only same chain swaps are supported");
     }
 
-    // Create a router for the input chain with the Alchemy provider
+    // Create a router for the input chain with the provider
     // using the default configuring in config.ts
     const router: AlphaRouter = create_router(from_chain_id);
     const options: SwapOptionsSwapRouter02 = create_swap_options();

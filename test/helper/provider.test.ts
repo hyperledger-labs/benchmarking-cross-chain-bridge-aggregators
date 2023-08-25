@@ -1,14 +1,12 @@
-import { create_tx, get_provider } from '@benchmarking-cross-chain-bridges/helper/provider';
+import { create_tx, send_tx, get_provider } from '@benchmarking-cross-chain-bridges/helper/provider';
 import { BaseProvider } from '@ethersproject/providers';
 import { expect } from 'chai';
 
 describe('provider:get_provider', () => {
-
-    describe('supported network (GOERLI) and api_provider (Alchemy)', () => {
+    describe('supported network (GOERLI) and', () => {
         it('should return a BaseProvider', async () => {
             const network = 'GOERLI';
-            const api_provider = 'ALCHEMY';
-            const provider: BaseProvider = get_provider(network, api_provider);
+            const provider: BaseProvider = get_provider(network);
             expect(provider).to.be.instanceOf(BaseProvider);
         });
     });
@@ -16,16 +14,7 @@ describe('provider:get_provider', () => {
     describe('unsupported network', () => {
         it('should throw an error for an unsupported network', async () => {
             const network = 'unsupported';
-            const api_provider = 'ALCHEMY';
-            expect(() => get_provider(network, api_provider)).to.throw('RPC URL not found for ALCHEMY and unsupported');
-        });
-    });
-
-    describe('unsupported api_provider', () => {
-        it('should throw an error for an unsupported api_provider', async () => {
-            const network = 'GOERLI';
-            const api_provider = 'unsupported';
-            expect(() => get_provider(network, api_provider)).to.throw('RPC URL not found for unsupported and GOERLI');
+            expect(() => get_provider(network)).to.throw('RPC URL not found for unsupported');
         });
     });
 });
@@ -33,7 +22,7 @@ describe('provider:get_provider', () => {
 describe('provider:create_tx', () => {
     it('should sign a transaction', async () => {
         const to = '0x87699e6d5ce5a1c01fCB3fD44626aE2e2ef6A5DD';
-        const value = '100';
+        const value = '1';
         const gas_limit = '100000';
         const data = '0x';
         const chain_id = 5;
@@ -52,8 +41,7 @@ describe('send_tx', () => {
 
         const signed_transaction = await create_tx(to, value, gas_limit, data, chain_id);
 
-        const provider = get_provider('GOERLI', 'ALCHEMY');
-        const response = await provider.sendTransaction(signed_transaction).then((response) => {
+        await send_tx(signed_transaction, chain_id).then((response) => {
             expect(response).to.be.a('object');
         }).catch((error) => {
             console.log(error);

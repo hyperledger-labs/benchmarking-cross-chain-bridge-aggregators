@@ -13,7 +13,7 @@ import { validate_keys } from '../../helper/inp_validator';
 export function create_router(chainId: number): AlphaRouter {
     return new AlphaRouter({
         chainId: chainId,
-        provider: get_provider(CHAIN_ID_MAP[chainId], 'ALCHEMY'),
+        provider: get_provider(CHAIN_ID_MAP[chainId]),
     });
 }
 

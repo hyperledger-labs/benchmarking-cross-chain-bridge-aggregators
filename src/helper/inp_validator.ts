@@ -1,4 +1,3 @@
-import { Network } from 'alchemy-sdk';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -65,32 +64,16 @@ export function validate_api_key(protocol_name: string): string {
     return api_key;
 }
 
-export function validate_rpc_url(protocol_name: string, network: string): string[] {
-
-    if (!protocol_name) {
-        throw new Error('Missing protocol name');
-    } else if (!network) {
+export function validate_rpc_url(network: string): string {
+    if (!network) {
         throw new Error('Missing network');
     }
 
-    const rpc_url: string | undefined = process.env[protocol_name.toUpperCase() + '_RPC_' + network.toUpperCase()];
-
-    const rpc_key: string | undefined = process.env[protocol_name.toUpperCase() + '_KEY_' + network.toUpperCase()];
-
+    const rpc_url: string | undefined = process.env['RPC_' + network.toUpperCase()];
 
     if (!rpc_url) {
-        throw new Error(`RPC URL not found for ${protocol_name} and ${network}`);
+        throw new Error(`RPC URL not found for ${network}`);
     }
 
-    if (!rpc_key) {
-        throw new Error(`RPC KEY not found for ${protocol_name} and ${network}`);
-    }
-
-    const alchemy_network: Network = (Network as any)['ETH_' + network] as Network;
-
-    if (!alchemy_network) {
-        throw new Error(`Alchemy network not found for ${protocol_name} and ${network}`);
-    }
-
-    return [rpc_url, rpc_key, alchemy_network];
+    return rpc_url;
 }
