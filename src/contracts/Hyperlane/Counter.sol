@@ -15,10 +15,20 @@ interface IMessageRecipient {
     ) external;
 }
 
+/**
+ * @title Hyperlane_Counter
+ * @dev A contract that increments a number based on the value passed in through a message.
+ */
 contract Hyperlane_Counter is IMessageRecipient {
     uint256 public number;
     event Received(uint32 origin, address sender, bytes body);
 
+    /**
+     * @dev Handles the incoming message and increments the number by the value passed in.
+     * @param _origin The origin of the message.
+     * @param _sender The sender of the message.
+     * @param _body The body of the message, containing the value to increment the number by.
+     */
     function handle(
         uint32 _origin,
         bytes32 _sender,
@@ -29,10 +39,19 @@ contract Hyperlane_Counter is IMessageRecipient {
         emit Received(_origin, bytes32ToAddress(_sender), _body);
     }
 
+    /**
+     * @dev Increments the number by the given value.
+     * @param _addNumber The value to increment the number by.
+     */
     function increment(uint256 _addNumber) internal {
         number = number + _addNumber;
     }
 
+    /**
+     * @dev Converts a bytes32 value to an address.
+     * @param _buf The bytes32 value to convert.
+     * @return The address represented by the bytes32 value.
+     */
     function bytes32ToAddress(bytes32 _buf) internal pure returns (address) {
         return address(uint160(uint256(_buf)));
     }

@@ -1,3 +1,10 @@
+/**
+ * @title CounterIGPGasScript
+ * @dev A script that interacts with the HyperlaneHelperScript and Hyperlane_Counter contracts to pay for gas on the Hyperlane network.
+ * @notice This script is used to pay for gas on the Hyperlane network by creating an IGP payment and calling the IGP contract with the payment.
+ * @notice The script requires the following environment variables to be set: KEY_PRIVATE, KEY_PUBLIC, HYPERLANE_MAILBOX_ADDRESS, HYPERLANE_IGP_ADDRESS, HYPERLANE_SOURCE_DOMAIN, HYPERLANE_DESTINATION_DOMAIN, HYPERLANE_DESTINATION_DOMAIN, HYPERLANE_GAS_AMOUNT.
+ */
+
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 

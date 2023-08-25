@@ -1,3 +1,8 @@
+/**
+ * @title DeployCounterScript
+ * @dev A script to deploy a Hyperlane_Counter contract on a specified domain using a HyperlaneHelperScript.
+ */
+
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 

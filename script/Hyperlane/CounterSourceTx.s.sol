@@ -1,3 +1,10 @@
+/**
+ * @title CounterSourceTxScript
+ * @dev This contract is a script that creates a source transaction to deploy a counter contract on a destination domain using HyperlaneHelperScript.
+ * It imports Script and console2 from forge-std/Script.sol and forge-std/console2.sol respectively.
+ * It also imports HyperlaneHelperScript from ./HyperlaneHelper.s.sol.
+ */
+
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
