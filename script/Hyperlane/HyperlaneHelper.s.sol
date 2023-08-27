@@ -105,8 +105,8 @@ contract HyperlaneHelperScript is Script {
 
         string memory json = vm.readFile(new_path);
 
-        bytes memory transactionHash = json.parseRaw(_key);
-        return transactionHash;
+        bytes memory transactionData = json.parseRaw(_key);
+        return transactionData;
     }
 
     /**

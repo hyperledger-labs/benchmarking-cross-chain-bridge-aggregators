@@ -34,7 +34,7 @@ describe('Hashi:Deploy', () => {
         deploy_contract(toChain, toToken, 'broadcast', false).then((stdout) => {
             done();
         }).catch((error) => {
-            expect(error.message).to.equal('No confirmation received. Aborting.');
+            expect(error.message).to.equal('User input confirmationResponse was false. Aborting.');
             done();
         });
     });

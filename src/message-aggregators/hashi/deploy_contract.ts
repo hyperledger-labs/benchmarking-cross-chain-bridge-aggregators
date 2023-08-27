@@ -21,7 +21,7 @@ export async function deploy_contract(toChain: number, contract_name: string, mo
     if (mode === 'broadcast') {
         getUserConfirmation(confirmationResponse, (confirmed) => {
             if (!confirmed) {
-                throw new Error('No confirmation received. Aborting.');
+                throw new Error(`User input confirmationResponse was ${confirmationResponse}. Aborting.`);
             }
         });
     }
