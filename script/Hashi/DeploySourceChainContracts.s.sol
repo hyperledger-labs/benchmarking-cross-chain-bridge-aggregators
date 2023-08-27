@@ -51,7 +51,7 @@ contract DeployAMBRelayScript is Script {
 
     uint256 SOURCE_DOMAIN;
     string DESTINATION_DOMAIN;
-    address AMB_RELAY;
+    address AMB;
     address DEPLOYED_YAHO;
 
     function setUp() public {
@@ -61,22 +61,22 @@ contract DeployAMBRelayScript is Script {
         SOURCE_DOMAIN = vm.envUint("HASHI_SOURCE_DOMAIN");
         DESTINATION_DOMAIN = vm.envString("HASHI_DESTINATION_DOMAIN");
 
-        AMB_RELAY = vm.envAddress("HASHI_AMB_RELAY_GOERLI");
+        AMB = vm.envAddress("HASHI_AMB_GOERLI");
 
-        bytes memory counterAddressBytes = hashiHelper.get_tx_data(
+        bytes memory deployedYahoAddressBytes = hashiHelper.get_tx_data(
             "DeploySourceChainContracts",
             DESTINATION_DOMAIN,
             ".transactions[0].contractAddress"
         );
 
-        DEPLOYED_YAHO = abi.decode(counterAddressBytes, (address));
+        DEPLOYED_YAHO = abi.decode(deployedYahoAddressBytes, (address));
     }
 
     function run() public {
         vm.startBroadcast(deployerPrivateKey);
 
         // Deploy AMBMessageRelay on Source chain
-        ambRelay = new AMBMessageRelay(IAMB(AMB_RELAY), Yaho(DEPLOYED_YAHO));
+        ambRelay = new AMBMessageRelay(IAMB(AMB), Yaho(DEPLOYED_YAHO));
 
         vm.stopBroadcast();
 
