@@ -4,3 +4,6 @@
 [submodule "lib/hashi"]
 	path = lib/hashi
 	url = https://github.com/gnosis/hashi
+[submodule "lib/Solidity-RLP"]
+	path = lib/Solidity-RLP
+	url = https://github.com/hamdiallam/Solidity-RLP
