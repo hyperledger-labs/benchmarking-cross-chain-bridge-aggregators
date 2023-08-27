@@ -12,7 +12,7 @@ import {console2} from "forge-std/console2.sol";
 import {Yaru} from "@hashi/Yaru.sol";
 import {IHashi} from "@hashi/interfaces/IHashi.sol";
 
-contract DeployDestinationChainContractsScript is Script {
+contract DeployYaruScript is Script {
     uint256 deployerPrivateKey;
 
     Yaru public yaru;

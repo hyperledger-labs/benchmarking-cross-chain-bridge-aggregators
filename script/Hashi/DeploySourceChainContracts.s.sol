@@ -11,7 +11,7 @@ import {console2} from "forge-std/console2.sol";
 
 import {Yaho} from "@hashi/Yaho.sol";
 
-contract DeploySourceChainContractsScript is Script {
+contract DeployYahoScript is Script {
     uint256 deployerPrivateKey;
 
     Yaho public yaho;
