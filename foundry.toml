@@ -2,8 +2,12 @@
 src = "src/foundry-contracts"
 out = "out"
 libs = ["lib", "node_modules"]
-remappings = ["@benchmarking-cross-chain-bridges/=src/contracts","@hashi/=lib/hashi/packages/evm/contracts", "solidity-rlp/=lib/Solidity-RLP"]
-fs_permissions = [{ access = "read", path = "./" }]
+remappings = [
+    "@benchmarking-cross-chain-bridges/=src/contracts",
+    "@hashi/=lib/hashi/packages/evm/contracts",
+    "solidity-rlp/=lib/Solidity-RLP",
+]
+fs_permissions = [{ access = "read-write", path = "./" }]
 verbosity = 4
 
 # See more config options https://github.com/foundry-rs/foundry/tree/master/crates/config
