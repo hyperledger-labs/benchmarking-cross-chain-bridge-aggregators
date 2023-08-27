@@ -1,7 +1,8 @@
 import { exec } from 'child_process';
 
 import { validate_chain, validate_keys } from '../../helper/inp_validator';
-import { get_contract, get_rpc_url } from './constants_local';
+import { get_contract, get_contract_file_name, get_rpc_url } from './constants_local';
+import { get_tx_data, get_tx_hash } from './config';
 
 // Function that handles user input (mocked during testing)
 function getUserConfirmation(response: boolean, callback: (confirmed: boolean) => void) {
@@ -36,4 +37,12 @@ export async function deploy_contract(toChain: number, contract_name: string, mo
             }
         });
     });
+}
+
+export function return_tx_hash(toChain: number, contract_name: string, mode: string): string {
+    const contract_path = get_contract_file_name(contract_name);
+
+    const tx_hash = get_tx_hash(toChain, contract_path, mode);
+
+    return tx_hash;
 }
