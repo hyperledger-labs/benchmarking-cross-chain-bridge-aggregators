@@ -4,9 +4,9 @@ const dispatcher_path = 'src/message-aggregators/hashi/dispatcher.sh';
 
 const contract_map: { [key: string]: string } = {
     "DeployYahoScript": "DeploySourceChainContracts.s.sol:DeployYahoScript",
-    "DeployAMBMessageRelayer": "DeploySourceChainContracts.s.sol:DeployAMBRelayScript",
+    "DeployAMBRelayScript": "DeploySourceChainContracts.s.sol:DeployAMBRelayScript",
     "DeployYaruScript": "DeployDestinationChainContracts.s.sol:DeployYaruScript",
-    "DeployAMBAdapter": "DeployDestinationChainContracts.s.sol:DeployAMBAdapterScript",
+    "DeployAMBAdapterScript": "DeployDestinationChainContracts.s.sol:DeployAMBAdapterScript",
 };
 
 export function get_contract(contract_name: string): string[] {

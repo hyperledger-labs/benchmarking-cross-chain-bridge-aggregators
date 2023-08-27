@@ -2,7 +2,7 @@ import { exec } from 'child_process';
 
 import { validate_chain, validate_keys } from '../../helper/inp_validator';
 import { get_contract, get_contract_file_name, get_rpc_url } from './constants_local';
-import { get_tx_data, get_tx_hash } from './config';
+import { get_tx_hash } from './config';
 
 // Function that handles user input (mocked during testing)
 function getUserConfirmation(response: boolean, callback: (confirmed: boolean) => void) {

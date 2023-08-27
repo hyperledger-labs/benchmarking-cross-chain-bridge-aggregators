@@ -16,6 +16,8 @@ import {AMBAdapter} from "@hashi/adapters/AMB/AMBAdapter.sol";
 import {HashiHelperScript} from "./HashiHelper.s.sol";
 
 contract DeployYaruScript is Script {
+    HashiHelperScript hashiHelper;
+
     uint256 deployerPrivateKey;
 
     Yaru public yaru;
@@ -32,6 +34,8 @@ contract DeployYaruScript is Script {
         HASHI = vm.envAddress("HASHI_HASHI_GNOSIS");
         SOURCE_DOMAIN = vm.envUint("HASHI_SOURCE_DOMAIN");
         DESTINATION_DOMAIN = vm.envUint("HASHI_DESTINATION_DOMAIN");
+
+        hashiHelper = new HashiHelperScript();
     }
 
     function run() public {
@@ -42,11 +46,7 @@ contract DeployYaruScript is Script {
 
         vm.stopBroadcast();
 
-        console2.log(
-            "Yaru deployed at address on chain %d: %s",
-            DESTINATION_DOMAIN,
-            address(yaru)
-        );
+        hashiHelper.write_deployed_address("Yaru", address(yaru));
     }
 }
 
@@ -68,13 +68,7 @@ contract DeployAMBAdapterScript is Script {
         SOURCE_DOMAIN = vm.envString("HASHI_SOURCE_DOMAIN");
         DESTINATION_DOMAIN = vm.envUint("HASHI_DESTINATION_DOMAIN");
         AMB = vm.envAddress("HASHI_AMB_GNOSIS");
-        bytes memory ambMessageRelayAddressBytes = hashiHelper.get_tx_data(
-            "DeployDestinationChainContracts",
-            SOURCE_DOMAIN,
-            ".transactions[0].contractAddress"
-        );
-
-        DEPLOYED_AMB_RELAY = abi.decode(ambMessageRelayAddressBytes, (address));
+        DEPLOYED_AMB_RELAY = hashiHelper.get_deployed_address("AMBRelay");
     }
 
     function run() public {
@@ -89,10 +83,6 @@ contract DeployAMBAdapterScript is Script {
 
         vm.stopBroadcast();
 
-        console2.log(
-            "AMBAdapter deployed at address on chain %d: %s",
-            DESTINATION_DOMAIN,
-            address(ambAdapter)
-        );
+        hashiHelper.write_deployed_address("AMBAdapter", address(ambAdapter));
     }
 }

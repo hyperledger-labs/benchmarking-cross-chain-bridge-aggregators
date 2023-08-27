@@ -16,6 +16,8 @@ import {AMBMessageRelay} from "@hashi/adapters/AMB/AMBMessageRelayer.sol";
 import {HashiHelperScript} from "./HashiHelper.s.sol";
 
 contract DeployYahoScript is Script {
+    HashiHelperScript hashiHelper;
+
     uint256 deployerPrivateKey;
 
     Yaho public yaho;
@@ -25,6 +27,8 @@ contract DeployYahoScript is Script {
     function setUp() public {
         deployerPrivateKey = vm.envUint("KEY_PRIVATE");
         SOURCE_DOMAIN = vm.envUint("HASHI_SOURCE_DOMAIN");
+
+        hashiHelper = new HashiHelperScript();
     }
 
     function run() public {
@@ -35,11 +39,7 @@ contract DeployYahoScript is Script {
 
         vm.stopBroadcast();
 
-        console2.log(
-            "Yaho deployed at address on chain %d: %s",
-            SOURCE_DOMAIN,
-            address(yaho)
-        );
+        hashiHelper.write_deployed_address("Yaho", address(yaho));
     }
 }
 
@@ -63,13 +63,7 @@ contract DeployAMBRelayScript is Script {
 
         AMB = vm.envAddress("HASHI_AMB_GOERLI");
 
-        bytes memory deployedYahoAddressBytes = hashiHelper.get_tx_data(
-            "DeploySourceChainContracts",
-            DESTINATION_DOMAIN,
-            ".transactions[0].contractAddress"
-        );
-
-        DEPLOYED_YAHO = abi.decode(deployedYahoAddressBytes, (address));
+        DEPLOYED_YAHO = hashiHelper.get_deployed_address("Yaho");
     }
 
     function run() public {
@@ -80,10 +74,6 @@ contract DeployAMBRelayScript is Script {
 
         vm.stopBroadcast();
 
-        console2.log(
-            "AMB Relay deployed at address on chain %d: %s",
-            SOURCE_DOMAIN,
-            address(ambRelay)
-        );
+        hashiHelper.write_deployed_address("AMBRelay", address(ambRelay));
     }
 }
