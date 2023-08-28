@@ -4,7 +4,7 @@ pragma solidity ^0.8.13;
 import {Test, console2} from "forge-std/Test.sol";
 import {Hyperlane_Counter} from "@benchmarking-cross-chain-bridges/Hyperlane/Counter.sol";
 
-contract CounterTest is Test {
+contract HyperlaneCounterTest is Test {
     Hyperlane_Counter public counter;
 
     function setUp() public {

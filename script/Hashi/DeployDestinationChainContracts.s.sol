@@ -15,6 +15,8 @@ import {IAMB} from "@hashi/adapters/AMB/IAMB.sol";
 import {AMBAdapter} from "@hashi/adapters/AMB/AMBAdapter.sol";
 import {HashiHelperScript} from "./HashiHelper.s.sol";
 
+import {Hashi_Counter} from "@benchmarking-cross-chain-bridges/Hashi/Counter.sol";
+
 contract DeployYaruScript is Script {
     HashiHelperScript hashiHelper;
 
@@ -84,5 +86,32 @@ contract DeployAMBAdapterScript is Script {
         vm.stopBroadcast();
 
         hashiHelper.write_deployed_address("AMBAdapter", address(ambAdapter));
+    }
+}
+
+contract DeployCounterScript is Script {
+    HashiHelperScript hashiHelper;
+
+    uint256 deployerPrivateKey;
+
+    Hashi_Counter public counter;
+    string SOURCE_DOMAIN;
+
+    function setUp() public {
+        hashiHelper = new HashiHelperScript();
+
+        deployerPrivateKey = vm.envUint("KEY_PRIVATE");
+
+        SOURCE_DOMAIN = vm.envString("HASHI_SOURCE_DOMAIN");
+    }
+
+    function run() public {
+        vm.startBroadcast(deployerPrivateKey);
+
+        counter = new Hashi_Counter();
+
+        vm.stopBroadcast();
+
+        hashiHelper.write_deployed_address("Counter", address(counter));
     }
 }
