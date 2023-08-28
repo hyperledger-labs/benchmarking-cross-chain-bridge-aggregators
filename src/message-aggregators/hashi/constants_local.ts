@@ -1,12 +1,16 @@
 import { CHAIN_ID_MAP } from "../../helper/token-constants_global";
+import fs from 'fs';
 
-const dispatcher_path = 'src/message-aggregators/hashi/dispatcher.sh';
+const hashi_root = 'src/message-aggregators/hashi';
+const dispatcher_path = `${hashi_root}/dispatcher.sh`;
+const deployed_address_path = `${hashi_root}/deployed_addresses.json`;
 
 const contract_map: { [key: string]: string } = {
-    "DeployYahoScript": "DeploySourceChainContracts.s.sol:DeployYahoScript",
-    "DeployAMBRelayScript": "DeploySourceChainContracts.s.sol:DeployAMBRelayScript",
-    "DeployYaruScript": "DeployDestinationChainContracts.s.sol:DeployYaruScript",
-    "DeployAMBAdapterScript": "DeployDestinationChainContracts.s.sol:DeployAMBAdapterScript",
+    "Yaho": "DeploySourceChainContracts.s.sol:DeployYahoScript",
+    "AMBRelay": "DeploySourceChainContracts.s.sol:DeployAMBRelayScript",
+    "Yaru": "DeployDestinationChainContracts.s.sol:DeployYaruScript",
+    "AMBAdapter": "DeployDestinationChainContracts.s.sol:DeployAMBAdapterScript",
+    "Counter": "DeployDestinationChainContracts.s.sol:DeployCounterScript",
 };
 
 export function get_contract(contract_name: string): string[] {
@@ -24,6 +28,17 @@ export function get_contract_file_name(contract_name: string): string {
     }
     else {
         throw new Error(`Contract ${contract_name} not found in contract_map`);
+    }
+}
+
+export function get_contract_address(contract_name: string): string {
+    const json = JSON.parse(fs.readFileSync(deployed_address_path).toString());
+
+    if (contract_name in json) {
+        return json[contract_name];
+    }
+    else {
+        throw new Error(`Contract ${contract_name} not found in deployed_address.json`);
     }
 }
 
