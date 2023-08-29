@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import fs from 'fs';
 
 import { build_route } from '@benchmarking-cross-chain-bridges/token-aggregators/cowswap/route_builder';
 
@@ -12,6 +13,7 @@ describe('Cowswap:Router', () => {
             const fromAmount = (1 * 10 ** 18).toString();
 
             build_route(fromChain, toChain, fromToken, toToken, fromAmount).then((route) => {
+                fs.writeFileSync('test/token-aggregators/cowswap/route.json', JSON.stringify(route));
                 expect(route.id).to.not.equal(null);
                 done();
             }).catch((error) => {

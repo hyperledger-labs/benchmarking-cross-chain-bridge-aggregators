@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import { ChainId } from '@uniswap/sdk-core';
+import fs from 'fs';
 
 import { build_route } from '@benchmarking-cross-chain-bridges/token-aggregators/uniswap/route_builder';
 
@@ -27,6 +28,7 @@ describe('Uniswap:Router', () => {
             const to_token = 'USDC';
             const amount = (1 * 10 ** 18).toString();
             build_route(from_chain_id, to_chain_id, from_token, to_token, amount).then((route) => {
+                fs.writeFileSync('test/token-aggregators/uniswap/route.json', JSON.stringify(route));
                 const blockNumber = parseInt(route.blockNumber._hex, 16);
                 expect(blockNumber).to.be.greaterThan(0);
                 done();

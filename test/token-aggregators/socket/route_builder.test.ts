@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import fs from 'fs';
 
 import { build_route } from '@benchmarking-cross-chain-bridges/token-aggregators/socket/route_builder';
 
@@ -32,6 +33,7 @@ describe('Socket:Router', () => {
             const sort = 'gas';
 
             build_route(from_chain_id, from_token_address, to_chain_id, to_token_address, amount, unique_routes, sort).then((route) => {
+                fs.writeFileSync('test/token-aggregators/socket/route.json', JSON.stringify(route));
                 expect(route.success).to.equal(true);
                 done();
             }
