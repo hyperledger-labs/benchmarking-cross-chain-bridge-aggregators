@@ -18,6 +18,12 @@ contract HashiHelperScript is Script {
         "/src/message-aggregators/hashi/deployed_addresses.json";
     string path_contract_address = string.concat(root, contract_address_json);
 
+    function create_tx(uint256 _number) public pure returns (bytes memory) {
+        return (
+            abi.encodeWithSignature("handle(bytes)", abi.encodePacked(_number))
+        );
+    }
+
     /**
      * @dev Gets transaction data for Hashi.
      * @param _contract_file_name The name of the contract file.
