@@ -20,4 +20,17 @@ contract HashiCounterTest is Test {
 
         assertEq(counter.number(), initialNumber + x);
     }
+
+    function testFuzz_calldataHandle(uint256 x) public {
+        bytes memory body = abi.encode(x);
+
+        uint256 initialNumber = counter.number();
+
+        (bool success, ) = address(counter).call(
+            abi.encodeWithSignature("handle(bytes)", body)
+        );
+
+        assertEq(success, true);
+        assertEq(counter.number(), initialNumber + x);
+    }
 }

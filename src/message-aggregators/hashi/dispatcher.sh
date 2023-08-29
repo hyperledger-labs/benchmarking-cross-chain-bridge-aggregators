@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "Testing Hyperlane"
+echo "Running Hashi Dispatcher"
 original_dir=$(pwd)
 
 mode=$1
@@ -22,7 +22,7 @@ echo "Testing Contracts"
 echo "Sending the source transaction"
 echo "Testing Scripts (dry-run)"
 
-BASE_COMMAND="forge script script/Hashi/$contract_path --rpc-url $rpc"
+BASE_COMMAND="forge script script/Hashi/$contract_path --rpc-url $rpc --verify"
 
 # forge script script/Hashi/DeploySourceChainContracts.s.sol:DeployYahoScript --rpc-url $RPC_GNOSIS
 

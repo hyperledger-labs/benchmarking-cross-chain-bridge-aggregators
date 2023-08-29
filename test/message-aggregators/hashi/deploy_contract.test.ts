@@ -4,13 +4,16 @@ import { deploy_contract } from '@benchmarking-cross-chain-bridges/message-aggre
 
 import { get_contract_address } from '@benchmarking-cross-chain-bridges/message-aggregators/hashi/constants_local';
 
+const mode = 'test';
+const confirmationResponse = false;
+
 describe('Deploys Hashi contracts Yaho and Yaru', () => {
     it('should simulate deployment of Yaho on GOERLI', (done) => {
         const toChain = 5;
         const contractName = 'Yaho';
         const old_address = get_contract_address(contractName);
 
-        deploy_contract(toChain, contractName, 'test', false).then((contract_address) => {
+        deploy_contract(toChain, contractName, mode, confirmationResponse).then((contract_address) => {
             expect(contract_address).to.not.be.equal(undefined);
             expect(contract_address).to.not.be.equal(old_address);
             done();
@@ -24,7 +27,7 @@ describe('Deploys Hashi contracts Yaho and Yaru', () => {
         const contractName = 'Yaru';
         const old_address = get_contract_address(contractName);
 
-        deploy_contract(toChain, contractName, 'test', false).then((contract_address) => {
+        deploy_contract(toChain, contractName, mode, confirmationResponse).then((contract_address) => {
             expect(contract_address).to.not.be.equal(undefined);
             expect(contract_address).to.not.be.equal(old_address);
             done();
@@ -40,7 +43,7 @@ describe('Deploys AMB Message Relay and AMB Adapter', () => {
         const contractName = 'AMBRelay';
         const old_address = get_contract_address(contractName);
 
-        deploy_contract(toChain, contractName, 'test', false).then((contract_address) => {
+        deploy_contract(toChain, contractName, mode, confirmationResponse).then((contract_address) => {
             expect(contract_address).to.not.be.equal(undefined);
             expect(contract_address).to.not.be.equal(old_address);
             done();
@@ -54,7 +57,7 @@ describe('Deploys AMB Message Relay and AMB Adapter', () => {
         const contractName = 'AMBAdapter';
         const old_address = get_contract_address(contractName);
 
-        deploy_contract(toChain, contractName, 'test', false).then((contract_address) => {
+        deploy_contract(toChain, contractName, mode, confirmationResponse).then((contract_address) => {
             expect(contract_address).to.not.be.equal(undefined);
             expect(contract_address).to.not.be.equal(old_address);
             done();
@@ -72,7 +75,7 @@ describe('Deploys Counter to the destination chain', () => {
 
         const old_address = get_contract_address(contractName);
 
-        deploy_contract(toChain, contractName, 'test', false).then((contract_address) => {
+        deploy_contract(toChain, contractName, mode, confirmationResponse).then((contract_address) => {
             expect(contract_address).to.not.be.equal(undefined);
             expect(contract_address).to.not.be.equal(old_address);
             done();
@@ -83,14 +86,14 @@ describe('Deploys Counter to the destination chain', () => {
 });
 
 describe('Following deploys should fail', () => {
-    it('real deployment of Yaho on GOERLI (confirmation is false)', (done) => {
+    it('real deployment of Yaho on GOERLI (confirmation is confirmationResponse)', (done) => {
         const toChain = 5;
         const contractName = 'Yaho';
 
-        deploy_contract(toChain, contractName, 'broadcast', false).then((contract_address) => {
+        deploy_contract(toChain, contractName, 'broadcast', confirmationResponse).then((contract_address) => {
             done();
         }).catch((error) => {
-            expect(error.message).to.equal('User input confirmationResponse was false. Aborting.');
+            expect(error.message).to.equal('User input confirmationResponse was confirmationResponse. Aborting.');
             done();
         });
     });
