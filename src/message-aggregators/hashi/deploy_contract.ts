@@ -4,11 +4,6 @@ import { validate_chain, validate_keys } from '../../helper/inp_validator';
 import { get_contract, get_contract_address, get_rpc_url } from './constants_local';
 import { get_tx_hash } from './config';
 
-// Function that handles user input (mocked during testing)
-function getUserConfirmation(response: boolean, callback: (confirmed: boolean) => void) {
-    callback(response);
-}
-
 export async function deploy_contract(toChain: number, contract_name: string, mode: string = 'test', confirmationResponse: boolean = false) {
     validate_chain('HASHI', toChain, toChain);
     const key_pair = validate_keys();
@@ -19,12 +14,8 @@ export async function deploy_contract(toChain: number, contract_name: string, mo
     const contract_path = paths[1];
 
     // If mode is not test, ask for user confirmation
-    if (mode === 'broadcast') {
-        getUserConfirmation(confirmationResponse, (confirmed) => {
-            if (!confirmed) {
-                throw new Error(`User input confirmationResponse was ${confirmationResponse}. Aborting.`);
-            }
-        });
+    if (mode === 'broadcast' && !confirmationResponse) {
+        throw new Error(`User input confirmationResponse was ${confirmationResponse}. Aborting.`);
     }
 
     return new Promise((resolve, reject) => {
@@ -33,7 +24,7 @@ export async function deploy_contract(toChain: number, contract_name: string, mo
                 console.error(err);
                 reject(err);
             } else {
-                return [resolve(stdout), get_contract_address(contract_name)];
+                return get_contract_address(contract_name);
             }
         });
     });
