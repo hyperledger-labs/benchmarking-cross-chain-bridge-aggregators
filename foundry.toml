@@ -3,9 +3,11 @@ src = "src/foundry-contracts"
 out = "out"
 libs = ["lib", "node_modules"]
 remappings = [
-    "@benchmarking-cross-chain-bridges/=src/contracts",
+    "@benchmarking-cross-chain-bridges/=src/foundry-contracts",
     "@hashi/=lib/hashi/packages/evm/contracts",
     "solidity-rlp/=lib/Solidity-RLP",
+    "@chainlink/contracts-ccip/=node_modules/@chainlink/contracts-ccip",
+    "@chainlink/contracts/=node_modules/@chainlink/contracts",
 ]
 fs_permissions = [{ access = "read-write", path = "./" }]
 verbosity = 4
@@ -17,7 +19,4 @@ gnosis = "${RPC_GNOSIS}"
 
 [etherscan]
 goerli = { key = "${ETHERSCAN_API_KEY}" }
-gnosis = { key = "${GNOSISCAN_API_KEY}" }
-
-[gnosisscan]
 gnosis = { key = "${GNOSISCAN_API_KEY}" }
