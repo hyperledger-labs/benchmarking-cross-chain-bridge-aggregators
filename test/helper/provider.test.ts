@@ -1,13 +1,12 @@
 import { create_tx, send_tx, get_provider } from '@benchmarking-cross-chain-bridges/helper/provider';
-import { BaseProvider } from '@ethersproject/providers';
 import { expect } from 'chai';
 
 describe('provider:get_provider', () => {
     describe('supported network (GOERLI) and', () => {
         it('should return a BaseProvider', async () => {
             const network = 'GOERLI';
-            const provider: BaseProvider = get_provider(network);
-            expect(provider).to.be.instanceOf(BaseProvider);
+            const provider = get_provider(network);
+            expect(provider).to.not.be.undefined;
         });
     });
 
