@@ -27,7 +27,7 @@ describe('Sushiswap:Router', () => {
             const to_token = 'USDC';
             const amount = (1 * 10 ** 18).toString();
             build_route(from_chain_id, to_chain_id, from_token, to_token, amount).then((route) => {
-                fs.writeFileSync('test/token-aggregators/sushiswap/route.json', JSON.stringify(route));
+                fs.writeFileSync('run-data/token-routes/sushiswap-route.json', JSON.stringify(route));
                 expect(route.length).to.be.greaterThan(0);
                 done();
             }).catch((error) => {

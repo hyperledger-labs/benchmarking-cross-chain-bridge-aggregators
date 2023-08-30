@@ -35,7 +35,7 @@ describe('LiFi:Router', () => {
             const fromAmount = (1 * 10 ** 18).toString();
 
             build_route(fromChain, toChain, fromToken, toToken, fromAmount).then((route) => {
-                fs.writeFileSync('test/token-aggregators/lifi/route.json', JSON.stringify(route));
+                fs.writeFileSync('run-data/token-routes/lifi-route.json', JSON.stringify(route));
 
                 expect(route).to.not.equal(null);
                 done();

@@ -50,7 +50,7 @@ The different testing modules of the project are implemented as scripts that can
  yarn run test:token-aggregators # generate the route.json files that contain the different trading routes and quotas
  ```
  ```shell
- yarn run test:message-aggregators # deploys contracts and issues transactions for interacting with the counter contracts 
+ yarn run test:message-aggregators # deploys contracts and issues transactions for interacting with the counter contracts
  ```
 
 
@@ -67,18 +67,29 @@ yarn clear:dry-run # clears foundry run logs
 ```
 
 ## Troubleshooting
-This project was tested in a MacOS M1 v13.4 (22F66), node version v18.17.1.
+This project was successfully tested on the following with node version v18.17.1
 
-Make sure you have permission to run the ``.sh``scripts. You may run ``chmod -R 777 .``. 
+| System         | Node     |
+| -------------- | -------- |
+| 6.4.12-arch1-1 | v18.17.1 |
+| MacOS M1 v13.4 | v18.17.1 |
 
-Sometimes running 
+Make sure you have permission to run the ``.sh`` scripts. You may run ``chmod -R 777 .`` .
+
+Sometimes running
+
+Known issues and fixes:
+
+1. something about fetch missing
+Solution: Use node v18.17.1 (there were some changes with the default packages included in node, version gte the one we used seems to work)
 
 ## Contributors
-https://github.com/RafaelAPB
-https://github.com/AndreAugusto11
-https://github.com/shankars99
 
-
+| Name                | Github                            |
+| ------------------- | --------------------------------- |
+| Shankar Subramanian | https://github.com/shankars99     |
+| Rafael Belchior     | https://github.com/RafaelAPB      |
+| André Augusto       | https://github.com/AndreAugusto11 |
 ## Acknowledgments 
 This project is sponsored by Hyperledger and Blockdaemon. 
 
