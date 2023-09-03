@@ -21,7 +21,7 @@ interface IMessageRecipient {
  */
 contract Hyperlane_Counter is IMessageRecipient {
     uint256 public number;
-    event Received(uint32 origin, address sender, bytes body);
+    event Received(address sender, bytes body);
 
     /**
      * @dev Handles the incoming message and increments the number by the value passed in.
@@ -36,7 +36,7 @@ contract Hyperlane_Counter is IMessageRecipient {
     ) external override {
         uint256 _addNumber = abi.decode(_body, (uint256));
         increment(_addNumber);
-        emit Received(_origin, bytes32ToAddress(_sender), _body);
+        emit Received(address(uint160(uint256(_sender))), _body);
     }
 
     /**
@@ -45,14 +45,5 @@ contract Hyperlane_Counter is IMessageRecipient {
      */
     function increment(uint256 _addNumber) internal {
         number = number + _addNumber;
-    }
-
-    /**
-     * @dev Converts a bytes32 value to an address.
-     * @param _buf The bytes32 value to convert.
-     * @return The address represented by the bytes32 value.
-     */
-    function bytes32ToAddress(bytes32 _buf) internal pure returns (address) {
-        return address(uint160(uint256(_buf)));
     }
 }
