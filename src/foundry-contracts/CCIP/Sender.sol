@@ -108,5 +108,29 @@ contract CCIP_Sender is OwnerIsCreator {
         return evm2AnyMessage;
     }
 
+    /**
+     * @dev Returns the fee required to send a cross-chain message to the specified destination chain.
+     * @param _destinationChainSelector The selector of the destination chain.
+     * @param _receiver The address of the receiver on the destination chain.
+     * @param _number The number of tokens to be sent.
+     * @return fees The fee required to send the cross-chain message.
+     */
+
+    function getFee(
+        uint64 _destinationChainSelector,
+        address _receiver,
+        uint256 _number
+    ) external view returns (uint256 fees) {
+        // Create an EVM2AnyMessage struct in memory with necessary information for sending a cross-chain message
+        Client.EVM2AnyMessage memory evm2AnyMessage = _buildCCIPMessage(
+            _receiver,
+            _number,
+            address(linkToken)
+        );
+
+        // Get the fee required to send the CCIP message
+        fees = router.getFee(_destinationChainSelector, evm2AnyMessage);
+    }
+
     receive() external payable {}
 }
