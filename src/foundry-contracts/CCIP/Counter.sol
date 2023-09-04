@@ -11,7 +11,7 @@ import {CCIPReceiver} from "@chainlink/contracts-ccip/src/v0.8/ccip/applications
  */
 
 /// @title - A simple contract for receiving string data across chains.
-contract CCIP_Receiver is CCIPReceiver {
+contract Counter is CCIPReceiver {
     uint256 public number; // Store the last received text.
     event Received(address sender, bytes body);
 

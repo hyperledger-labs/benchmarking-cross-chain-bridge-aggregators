@@ -14,7 +14,7 @@ import {Hashi_Counter} from "@benchmarking-cross-chain-bridges/Hashi/Counter.sol
 import {Yaho} from "@hashi/Yaho.sol";
 import {Message} from "@hashi/interfaces/IMessage.sol";
 
-contract DeployYahoScript is Script {
+contract CounterSourceTxScript is Script {
     HashiHelperScript hashiHelper;
     Yaho public yaho;
 
