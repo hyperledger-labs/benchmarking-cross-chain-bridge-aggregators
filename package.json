@@ -19,7 +19,7 @@
     "test:helper": "mocha 'test/helper/*.test.ts'",
     "test:token-aggregators": "mocha 'test/token-aggregators/**/*.test.ts'",
     "test:message-aggregators": "./test/message-aggregators/**/*.test.sh 80001 5",
-    "test:contracts": "forge test",
+    "test:foundry-contracts": "forge test --rpc-url $RPC_SEPOLIA",
     "test": "yarn run test:helper && yarn run test:token-aggregators && yarn run test:message-aggregators",
     "clear:dry-run": "rm -rf broadcast/*/*/dry-run"
   },

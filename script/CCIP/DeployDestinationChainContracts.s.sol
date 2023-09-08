@@ -3,10 +3,10 @@ pragma solidity ^0.8.13;
 
 import {Script} from "forge-std/Script.sol";
 import {console2} from "forge-std/console2.sol";
-import {Counter} from "@benchmarking-cross-chain-bridges/CCIP/Counter.sol";
+import {CCIP_Counter} from "@benchmarking-cross-chain-bridges/CCIP/Counter.sol";
 
 contract DeployCounterScript is Script {
-    Counter counter;
+    CCIP_Counter counter;
 
     address ROUTER_ADDRESS;
 
@@ -20,7 +20,7 @@ contract DeployCounterScript is Script {
 
     function run() public {
         vm.startBroadcast(deployerPrivateKey);
-        counter = new Counter(ROUTER_ADDRESS);
+        counter = new CCIP_Counter(ROUTER_ADDRESS);
         vm.stopBroadcast();
 
         console2.log("Counter deployed at address: %s", address(counter));
