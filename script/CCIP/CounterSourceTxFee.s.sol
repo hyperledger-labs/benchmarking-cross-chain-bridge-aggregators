@@ -7,6 +7,7 @@ import {console2} from "forge-std/console2.sol";
 import {LinkTokenInterface} from "@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol";
 
 import {CCIP_Sender} from "@benchmarking-cross-chain-bridges/CCIP/SourceContract.sol";
+import {HelperScript} from "../Helper/Helper.s.sol";
 
 contract SourceTxFeeLINKScript is Script {
     CCIP_Sender source_contract;
@@ -21,12 +22,15 @@ contract SourceTxFeeLINKScript is Script {
 
     uint256 deployerPrivateKey;
 
+    HelperScript helper;
+
     function setUp() public {
         deployerPrivateKey = vm.envUint("KEY_PRIVATE");
 
-        SOURCE_CONTRACT_ADDRESS = vm.envAddress("CCIP_SENDER_ADDRESS");
+        helper = new HelperScript("CCIP", true);
 
-        DESTINATION_CONTRACT_ADDRESS = vm.envAddress("CCIP_RECEIVER_ADDRESS");
+        SOURCE_CONTRACT_ADDRESS = helper.get_deployed_address("Sender");
+        DESTINATION_CONTRACT_ADDRESS = helper.get_deployed_address("Counter");
 
         DESTINATION_DOMAIN = uint64(vm.envUint("CCIP_DESTINATION_DOMAIN"));
 
@@ -56,6 +60,7 @@ contract SourceTxFeeLINKScript is Script {
 
 contract SourceTxFeeNativeScript is Script {
     CCIP_Sender source_contract;
+    HelperScript helper;
 
     uint64 DESTINATION_DOMAIN;
     address SOURCE_CONTRACT_ADDRESS;
@@ -67,10 +72,10 @@ contract SourceTxFeeNativeScript is Script {
 
     function setUp() public {
         deployerPrivateKey = vm.envUint("KEY_PRIVATE");
+        helper = new HelperScript("CCIP", true);
 
-        SOURCE_CONTRACT_ADDRESS = vm.envAddress("CCIP_SENDER_ADDRESS");
-
-        DESTINATION_CONTRACT_ADDRESS = vm.envAddress("CCIP_RECEIVER_ADDRESS");
+        SOURCE_CONTRACT_ADDRESS = helper.get_deployed_address("Sender");
+        DESTINATION_CONTRACT_ADDRESS = helper.get_deployed_address("Counter");
 
         DESTINATION_DOMAIN = uint64(vm.envUint("CCIP_DESTINATION_DOMAIN"));
 

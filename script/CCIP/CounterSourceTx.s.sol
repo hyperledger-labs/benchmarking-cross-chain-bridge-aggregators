@@ -7,10 +7,13 @@ import {console2} from "forge-std/console2.sol";
 import {LinkTokenInterface} from "@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol";
 
 import {CCIP_Sender} from "@benchmarking-cross-chain-bridges/CCIP/SourceContract.sol";
+import {HelperScript} from "../Helper/Helper.s.sol";
 
 contract CounterSourceTxPayLINKScript is Script {
     CCIP_Sender source_contract;
     LinkTokenInterface linkToken;
+
+    HelperScript helper;
 
     uint64 DESTINATION_DOMAIN;
     address SOURCE_CONTRACT_ADDRESS;
@@ -23,10 +26,11 @@ contract CounterSourceTxPayLINKScript is Script {
 
     function setUp() public {
         deployerPrivateKey = vm.envUint("KEY_PRIVATE");
+        helper = new HelperScript("CCIP", true);
 
-        SOURCE_CONTRACT_ADDRESS = vm.envAddress("CCIP_SENDER_ADDRESS");
+        SOURCE_CONTRACT_ADDRESS = helper.get_deployed_address("Sender");
 
-        DESTINATION_CONTRACT_ADDRESS = vm.envAddress("CCIP_RECEIVER_ADDRESS");
+        DESTINATION_CONTRACT_ADDRESS = helper.get_deployed_address("Counter");
 
         DESTINATION_DOMAIN = uint64(vm.envUint("CCIP_DESTINATION_DOMAIN"));
 
