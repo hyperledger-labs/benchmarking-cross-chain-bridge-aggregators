@@ -6,11 +6,11 @@ const dispatcher_path = `${hashi_root}/dispatcher.sh`;
 const deployed_address_path = `${hashi_root}/deployed_addresses.json`;
 
 const contract_map: { [key: string]: string } = {
-    "Yaho": "DeploySourceChainContracts.s.sol:DeployYahoScript",
-    "AMBRelay": "DeploySourceChainContracts.s.sol:DeployAMBRelayScript",
-    "Yaru": "DeployDestinationChainContracts.s.sol:DeployYaruScript",
-    "AMBAdapter": "DeployDestinationChainContracts.s.sol:DeployAMBAdapterScript",
-    "Counter": "DeployDestinationChainContracts.s.sol:DeployCounterScript",
+    "Yaho": "Hashi_DeploySourceChainContracts.s.sol:DeployYahoScript",
+    "AMBRelay": "Hashi_DeploySourceChainContracts.s.sol:DeployAMBRelayScript",
+    "Yaru": "Hashi_DeployDestinationChainContracts.s.sol:DeployYaruScript",
+    "AMBAdapter": "Hashi_DeployDestinationChainContracts.s.sol:DeployAMBAdapterScript",
+    "Counter": "Hashi_DeployDestinationChainContracts.s.sol:DeployCounterScript",
 };
 
 export function get_contract(contract_name: string): string[] {

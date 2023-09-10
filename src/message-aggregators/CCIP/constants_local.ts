@@ -2,12 +2,12 @@ import { CHAIN_ID_MAP } from "../../helper/token-constants_global";
 import { _get_contract_address, _get_deployed_contract_address, _get_contract_file_name, validate_rpc_url } from "../../helper/inp_validator";
 
 const contract_script_map: { [key: string]: string } = {
-    "Sender": "DeploySourceChainContracts.s.sol:DeploySenderScript",
-    "Counter": "DeployDestinationChainContracts.s.sol:DeployCounterScript",
-    "Send_SourceTxLink": "CounterSourceTx.s.sol:CounterSourceTxPayLINKScript",
-    "Send_SourceTxNative": "CounterSourceTx.s.sol:CounterSourceTxPayLINKScript",
-    "Get_FeeTxLink": "CounterSourceTxFee.s.sol:SourceTxFeeLINKScript",
-    "Get_FeeTxNative": "CounterSourceTxFee.s.sol:SourceTxFeeNativeScript",
+    "Sender": "CCIP_DeploySourceChainContracts.s.sol:DeploySenderScript",
+    "Counter": "CCIP_DeployDestinationChainContracts.s.sol:DeployCounterScript",
+    "Send_SourceTxLink": "CCIP_CounterSourceTx.s.sol:CounterSourceTxPayLINKScript",
+    "Send_SourceTxNative": "CCIP_CounterSourceTx.s.sol:CounterSourceTxPayLINKScript",
+    "Get_FeeTxLink": "CCIP_CounterSourceTxFee.s.sol:SourceTxFeeLINKScript",
+    "Get_FeeTxNative": "CCIP_CounterSourceTxFee.s.sol:SourceTxFeeNativeScript",
 };
 
 const domain_identifier_map: { [key: string]: string } = {

@@ -12,7 +12,7 @@ export HYPERLANE_DESTINATION_DOMAIN=$2
 
 echo "Testing Contracts"
 
-forge test --match-path="test/contracts/Hyperlane/*"
+forge test --match-path="test/foundry-contracts/Hyperlane/*"
 
 echo "Sending the source transaction"
 echo "Testing Scripts (dry-run)"

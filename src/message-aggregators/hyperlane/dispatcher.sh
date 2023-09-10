@@ -14,8 +14,8 @@ export HYPERLANE_DESTINATION_DOMAIN="$2"
 
 # Deploy the counter contract
 echo "Deploying the counter contract on network: $HYPERLANE_SOURCE_DOMAIN"
-forge script script/Hyperlane/DeployDestinationChainContracts.s.sol:DeployCounterScript --rpc-url $RPC_GOERLI --broadcast --verify
+forge script script/Hyperlane/Hyperlane_DeployDestinationChainContracts.s.sol:DeployCounterScript --rpc-url $RPC_GOERLI --broadcast --verify
 
 # Send the source transaction
 echo "Sending the source transaction on network: $HYPERLANE_DESTINATION_DOMAIN"
-forge script script/Hyperlane/CounterSourceTx.s.sol:CounterSourceTxScript --rpc-url $RPC_MUMBAI --broadcast
+forge script script/Hyperlane/Hyperlane_CounterSourceTx.s.sol:CounterSourceTxScript --rpc-url $RPC_MUMBAI --broadcast
