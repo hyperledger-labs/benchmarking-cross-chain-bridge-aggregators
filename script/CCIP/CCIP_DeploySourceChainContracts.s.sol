@@ -12,17 +12,17 @@ contract DeploySenderScript is Script {
     address ROUTER_ADDRESS;
     address LINK_ADDRESS;
 
-    bool isTest;
     uint256 deployerPrivateKey;
+    bool isTest;
     HelperScript helper;
 
     function setUp() public {
         deployerPrivateKey = vm.envUint("KEY_PRIVATE");
-        ROUTER_ADDRESS = vm.envAddress("CCIP_ROUTER_ADDRESS");
-        LINK_ADDRESS = vm.envAddress("CCIP_LINK_ADDRESS");
-
         isTest = vm.envBool("TEST");
         helper = new HelperScript("CCIP", isTest);
+
+        ROUTER_ADDRESS = vm.envAddress("CCIP_ROUTER_ADDRESS");
+        LINK_ADDRESS = vm.envAddress("CCIP_LINK_ADDRESS");
     }
 
     function run() public {

@@ -18,18 +18,13 @@ if [[ $op == "deploy" ]]; then
     export CCIP_ROUTER_ADDRESS=$5
     export CCIP_LINK_ADDRESS=$6
     verify="--verify"
-elif [[ $op == "send" || $op == "get" ]]; then
+elif [[ $op == "send" || $op == "call" ]]; then
     export CCIP_NUMBER=$5
 fi
 
-
-echo "Testing Contracts"
-
-forge test --match-path="test/foundry-contracts/CCIP/*" --rpc-url $rpc
-
 echo "Sending the source transaction"
 
-BASE_COMMAND="forge script script/CCIP/$contract_path --rpc-url $rpc"
+BASE_COMMAND="forge script script/CCIP/$contract_path --rpc-url $rpc -vv"
 
 # Check if --broadcast flag should be included
 if [ "$mode" == "broadcast" ]; then
@@ -40,6 +35,5 @@ else
     export TEST=true
 fi
 
-echo "Executing command: $FULL_COMMAND"
 # Execute the constructed command
 eval "$FULL_COMMAND"

@@ -20,12 +20,14 @@ contract CounterSourceTxPayLINKScript is Script {
 
     uint256 number;
 
-    HelperScript helper;
-    bool isTest;
     uint256 deployerPrivateKey;
+    bool isTest;
+    HelperScript helper;
 
     function setUp() public {
         deployerPrivateKey = vm.envUint("KEY_PRIVATE");
+        isTest = vm.envBool("TEST");
+        helper = new HelperScript("CCIP", isTest);
 
         DEPLOYED_SOURCE_CONTRACT_ADDRESS = helper.get_deployed_address(
             "Sender"
@@ -45,9 +47,6 @@ contract CounterSourceTxPayLINKScript is Script {
             payable(DEPLOYED_SOURCE_CONTRACT_ADDRESS)
         );
         linkToken = LinkTokenInterface(LINK_ADDRESS);
-
-        isTest = vm.envBool("TEST");
-        helper = new HelperScript("CCIP", isTest);
     }
 
     function run() public {
@@ -74,12 +73,14 @@ contract CounterSourceTxPayNativeScript is Script {
 
     uint256 number;
 
-    HelperScript helper;
-    bool isTest;
     uint256 deployerPrivateKey;
+    bool isTest;
+    HelperScript helper;
 
     function setUp() public {
         deployerPrivateKey = vm.envUint("KEY_PRIVATE");
+        isTest = vm.envBool("TEST");
+        helper = new HelperScript("CCIP", isTest);
 
         DEPLOYED_SOURCE_CONTRACT_ADDRESS = vm.envAddress("CCIP_SENDER_ADDRESS");
 
@@ -94,9 +95,6 @@ contract CounterSourceTxPayNativeScript is Script {
         source_contract = CCIP_Sender(
             payable(DEPLOYED_SOURCE_CONTRACT_ADDRESS)
         );
-
-        isTest = vm.envBool("TEST");
-        helper = new HelperScript("CCIP", isTest);
     }
 
     function run() public {

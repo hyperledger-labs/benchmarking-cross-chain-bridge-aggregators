@@ -8,6 +8,7 @@
   },
   "scripts": {
     "run:hyperlane": "./src/message-aggregators/hyperlane/counter.sh 80001 5",
+    "test:ccip": "mocha 'test/message-aggregators/CCIP/*.test.ts'",
     "test:hashi": "mocha 'test/message-aggregators/hashi/*.test.ts'",
     "test:hyperlane": "./test/message-aggregators/hyperlane/counter.test.sh 80001 5",
     "test:cowswap": "mocha 'test/token-aggregators/cowswap/*.test.ts'",
@@ -19,8 +20,8 @@
     "test:helper": "mocha 'test/helper/*.test.ts'",
     "test:token-aggregators": "mocha 'test/token-aggregators/**/*.test.ts'",
     "test:message-aggregators": "./test/message-aggregators/**/*.test.sh 80001 5",
-    "test:foundry-contracts": "forge test --rpc-url $RPC_SEPOLIA",
-    "test": "yarn run test:helper && yarn run test:token-aggregators && yarn run test:message-aggregators",
+    "test:foundry-contracts": "RPC_SEPOLIA=ENTER_YOUR_SEPOLIA_RPC_IN_package.json && forge test --rpc-url $RPC_SEPOLIA",
+    "test": "yarn test:helper && yarn test:token-aggregators && yarn test:message-aggregators",
     "clear:dry-run": "rm -rf broadcast/*/*/dry-run"
   },
   "repository": {
@@ -38,7 +39,7 @@
     "@chainlink/contracts-ccip": "^0.7.6",
     "@lifi/sdk": "2.2.2",
     "@sushiswap/sdk": "5.0.0-canary.116",
-    "@types/node": "20.4.8",
+    "@types/node": "^20.6.0",
     "@uniswap/sdk-core": "4.0.6",
     "@uniswap/smart-order-router": "3.15.0",
     "cross-fetch": "4.0.0",
@@ -52,6 +53,6 @@
     "@types/mocha": "10.0.1",
     "chai": "4.3.7",
     "mocha": "10.2.0",
-    "ts-node": "10.9.1"
+    "ts-node": "^10.9.1"
   }
 }

@@ -1,13 +1,23 @@
 import { CHAIN_ID_MAP } from "../../helper/token-constants_global";
-import { _get_contract_address, _get_deployed_contract_address, _get_contract_file_name, validate_rpc_url } from "../../helper/inp_validator";
+import { _get_contract_address, _get_deployed_contract_address, _get_contract_file_name, _get_tx_hash } from "../../helper/transaction_parser";
+import { validate_rpc_url } from "../../helper/inp_validator";
+
+export enum CCIP_Contract_Names {
+    "Sender" = "Sender",
+    "Counter" = "Counter",
+    "Send_SourceTxLink" = "Send_SourceTxLink",
+    "Send_SourceTxNative" = "Send_SourceTxNative",
+    "Call_FeeTxLink" = "Call_FeeTxLink",
+    "Call_FeeTxNative" = "Call_FeeTxNative"
+}
 
 const contract_script_map: { [key: string]: string } = {
     "Sender": "CCIP_DeploySourceChainContracts.s.sol:DeploySenderScript",
     "Counter": "CCIP_DeployDestinationChainContracts.s.sol:DeployCounterScript",
     "Send_SourceTxLink": "CCIP_CounterSourceTx.s.sol:CounterSourceTxPayLINKScript",
     "Send_SourceTxNative": "CCIP_CounterSourceTx.s.sol:CounterSourceTxPayLINKScript",
-    "Get_FeeTxLink": "CCIP_CounterSourceTxFee.s.sol:SourceTxFeeLINKScript",
-    "Get_FeeTxNative": "CCIP_CounterSourceTxFee.s.sol:SourceTxFeeNativeScript",
+    "Call_FeeTxLink": "CCIP_CounterSourceTxFee.s.sol:SourceTxFeeLINKScript",
+    "Call_FeeTxNative": "CCIP_CounterSourceTxFee.s.sol:SourceTxFeeNativeScript",
 };
 
 const domain_identifier_map: { [key: string]: string } = {
@@ -42,4 +52,8 @@ export function get_deployed_contract_address(contract_name: string): string {
 
 export function get_rpc_url(toChain: number): string {
     return validate_rpc_url(CHAIN_ID_MAP[toChain]);
+}
+
+export function get_tx_hash(chain_id: number, contract_name: string, mode_path: string): string {
+    return _get_tx_hash(chain_id, contract_name, mode_path)
 }

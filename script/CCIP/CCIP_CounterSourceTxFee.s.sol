@@ -20,15 +20,13 @@ contract SourceTxFeeLINKScript is Script {
 
     uint256 number;
 
-    HelperScript helper;
-    bool isTest;
     uint256 deployerPrivateKey;
+    bool isTest;
+    HelperScript helper;
 
     function setUp() public {
         deployerPrivateKey = vm.envUint("KEY_PRIVATE");
-
         isTest = vm.envBool("TEST");
-
         helper = new HelperScript("CCIP", isTest);
 
         DEPLOYED_SOURCE_CONTRACT_ADDRESS = helper.get_deployed_address(
@@ -75,8 +73,8 @@ contract SourceTxFeeNativeScript is Script {
     uint256 number;
     uint64 DESTINATION_DOMAIN;
 
-    bool isTest;
     uint256 deployerPrivateKey;
+    bool isTest;
     HelperScript helper;
 
     function setUp() public {
@@ -84,14 +82,20 @@ contract SourceTxFeeNativeScript is Script {
         isTest = vm.envBool("TEST");
         helper = new HelperScript("CCIP", isTest);
 
-        DEPLOYED_SOURCE_CONTRACT_ADDRESS = helper.get_deployed_address("Sender");
-        DEPLOYED_DESTINATION_CONTRACT_ADDRESS = helper.get_deployed_address("Counter");
+        DEPLOYED_SOURCE_CONTRACT_ADDRESS = helper.get_deployed_address(
+            "Sender"
+        );
+        DEPLOYED_DESTINATION_CONTRACT_ADDRESS = helper.get_deployed_address(
+            "Counter"
+        );
 
         DESTINATION_DOMAIN = uint64(vm.envUint("CCIP_DESTINATION_DOMAIN"));
 
         number = vm.envUint("CCIP_NUMBER");
 
-        source_contract = CCIP_Sender(payable(DEPLOYED_SOURCE_CONTRACT_ADDRESS));
+        source_contract = CCIP_Sender(
+            payable(DEPLOYED_SOURCE_CONTRACT_ADDRESS)
+        );
     }
 
     function run() public {
