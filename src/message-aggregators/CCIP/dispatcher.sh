@@ -25,7 +25,7 @@ fi
 
 echo "Testing Contracts"
 
-forge test --match-path="test/contracts/CCIP/*"
+forge test --match-path="test/foundry-contracts/CCIP/*" --rpc-url $rpc
 
 echo "Sending the source transaction"
 
@@ -34,8 +34,10 @@ BASE_COMMAND="forge script script/CCIP/$contract_path --rpc-url $rpc"
 # Check if --broadcast flag should be included
 if [ "$mode" == "broadcast" ]; then
     FULL_COMMAND="$BASE_COMMAND --broadcast ${verify}"
+    export TEST=false
 else
     FULL_COMMAND="$BASE_COMMAND"
+    export TEST=true
 fi
 
 echo "Executing command: $FULL_COMMAND"

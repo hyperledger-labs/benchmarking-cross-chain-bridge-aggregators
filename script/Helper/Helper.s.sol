@@ -17,6 +17,7 @@ contract HelperScript is Script {
     string contract_address_json;
     string path_contract_address;
 
+    bool isTest;
     string testModifier;
 
     constructor(string memory _protocolName, bool _isTest) {
@@ -30,9 +31,12 @@ contract HelperScript is Script {
 
         if (_isTest) {
             testModifier = "/dry-run/";
+            console2.log("We are in test so we won't write to file.\n");
         } else {
             testModifier = "/";
         }
+
+        isTest = _isTest;
     }
 
     /**
@@ -78,6 +82,15 @@ contract HelperScript is Script {
         string calldata _contract_name,
         address _address
     ) public {
+        if (isTest) {
+            console2.log(
+                "Deployed address of %s is %s",
+                _contract_name,
+                _address
+            );
+            return;
+        }
+
         vm.writeJson(
             vm.toString(_address),
             path_contract_address,

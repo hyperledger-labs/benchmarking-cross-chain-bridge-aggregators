@@ -4,6 +4,7 @@ pragma solidity ^0.8.13;
 import {Script} from "forge-std/Script.sol";
 import {console2} from "forge-std/console2.sol";
 import {CCIP_Sender} from "@benchmarking-cross-chain-bridges/CCIP/SourceContract.sol";
+import {HelperScript} from "../Helper/Helper.s.sol";
 
 contract DeploySenderScript is Script {
     CCIP_Sender sender;
@@ -11,12 +12,17 @@ contract DeploySenderScript is Script {
     address ROUTER_ADDRESS;
     address LINK_ADDRESS;
 
+    bool isTest;
     uint256 deployerPrivateKey;
+    HelperScript helper;
 
     function setUp() public {
         deployerPrivateKey = vm.envUint("KEY_PRIVATE");
         ROUTER_ADDRESS = vm.envAddress("CCIP_ROUTER_ADDRESS");
         LINK_ADDRESS = vm.envAddress("CCIP_LINK_ADDRESS");
+
+        isTest = vm.envBool("TEST");
+        helper = new HelperScript("CCIP", isTest);
     }
 
     function run() public {
@@ -24,9 +30,6 @@ contract DeploySenderScript is Script {
         sender = new CCIP_Sender(ROUTER_ADDRESS, LINK_ADDRESS);
         vm.stopBroadcast();
 
-        console2.log(
-            "Counter interaction contract deployed at address: %s",
-            address(sender)
-        );
+        helper.write_deployed_address("Sender", address(sender));
     }
 }

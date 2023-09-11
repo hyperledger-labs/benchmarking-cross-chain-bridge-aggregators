@@ -13,24 +13,27 @@ contract CounterSourceTxPayLINKScript is Script {
     CCIP_Sender source_contract;
     LinkTokenInterface linkToken;
 
-    HelperScript helper;
-
     uint64 DESTINATION_DOMAIN;
-    address SOURCE_CONTRACT_ADDRESS;
-    address DESTINATION_CONTRACT_ADDRESS;
+    address DEPLOYED_SOURCE_CONTRACT_ADDRESS;
+    address DEPLOYED_DESTINATION_CONTRACT_ADDRESS;
     address LINK_ADDRESS;
 
     uint256 number;
 
+    HelperScript helper;
+    bool isTest;
     uint256 deployerPrivateKey;
 
     function setUp() public {
         deployerPrivateKey = vm.envUint("KEY_PRIVATE");
-        helper = new HelperScript("CCIP", true);
 
-        SOURCE_CONTRACT_ADDRESS = helper.get_deployed_address("Sender");
+        DEPLOYED_SOURCE_CONTRACT_ADDRESS = helper.get_deployed_address(
+            "Sender"
+        );
 
-        DESTINATION_CONTRACT_ADDRESS = helper.get_deployed_address("Counter");
+        DEPLOYED_DESTINATION_CONTRACT_ADDRESS = helper.get_deployed_address(
+            "Counter"
+        );
 
         DESTINATION_DOMAIN = uint64(vm.envUint("CCIP_DESTINATION_DOMAIN"));
 
@@ -38,18 +41,23 @@ contract CounterSourceTxPayLINKScript is Script {
 
         number = vm.envUint("CCIP_NUMBER");
 
-        source_contract = CCIP_Sender(payable(SOURCE_CONTRACT_ADDRESS));
+        source_contract = CCIP_Sender(
+            payable(DEPLOYED_SOURCE_CONTRACT_ADDRESS)
+        );
         linkToken = LinkTokenInterface(LINK_ADDRESS);
+
+        isTest = vm.envBool("TEST");
+        helper = new HelperScript("CCIP", isTest);
     }
 
     function run() public {
         vm.startBroadcast(deployerPrivateKey);
 
-        linkToken.transfer(SOURCE_CONTRACT_ADDRESS, 1e17);
+        linkToken.transfer(DEPLOYED_SOURCE_CONTRACT_ADDRESS, 1e17);
 
         source_contract.sendMessagePayLINK(
             DESTINATION_DOMAIN,
-            DESTINATION_CONTRACT_ADDRESS,
+            DEPLOYED_DESTINATION_CONTRACT_ADDRESS,
             number
         );
 
@@ -61,35 +69,44 @@ contract CounterSourceTxPayNativeScript is Script {
     CCIP_Sender source_contract;
 
     uint64 DESTINATION_DOMAIN;
-    address SOURCE_CONTRACT_ADDRESS;
-    address DESTINATION_CONTRACT_ADDRESS;
+    address DEPLOYED_SOURCE_CONTRACT_ADDRESS;
+    address DEPLOYED_DESTINATION_CONTRACT_ADDRESS;
 
     uint256 number;
 
+    HelperScript helper;
+    bool isTest;
     uint256 deployerPrivateKey;
 
     function setUp() public {
         deployerPrivateKey = vm.envUint("KEY_PRIVATE");
 
-        SOURCE_CONTRACT_ADDRESS = vm.envAddress("CCIP_SENDER_ADDRESS");
+        DEPLOYED_SOURCE_CONTRACT_ADDRESS = vm.envAddress("CCIP_SENDER_ADDRESS");
 
-        DESTINATION_CONTRACT_ADDRESS = vm.envAddress("CCIP_RECEIVER_ADDRESS");
+        DEPLOYED_DESTINATION_CONTRACT_ADDRESS = vm.envAddress(
+            "CCIP_RECEIVER_ADDRESS"
+        );
 
         DESTINATION_DOMAIN = uint64(vm.envUint("CCIP_DESTINATION_DOMAIN"));
 
         number = vm.envUint("CCIP_NUMBER");
 
-        source_contract = CCIP_Sender(payable(SOURCE_CONTRACT_ADDRESS));
+        source_contract = CCIP_Sender(
+            payable(DEPLOYED_SOURCE_CONTRACT_ADDRESS)
+        );
+
+        isTest = vm.envBool("TEST");
+        helper = new HelperScript("CCIP", isTest);
     }
 
     function run() public {
         vm.startBroadcast(deployerPrivateKey);
 
-        payable(SOURCE_CONTRACT_ADDRESS).transfer(1e16);
+        payable(DEPLOYED_SOURCE_CONTRACT_ADDRESS).transfer(1e16);
 
         source_contract.sendMessagePayNative(
             DESTINATION_DOMAIN,
-            DESTINATION_CONTRACT_ADDRESS,
+            DEPLOYED_DESTINATION_CONTRACT_ADDRESS,
             number
         );
 
