@@ -5,14 +5,14 @@ import { SUPPORTED_CHAINS, SUPPORTED_TOKENS, CHAIN_ID_MAP, CHAIN, CHAIN_MAP, KEY
 
 let { KEY_PUBLIC, KEY_PRIVATE, SOCKET_API_KEY } = process.env;
 
-export function validate_chain(protocol_name: string, from_chain_id: number, to_chain_id: number): CHAIN[] {
-    if (!SUPPORTED_CHAINS[protocol_name].includes(CHAIN_ID_MAP[from_chain_id])) {
-        throw new Error(`Invalid chain_id: ${from_chain_id} for protocol: ${protocol_name}`);
+export function validate_chain(protocol_name: string, source_chain_id: number, to_chain_id: number = source_chain_id): CHAIN[] {
+    if (!SUPPORTED_CHAINS[protocol_name].includes(CHAIN_ID_MAP[source_chain_id])) {
+        throw new Error(`Invalid chain_id: ${source_chain_id} for protocol: ${protocol_name}`);
     } else if (!SUPPORTED_CHAINS[protocol_name].includes(CHAIN_ID_MAP[to_chain_id])) {
         throw new Error(`Invalid chain_id: ${to_chain_id} for protocol: ${protocol_name}`);
     }
 
-    return [CHAIN_MAP[from_chain_id], CHAIN_MAP[from_chain_id]];
+    return [CHAIN_MAP[source_chain_id], CHAIN_MAP[to_chain_id]];
 }
 
 export function validate_tokens(from_token: string, to_token: string): boolean {

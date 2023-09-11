@@ -21,8 +21,8 @@ const contract_script_map: { [key: string]: string } = {
 };
 
 const domain_identifier_map: { [key: string]: string } = {
-    "Sepolia": "16015286601757825753",
-    "Mumbai": "12532609583862916517"
+    "SEPOLIA": "16015286601757825753",
+    "MUMBAI": "12532609583862916517"
 };
 
 export function get_contract_address(chain_id: number, contract_name: string): string {

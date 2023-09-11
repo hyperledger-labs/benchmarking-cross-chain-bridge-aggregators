@@ -9,11 +9,13 @@ const confirmationResponse = false;
 
 describe('Send a Cross-Chain Tx from Sepolia to Mumbai', () => {
     it('should simulate a transaction paid with LINK', (done) => {
-        const toChain = CHAIN_MAP["SEPOLIA"].chainId;
+        const sourceChain = CHAIN_MAP["SEPOLIA"].chainId;
+        const destChain = CHAIN_MAP["MUMBAI"].chainId;
         const contractName = CCIP_Contract_Names.Send_SourceTxLink;
         const operation = 'send';
+        const val = 20;
 
-        script_interface(toChain, contractName, operation, mode, confirmationResponse).then((tx_hash) => {
+        script_interface(sourceChain, destChain, contractName, operation, val, mode, confirmationResponse).then((tx_hash) => {
             expect(tx_hash).to.be.a('string');
             expect(tx_hash).to.equal("we're in test so tx successful");
             done();
@@ -24,11 +26,13 @@ describe('Send a Cross-Chain Tx from Sepolia to Mumbai', () => {
     });
 
     it('should simulate a transaction paid with native currency', (done) => {
-        const toChain = CHAIN_MAP["SEPOLIA"].chainId;
+        const sourceChain = CHAIN_MAP["SEPOLIA"].chainId;
+        const destChain = CHAIN_MAP["MUMBAI"].chainId;
         const contractName = CCIP_Contract_Names.Send_SourceTxNative;
         const operation = 'send';
+        const val = 20;
 
-        script_interface(toChain, contractName, operation, mode, confirmationResponse).then((tx_hash) => {
+        script_interface(sourceChain, destChain, contractName, operation, val, mode, confirmationResponse).then((tx_hash) => {
             expect(tx_hash).to.be.a('string');
             expect(tx_hash).to.equal("we're in test so tx successful");
             done();

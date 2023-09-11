@@ -9,11 +9,13 @@ const confirmationResponse = false;
 
 describe('Get fees for a Cross-Chain Tx from Sepolia to Mumbai', () => {
     it('should get onchain fees for a transaction paid with LINK', (done) => {
-        const toChain = CHAIN_MAP["SEPOLIA"].chainId;
+        const sourceChain = CHAIN_MAP["SEPOLIA"].chainId;
+        const destChain = CHAIN_MAP["MUMBAI"].chainId;
         const contractName = CCIP_Contract_Names.Call_FeeTxLink;
         const operation = 'call';
+        const val = 20;
 
-        script_interface(toChain, contractName, operation, mode, confirmationResponse).then((stdout) => {
+        script_interface(sourceChain, destChain, contractName, operation, val, mode, confirmationResponse).then((stdout) => {
             console.log(stdout);
             expect(stdout).to.be.a('string');
             done();
@@ -24,11 +26,13 @@ describe('Get fees for a Cross-Chain Tx from Sepolia to Mumbai', () => {
     });
 
     it('should get onchain fees for a transaction paid with Native currency', (done) => {
-        const toChain = CHAIN_MAP["SEPOLIA"].chainId;
+        const sourceChain = CHAIN_MAP["SEPOLIA"].chainId;
+        const destChain = CHAIN_MAP["MUMBAI"].chainId;
         const contractName = CCIP_Contract_Names.Call_FeeTxNative;
         const operation = 'call';
+        const val = 20;
 
-        script_interface(toChain, contractName, operation, mode, confirmationResponse).then((stdout) => {
+        script_interface(sourceChain, destChain, contractName, operation, val, mode, confirmationResponse).then((stdout) => {
             console.log(stdout);
             expect(stdout).to.be.a('string');
             done();

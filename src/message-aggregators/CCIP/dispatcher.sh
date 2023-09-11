@@ -12,14 +12,39 @@ mode=$1
 rpc=$2
 op=$3
 contract_path=$4
+shift 4
+
 verify=""
 
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --router_address)
+            export CCIP_ROUTER_ADDRESS="$2"
+            shift 2
+            ;;
+        --link_address)
+            export CCIP_LINK_ADDRESS="$2"
+            shift 2
+            ;;
+        --number)
+            export CCIP_NUMBER="$2"
+            shift 2
+            ;;
+        --domain_identifier)
+            export CCIP_DESTINATION_DOMAIN="$2"
+            shift 2
+            ;;
+        *)
+            echo "Unknown option: $1"
+            exit 1
+            ;;
+    esac
+done
+
 if [[ $op == "deploy" ]]; then
-    export CCIP_ROUTER_ADDRESS=$5
-    export CCIP_LINK_ADDRESS=$6
     verify="--verify"
 elif [[ $op == "send" || $op == "call" ]]; then
-    export CCIP_NUMBER=$5
+    verify=""
 fi
 
 echo "Sending the source transaction"
