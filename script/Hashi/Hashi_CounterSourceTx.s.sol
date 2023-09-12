@@ -9,42 +9,45 @@ pragma solidity ^0.8.13;
 import {Script} from "forge-std/Script.sol";
 import {console2} from "forge-std/console2.sol";
 
-import {HashiHelperScript} from "./HashiHelper.s.sol";
+import {HelperScript} from "../Helper/Helper.s.sol";
 import {Hashi_Counter} from "@benchmarking-cross-chain-bridges/Hashi/Counter.sol";
 import {Yaho} from "@hashi/Yaho.sol";
 import {Message} from "@hashi/interfaces/IMessage.sol";
 
 contract CounterSourceTxScript is Script {
-    HashiHelperScript hashiHelper;
     Yaho public yaho;
 
-    uint256 deployerPrivateKey;
-
     address counter;
-    address deployed_yaho;
-    address deployed_ambRelay;
-    address deployed_ambAdapter;
+    address DEPLOYED_YAHO;
+    address DEPLOYED_AMBRELAY;
+    address DEPLOYED_AMBADAPTER;
 
     uint256 DESTINATION_DOMAIN;
 
+    uint256 deployerPrivateKey;
+    bool isTest;
+    HelperScript helper;
+
     function setUp() public {
         deployerPrivateKey = vm.envUint("KEY_PRIVATE");
+        isTest = vm.envBool("TEST");
+        helper = new HelperScript("Hashi", isTest);
+
         DESTINATION_DOMAIN = vm.envUint("HASHI_DESTINATION_DOMAIN");
-        hashiHelper = new HashiHelperScript();
 
-        counter = hashiHelper.get_deployed_address("Counter");
+        counter = helper.get_deployed_address("Counter");
 
-        deployed_yaho = hashiHelper.get_deployed_address("Yaho");
-        deployed_ambRelay = hashiHelper.get_deployed_address("AMBRelay");
-        deployed_ambAdapter = hashiHelper.get_deployed_address("AMBAdapter");
+        DEPLOYED_YAHO = helper.get_deployed_address("Yaho");
+        DEPLOYED_AMBRELAY = helper.get_deployed_address("AMBRelay");
+        DEPLOYED_AMBADAPTER = helper.get_deployed_address("AMBAdapter");
 
-        yaho = Yaho(deployed_yaho);
+        yaho = Yaho(DEPLOYED_YAHO);
     }
 
     function run() public {
         vm.startBroadcast(deployerPrivateKey);
 
-        bytes memory tx_data = hashiHelper.create_tx(20);
+        bytes memory tx_data = create_tx(20);
 
         Message memory message = Message(counter, DESTINATION_DOMAIN, tx_data);
 
@@ -52,10 +55,10 @@ contract CounterSourceTxScript is Script {
         messages[0] = message;
 
         address[] memory adapters = new address[](1);
-        adapters[0] = deployed_ambAdapter;
+        adapters[0] = DEPLOYED_AMBADAPTER;
 
         address[] memory destinationAdapters = new address[](1);
-        destinationAdapters[0] = deployed_ambRelay;
+        destinationAdapters[0] = DEPLOYED_AMBRELAY;
 
         (bytes32[] memory messageIds, bytes32[] memory adapterReciepts) = yaho
             .dispatchMessagesToAdapters(
@@ -70,5 +73,11 @@ contract CounterSourceTxScript is Script {
         console2.logBytes32(adapterReciepts[0]);
 
         vm.stopBroadcast();
+    }
+
+    function create_tx(uint256 _number) public pure returns (bytes memory) {
+        return (
+            abi.encodeWithSignature("handle(bytes)", abi.encodePacked(_number))
+        );
     }
 }

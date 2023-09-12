@@ -12,23 +12,22 @@ import {console2} from "forge-std/console2.sol";
 import {Yaho} from "@hashi/Yaho.sol";
 import {IAMB} from "@hashi/adapters/AMB/IAMB.sol";
 import {AMBMessageRelay} from "@hashi/adapters/AMB/AMBMessageRelayer.sol";
-
-import {HashiHelperScript} from "./HashiHelper.s.sol";
+import {HelperScript} from "../Helper/Helper.s.sol";
 
 contract DeployYahoScript is Script {
-    HashiHelperScript hashiHelper;
-
-    uint256 deployerPrivateKey;
-
+    uint256 SOURCE_DOMAIN;
     Yaho public yaho;
 
-    uint256 SOURCE_DOMAIN;
+    uint256 deployerPrivateKey;
+    bool isTest;
+    HelperScript helper;
 
     function setUp() public {
         deployerPrivateKey = vm.envUint("KEY_PRIVATE");
-        SOURCE_DOMAIN = vm.envUint("HASHI_SOURCE_DOMAIN");
+        isTest = vm.envBool("TEST");
+        helper = new HelperScript("Hashi", isTest);
 
-        hashiHelper = new HashiHelperScript();
+        SOURCE_DOMAIN = vm.envUint("HASHI_SOURCE_DOMAIN");
     }
 
     function run() public {
@@ -39,14 +38,11 @@ contract DeployYahoScript is Script {
 
         vm.stopBroadcast();
 
-        hashiHelper.write_deployed_address("Yaho", address(yaho));
+        helper.write_deployed_address("Yaho", address(yaho));
     }
 }
 
 contract DeployAMBRelayScript is Script {
-    HashiHelperScript hashiHelper;
-    uint256 deployerPrivateKey;
-
     AMBMessageRelay public ambRelay;
 
     uint256 SOURCE_DOMAIN;
@@ -54,16 +50,21 @@ contract DeployAMBRelayScript is Script {
     address AMB;
     address DEPLOYED_YAHO;
 
+    uint256 deployerPrivateKey;
+    bool isTest;
+    HelperScript helper;
+
     function setUp() public {
-        hashiHelper = new HashiHelperScript();
         deployerPrivateKey = vm.envUint("KEY_PRIVATE");
+        isTest = vm.envBool("TEST");
+        helper = new HelperScript("Hashi", isTest);
 
         SOURCE_DOMAIN = vm.envUint("HASHI_SOURCE_DOMAIN");
         DESTINATION_DOMAIN = vm.envString("HASHI_DESTINATION_DOMAIN");
 
-        AMB = vm.envAddress("HASHI_AMB_GOERLI");
+        AMB = vm.envAddress("HASHI_AMB_RELAY_SOURCE");
 
-        DEPLOYED_YAHO = hashiHelper.get_deployed_address("Yaho");
+        DEPLOYED_YAHO = helper.get_deployed_address("Yaho");
     }
 
     function run() public {
@@ -74,6 +75,6 @@ contract DeployAMBRelayScript is Script {
 
         vm.stopBroadcast();
 
-        hashiHelper.write_deployed_address("AMBRelay", address(ambRelay));
+        helper.write_deployed_address("AMBRelay", address(ambRelay));
     }
 }
