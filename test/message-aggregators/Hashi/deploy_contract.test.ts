@@ -18,7 +18,7 @@ describe('Deploys Hashi contracts Yaho and Yaru', () => {
         const contractName = Hashi_Contract_Names.Yaho;
         const txChain = sourceChain;
 
-        script_interface(sourceChain, destChain, sourceChain, contractName, operation, value, mode, confirmationResponse).then((contract_address) => {
+        script_interface(sourceChain, destChain, txChain, contractName, operation, value, mode, confirmationResponse).then((contract_address) => {
             expect(contract_address).to.be.a('string');
             expect(contract_address).to.have.lengthOf(42);
             done();
@@ -59,7 +59,7 @@ describe('Deploys AMB Message Relay and AMB Adapter', () => {
         const contractName = Hashi_Contract_Names.AMBAdapter;
         const txChain = destChain;
 
-        script_interface(sourceChain, destChain, destChain, contractName, operation, value, mode, confirmationResponse).then((contract_address) => {
+        script_interface(sourceChain, destChain, txChain, contractName, operation, value, mode, confirmationResponse).then((contract_address) => {
             expect(contract_address).to.be.a('string');
             expect(contract_address).to.have.lengthOf(42);
             done();
@@ -74,7 +74,7 @@ describe('Deploys Counter to the destination chain', () => {
         const contractName = 'Counter';
         const txChain = destChain;
 
-        script_interface(sourceChain, destChain, destChain, contractName, operation, value, mode, confirmationResponse).then((contract_address) => {
+        script_interface(sourceChain, destChain, txChain, contractName, operation, value, mode, confirmationResponse).then((contract_address) => {
             expect(contract_address).to.be.a('string');
             expect(contract_address).to.have.lengthOf(42);
             done();

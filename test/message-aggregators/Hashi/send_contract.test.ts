@@ -18,9 +18,9 @@ describe.skip('Sends a cross-chain transaction to Counter', () => {
         const contractName = Hashi_Contract_Names.Send_SourceTx;
         const txChain = sourceChain;
 
-        script_interface(sourceChain, destChain, sourceChain, contractName, operation, value, mode, confirmationResponse).then((contract_address) => {
-            expect(contract_address).to.be.a('string');
-            expect(contract_address).to.have.lengthOf(42);
+        script_interface(sourceChain, destChain, txChain, contractName, operation, value, mode, confirmationResponse).then((tx_hash) => {
+            expect(tx_hash).to.be.a('string');
+            expect(tx_hash).to.equal("we're in test so tx successful");
             done();
         }).catch((error) => {
             done(error);

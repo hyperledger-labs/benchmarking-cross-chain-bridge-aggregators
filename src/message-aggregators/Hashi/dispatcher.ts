@@ -36,7 +36,6 @@ export async function script_interface(sourceChain: number, destChain: number, t
             } else {
                 if (operation === 'deploy') {
                     console.log(stdout);
-                    // console.log(get_deployed_contract_address(contractName));
                     resolve(get_deployed_contract_address(contractName));
                 } else if (operation === 'send') {
                     const tx_hash = get_tx_hash(sourceChain, contract_file_name, mode);
