@@ -37,6 +37,8 @@ export const GOERLI: CHAIN = {
     address_map: {
         "HASHI_YAHO": "0x2fcbfd5bef7c94b77cf920fcc5e76d908a52bccc",
         "HASHI_AMB_RELAY": "0xb01faaf162732752b24646c7475c445cceceb8a1",
+        "HYPERLANE_MAILBOX": "0xCC737a94FecaeC165AbCf12dED095BB13F037685",
+        "HYPERLANE_IGP": "0xCC737a94FecaeC165AbCf12dED095BB13F037685"
     },
 };
 
@@ -52,6 +54,8 @@ export const SEPOLIA: CHAIN = {
     },
     address_map: {
         "CCIP_ROUTER": "0xD0daae2231E9CB96b94C8512223533293C3693Bf",
+        "HYPERLANE_MAILBOX": "0xCC737a94FecaeC165AbCf12dED095BB13F037685",
+        "HYPERLANE_IGP": "0xCC737a94FecaeC165AbCf12dED095BB13F037685"
     },
 }
 
@@ -65,9 +69,7 @@ export const POLYGON: CHAIN = {
         "USDC": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
         "LINK": "0xb0897686c545045aFc77CF20eC7A532E3120E0F1",
     },
-    address_map: {
-        "CCIP_ROUTER": "0x3C3D92629A02a8D95D5CB9650fe49C3544f69B43",
-    },
+    address_map: {},
 };
 
 
@@ -83,6 +85,8 @@ export const MUMBAI: CHAIN = {
     },
     address_map: {
         "CCIP_ROUTER": "0x70499c328e1E2a3c41108bd3730F6670a44595D1",
+        "HYPERLANE_MAILBOX": "0xCC737a94FecaeC165AbCf12dED095BB13F037685",
+        "HYPERLANE_IGP": "0xCC737a94FecaeC165AbCf12dED095BB13F037685"
     },
 }
 
@@ -121,8 +125,9 @@ export const SUPPORTED_CHAINS: { [key: string]: string[] } = {
     "COW": ["MAINNET", "GOERLI", "POLYGON"],
     "SUSHI": ["MAINNET", "GOERLI", "POLYGON"],
     "XY": ["MAINNET", "POLYGON"],
+    "CCIP": ["SEPOLIA", "MUMBAI"],
     "HASHI": ["GOERLI", "GNOSIS"],
-    "CCIP": ["SEPOLIA", "POLYGON", "MUMBAI"],
+    "HYPERLANE": ["GOERLI", "SEPOLIA", "MUMBAI"],
 }
 
 export const CHAIN_ID_MAP: { [key: number]: string } = {
