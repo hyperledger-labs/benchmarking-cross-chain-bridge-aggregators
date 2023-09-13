@@ -35,6 +35,20 @@ test
         └── counter.test.sh
 ```
 
+## Setup
+You can run
+ ```shell
+ yarn setup # to install the node packages, foundry packages, and create directories used
+ ```
+
+ Or manually:
+
+ ```shell
+ yarn # to install the node packages
+ forge install # to install the foundry packages
+ mkdir -p run-data/token-routes
+ ```
+
 ## Running the project
 The different testing modules of the project are implemented as scripts that can be ran via yarn or npm.
 
@@ -52,8 +66,6 @@ The different testing modules of the project are implemented as scripts that can
  ```shell
  yarn run test:message-aggregators # deploys contracts and issues transactions for interacting with the counter contracts
  ```
-
-
 
 ## Run Transactions
 

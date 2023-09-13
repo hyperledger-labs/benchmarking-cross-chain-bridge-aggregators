@@ -20,8 +20,11 @@
     "test:token-aggregators": "mocha 'test/token-aggregators/**/*.test.ts'",
     "test:message-aggregators": "mocha 'test/message-aggregators/**/*.test.ts'",
     "test:foundry-contracts": "RPC_SEPOLIA=ENTER_YOUR_SEPOLIA_RPC_IN_package.json && forge test --rpc-url $RPC_SEPOLIA",
-    "test": "yarn test:helper && yarn test:token-aggregators && yarn test:message-aggregators",
-    "clear:dry-run": "rm -rf broadcast/*/*/dry-run"
+    "test:all": "mocha 'test/**/**/*.test.ts'",
+    "clear:dry-run": "rm -rf broadcast/*/*/dry-run",
+    "setup:yarn": "yarn",
+    "setup:contracts": "forge install",
+    "setup": "yarn setup:yarn && yarn setup:contracts && mkdir -p run-data/token-routes"
   },
   "repository": {
     "type": "git",
