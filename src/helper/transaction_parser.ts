@@ -62,11 +62,9 @@ export function _get_tx_hash(chain_id: number, contract_name: string, mode: stri
     let mode_path = '';
     if (mode === 'test') {
         mode_path = 'dry-run';
+        return "we're in test so tx successful";
     }
     const data = _get_tx_data(chain_id, contract_name, mode_path);
 
-    if (mode === 'test') {
-        return "we're in test so tx successful";
-    }
     return JSON.parse(data).transactions[0].hash;
 }
