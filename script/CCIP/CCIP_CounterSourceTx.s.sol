@@ -82,10 +82,12 @@ contract CounterSourceTxPayNativeScript is Script {
         isTest = vm.envBool("TEST");
         helper = new HelperScript("CCIP", isTest);
 
-        DEPLOYED_SOURCE_CONTRACT_ADDRESS = vm.envAddress("CCIP_SENDER_ADDRESS");
+        DEPLOYED_SOURCE_CONTRACT_ADDRESS = helper.get_deployed_address(
+            "Sender"
+        );
 
-        DEPLOYED_DESTINATION_CONTRACT_ADDRESS = vm.envAddress(
-            "CCIP_RECEIVER_ADDRESS"
+        DEPLOYED_DESTINATION_CONTRACT_ADDRESS = helper.get_deployed_address(
+            "Counter"
         );
 
         DESTINATION_DOMAIN = uint64(vm.envUint("CCIP_DESTINATION_DOMAIN"));
