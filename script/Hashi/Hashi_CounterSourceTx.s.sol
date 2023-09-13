@@ -21,7 +21,7 @@ contract CounterSourceTxScript is Script {
     address DEPLOYED_YAHO;
     address DEPLOYED_AMBRELAY;
     address DEPLOYED_AMBADAPTER;
-
+    uint256 number;
     uint256 DESTINATION_DOMAIN;
 
     uint256 deployerPrivateKey;
@@ -34,9 +34,9 @@ contract CounterSourceTxScript is Script {
         helper = new HelperScript("Hashi", isTest);
 
         DESTINATION_DOMAIN = vm.envUint("HASHI_DESTINATION_DOMAIN");
+        number = vm.envUint("HASHI_NUMBER");
 
         counter = helper.get_deployed_address("Counter");
-
         DEPLOYED_YAHO = helper.get_deployed_address("Yaho");
         DEPLOYED_AMBRELAY = helper.get_deployed_address("AMBRelay");
         DEPLOYED_AMBADAPTER = helper.get_deployed_address("AMBAdapter");
@@ -47,7 +47,7 @@ contract CounterSourceTxScript is Script {
     function run() public {
         vm.startBroadcast(deployerPrivateKey);
 
-        bytes memory tx_data = create_tx(20);
+        bytes memory tx_data = create_tx(number);
 
         Message memory message = Message(counter, DESTINATION_DOMAIN, tx_data);
 
