@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { CHAIN_ID_MAP, CHAIN_MAP } from './token-constants_global';
+import { CHAIN_ID_MAP, CHAIN_MAP } from './constants_global';
 
 export function _get_contract_address(chain_id: number, contract_name: string, isToken: boolean): string {
 

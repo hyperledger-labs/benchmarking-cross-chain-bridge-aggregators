@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-import { SUPPORTED_CHAINS, SUPPORTED_TOKENS, CHAIN_ID_MAP, CHAIN, CHAIN_MAP, KEY_PAIR } from './token-constants_global';
+import { SUPPORTED_CHAINS, SUPPORTED_TOKENS, CHAIN_ID_MAP, CHAIN, CHAIN_MAP, KEY_PAIR } from './constants_global';
 
 let { KEY_PUBLIC, KEY_PRIVATE, SOCKET_API_KEY } = process.env;
 

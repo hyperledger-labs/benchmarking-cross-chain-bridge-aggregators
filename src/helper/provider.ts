@@ -1,7 +1,7 @@
 import { ethers } from 'ethers';
 
 import { validate_rpc_url, validate_keys } from './inp_validator';
-import { CHAIN_ID_MAP } from './token-constants_global';
+import { CHAIN_ID_MAP } from './constants_global';
 
 export function get_provider(chain_name: string) {
     const rpc_url = validate_rpc_url(chain_name);

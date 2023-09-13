@@ -2,7 +2,7 @@
 
 import { Ether, Token } from '@uniswap/sdk-core'
 
-import { CHAIN_MAP } from '../../helper/token-constants_global';
+import { CHAIN_MAP } from '@benchmarking-cross-chain-bridges/helper/constants_global';
 // Addresses
 
 export const V3_SWAP_ROUTER_ADDRESS = '0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45'

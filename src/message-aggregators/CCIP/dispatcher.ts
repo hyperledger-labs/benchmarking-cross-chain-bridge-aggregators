@@ -1,8 +1,8 @@
 import { exec } from 'child_process';
 
-import { validate_chain, validate_keys } from '../../helper/inp_validator';
+import { validate_chain, validate_keys } from '@benchmarking-cross-chain-bridges/helper/inp_validator';
 import { get_deployed_contract_address, get_contract_address, get_token_address, get_rpc_url, get_contract_file_name, get_domain_identifier, get_tx_hash } from './constants_local';
-import { CHAIN_ID_MAP } from '@benchmarking-cross-chain-bridges/helper/token-constants_global';
+import { CHAIN_ID_MAP } from '@benchmarking-cross-chain-bridges/helper/constants_global';
 
 export async function script_interface(sourceChain: number, destChain: number, txChain: number, contractName: string, operation: string, val: number = 0, mode: string = 'test', confirmationResponse: boolean = false) {
     validate_chain('CCIP', sourceChain, destChain);
@@ -13,7 +13,6 @@ export async function script_interface(sourceChain: number, destChain: number, t
     const dispatcher_path = paths[0];
     const contract_name = paths[1];
     const contract_file_name = paths[1].split(':')[0];
-
 
     const router_address = get_contract_address(sourceChain, 'CCIP_ROUTER');
     const link_address = get_token_address(sourceChain, 'LINK');

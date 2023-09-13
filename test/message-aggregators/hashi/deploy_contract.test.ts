@@ -4,7 +4,7 @@ import { script_interface } from '@benchmarking-cross-chain-bridges/message-aggr
 
 import { Hashi_Contract_Names } from '@benchmarking-cross-chain-bridges/message-aggregators/Hashi/constants_local';
 
-import { CHAIN_MAP } from '@benchmarking-cross-chain-bridges/helper/token-constants_global';
+import { CHAIN_MAP } from '@benchmarking-cross-chain-bridges/helper/constants_global';
 
 const mode = 'test';
 const confirmationResponse = false;

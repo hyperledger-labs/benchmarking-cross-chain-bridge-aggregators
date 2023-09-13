@@ -1,7 +1,7 @@
 import { Order } from '@lifi/sdk';
 import { lifi } from './config';
 
-import { validate_chain, validate_tokens, validate_keys } from '../../helper/inp_validator';
+import { validate_chain, validate_tokens, validate_keys } from '@benchmarking-cross-chain-bridges/helper/inp_validator';
 import { TOKEN_MAP, get_lifi_url } from './constants_local';
 
 // Test without rate limiting at : https://apidocs.li.fi/reference/get_quote

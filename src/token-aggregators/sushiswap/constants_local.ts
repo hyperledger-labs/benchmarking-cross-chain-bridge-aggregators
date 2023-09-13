@@ -2,7 +2,7 @@
 
 import { Ether, Token } from '@sushiswap/sdk'
 
-import { CHAIN_MAP } from '../../helper/token-constants_global';
+import { CHAIN_MAP } from '@benchmarking-cross-chain-bridges/helper/constants_global';
 
 // Currencies and Tokens
 

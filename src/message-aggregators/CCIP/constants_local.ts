@@ -1,6 +1,6 @@
-import { CHAIN_ID_MAP } from "../../helper/token-constants_global";
-import { _get_contract_address, _get_deployed_contract_address, _get_contract_file_name, _get_tx_hash } from "../../helper/transaction_parser";
-import { validate_rpc_url } from "../../helper/inp_validator";
+import { CHAIN_ID_MAP } from "@benchmarking-cross-chain-bridges/helper/constants_global";
+import { _get_contract_address, _get_deployed_contract_address, _get_contract_file_name, _get_tx_hash } from "@benchmarking-cross-chain-bridges/helper/transaction_parser";
+import { validate_rpc_url } from "@benchmarking-cross-chain-bridges/helper/inp_validator";
 
 export enum CCIP_Contract_Names {
     "Sender" = "Sender",
@@ -15,7 +15,7 @@ const contract_script_map: { [key: string]: string } = {
     "Sender": "CCIP_DeploySourceChainContracts.s.sol:DeploySenderScript",
     "Counter": "CCIP_DeployDestinationChainContracts.s.sol:DeployCounterScript",
     "Send_SourceTxLink": "CCIP_CounterSourceTx.s.sol:CounterSourceTxPayLINKScript",
-    "Send_SourceTxNative": "CCIP_CounterSourceTx.s.sol:CounterSourceTxPayLINKScript",
+    "Send_SourceTxNative": "CCIP_CounterSourceTx.s.sol:CounterSourceTxPayNativeScript",
     "Call_FeeTxLink": "CCIP_CounterSourceTxFee.s.sol:SourceTxFeeLINKScript",
     "Call_FeeTxNative": "CCIP_CounterSourceTxFee.s.sol:SourceTxFeeNativeScript",
 };

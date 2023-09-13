@@ -6,9 +6,9 @@ import {
 
 import { Percent } from '@uniswap/sdk-core'
 
-import { get_provider } from '../../helper/provider';
-import { CHAIN_ID_MAP } from '../../helper/token-constants_global';
-import { validate_keys } from '../../helper/inp_validator';
+import { get_provider } from '@benchmarking-cross-chain-bridges/helper/provider';
+import { CHAIN_ID_MAP } from '@benchmarking-cross-chain-bridges/helper/constants_global';
+import { validate_keys } from '@benchmarking-cross-chain-bridges/helper/inp_validator';
 
 export function create_router(chainId: number): AlphaRouter {
     return new AlphaRouter({

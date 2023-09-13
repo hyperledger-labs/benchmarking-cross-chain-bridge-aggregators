@@ -1,6 +1,6 @@
-import { CHAIN_ID_MAP } from "../../helper/token-constants_global";
-import { _get_contract_address, _get_deployed_contract_address, _get_contract_file_name, _get_tx_hash } from "../../helper/transaction_parser";
-import { validate_rpc_url } from "../../helper/inp_validator";
+import { CHAIN_ID_MAP } from "@benchmarking-cross-chain-bridges/helper/constants_global";
+import { _get_contract_address, _get_deployed_contract_address, _get_contract_file_name, _get_tx_hash } from "@benchmarking-cross-chain-bridges/helper/transaction_parser";
+import { validate_rpc_url } from "@benchmarking-cross-chain-bridges/helper/inp_validator";
 
 export enum Hashi_Contract_Names {
     "Yaho" = "Yaho",

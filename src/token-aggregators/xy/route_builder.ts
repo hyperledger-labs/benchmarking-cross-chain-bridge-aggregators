@@ -1,7 +1,7 @@
 // https://aggregator-api.xy.finance/v1/docs#/Aggregator%20API/get_quote_quote_get
 
 import { TOKEN_MAP } from "./constants_local";
-import { validate_chain, validate_tokens, validate_keys } from '../../helper/inp_validator';
+import { validate_chain, validate_tokens, validate_keys } from '@benchmarking-cross-chain-bridges/helper/inp_validator';
 
 export async function build_route(from_chain_id: number, to_chain_id: number, from_token: string, to_token: string, amount: string) {
 
