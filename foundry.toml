@@ -15,8 +15,12 @@ verbosity = 4
 # See more config options https://github.com/foundry-rs/foundry/tree/master/crates/config
 [rpc_endpoints]
 goerli = "${RPC_GOERLI}"
+sepolia = "${RPC_SEPOLIA}"
+mumbai = "${RPC_MUMBAI}"
 gnosis = "${RPC_GNOSIS}"
 
 [etherscan]
 goerli = { key = "${ETHERSCAN_API_KEY}" }
-gnosis = { key = "${GNOSISCAN_API_KEY}" }
+sepolia = { key = "${ETHERSCAN_API_KEY}" }
+mumbai = { key = "${POLYSCAN_API_KEY}", url = "https://api-testnet.polygonscan.com/api", chain = "Mumbai" }
+gnosis = { key = "${GNOSISCAN_API_KEY}", url = "https://api.gnosisscan.io/api", chain = "Gnosis" }
