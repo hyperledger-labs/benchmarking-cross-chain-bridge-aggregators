@@ -13,7 +13,7 @@ const value = 0;
 const sourceChain = CHAIN_MAP.GOERLI.chainId;
 const destChain = CHAIN_MAP.MUMBAI.chainId;
 
-describe.skip('Deploys Contracts on Destination Chain', () => {
+describe('Deploys Contracts on Destination Chain', () => {
     it('should simulate deployment of Hyperlane_Counter on Mumbai', (done) => {
         const contractName = Hyperlane_Contract_Names.Counter;
         const txChain = destChain;
