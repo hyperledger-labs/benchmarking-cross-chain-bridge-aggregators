@@ -7,10 +7,9 @@
     "test": "test"
   },
   "scripts": {
-    "run:hyperlane": "./src/message-aggregators/hyperlane/counter.sh 80001 5",
     "test:ccip": "mocha 'test/message-aggregators/CCIP/*.test.ts'",
-    "test:hashi": "mocha 'test/message-aggregators/hashi/*.test.ts'",
-    "test:hyperlane": "./test/message-aggregators/hyperlane/counter.test.sh 80001 5",
+    "test:hashi": "mocha 'test/message-aggregators/Hashi/*.test.ts'",
+    "test:hyperlane": "mocha 'test/message-aggregators/Hyperlane/*.test.ts'",
     "test:cowswap": "mocha 'test/token-aggregators/cowswap/*.test.ts'",
     "test:lifi": "mocha 'test/token-aggregators/lifi/*.test.ts'",
     "test:socket": "mocha 'test/token-aggregators/socket/*.test.ts'",
@@ -19,7 +18,7 @@
     "test:xy": "mocha 'test/token-aggregators/xy/*.test.ts'",
     "test:helper": "mocha 'test/helper/*.test.ts'",
     "test:token-aggregators": "mocha 'test/token-aggregators/**/*.test.ts'",
-    "test:message-aggregators": "./test/message-aggregators/**/*.test.sh 80001 5",
+    "test:message-aggregators": "mocha 'test/message-aggregators/**/*.test.ts'",
     "test:foundry-contracts": "RPC_SEPOLIA=ENTER_YOUR_SEPOLIA_RPC_IN_package.json && forge test --rpc-url $RPC_SEPOLIA",
     "test": "yarn test:helper && yarn test:token-aggregators && yarn test:message-aggregators",
     "clear:dry-run": "rm -rf broadcast/*/*/dry-run"
