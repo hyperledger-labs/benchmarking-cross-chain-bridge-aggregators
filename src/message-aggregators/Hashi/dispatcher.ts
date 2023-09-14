@@ -6,8 +6,8 @@ import { CHAIN_ID_MAP } from '@benchmarking-cross-chain-bridges/helper/constants
 
 // txChain: number tells us which chain we're sending the transaction on
 export async function script_interface(sourceChain: number, destChain: number, txChain: number, contractName: string, operation: string, val: number = 0, mode: string = 'test', confirmationResponse: boolean = false) {
-    validate_chain('HASHI', sourceChain, destChain);
     const key_pair = validate_keys();
+    validate_chain('HASHI', sourceChain, destChain, txChain);
 
     const paths = get_contract_file_name(contractName);
     const rpc_url = get_rpc_url(txChain);
