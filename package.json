@@ -39,6 +39,7 @@
   "dependencies": {
     "@chainlink/contracts": "^0.6.1",
     "@chainlink/contracts-ccip": "^0.7.6",
+    "@gnosis.pm/gp-v2-contracts": "^1.1.2",
     "@lifi/sdk": "2.2.2",
     "@sushiswap/sdk": "5.0.0-canary.116",
     "@types/node": "^20.6.0",
