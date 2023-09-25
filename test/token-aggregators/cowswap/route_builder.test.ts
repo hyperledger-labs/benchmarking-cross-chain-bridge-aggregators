@@ -5,7 +5,7 @@ import { Order } from '@gnosis.pm/gp-v2-contracts';
 import { Quote, CoWReturn } from '@benchmarking-cross-chain-bridges/token-aggregators/cowswap/types';
 import { build_route } from '@benchmarking-cross-chain-bridges/token-aggregators/cowswap/route_builder';
 
-describe.skip('should generate quotes for WETH -> USDC', () => {
+describe('should generate quotes for WETH -> USDC', () => {
     const sourceChain = 5;
     const destChain = 5;
 

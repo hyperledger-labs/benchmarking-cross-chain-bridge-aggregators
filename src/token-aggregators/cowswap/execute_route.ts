@@ -54,16 +54,11 @@ export async function submit_order(chainId: number, orderRequest: OrderRequest, 
 
     const chain_name = CHAIN_ID_MAP[chainId];
 
-    try {
-        const tx = await approveAllow(
-            chain_name,
-            createOrder.sellToken,
-            '0xC92E8bdf79f0507f65a392b0ab4667716BFE0110',
-        );
-        console.log(tx.hash);
-    } catch (err) {
-        console.error(err);
-    }
+    await approveAllow(
+        chain_name,
+        createOrder.sellToken,
+        '0xC92E8bdf79f0507f65a392b0ab4667716BFE0110',
+    );
 
     const url = `https://api.cow.fi/${chain_name.toLowerCase()}/api/v1/orders`;
 
