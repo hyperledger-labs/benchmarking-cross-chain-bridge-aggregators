@@ -5,7 +5,7 @@ import { get_deployed_contract_address, get_contract_address, get_token_address,
 import { CHAIN_ID_MAP } from '@benchmarking-cross-chain-bridges/helper/constants_global';
 
 export async function script_interface(sourceChain: number, destChain: number, txChain: number, contractName: string, operation: string, val: number = 0, mode: string = 'test', confirmationResponse: boolean = false) {
-    validate_chain('CCIP', sourceChain, destChain);
+    validate_chain('CCIP', sourceChain, destChain, txChain);
     const key_pair = validate_keys();
 
     const paths = get_contract_file_name(contractName);

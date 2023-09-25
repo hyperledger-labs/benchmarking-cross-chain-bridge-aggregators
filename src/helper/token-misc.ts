@@ -1,17 +1,21 @@
-import { ethers } from "ethers";
-import { get_provider, create_tx, send_tx } from "./provider";
+import { ethers, Contract } from "ethers";
+import { get_signer } from "./provider";
 
-export async function approve_token_transfer(contract_abi: string, token_address: string, spender_address: string, amount: string, chain_id: number): Promise<ethers.providers.TransactionResponse> {
+import ERC20 from "@openzeppelin/contracts/build/contracts/ERC20.json";
 
-    const tokenContract = new ethers.Contract(token_address, contract_abi, get_provider('GOERLI'));
+export async function approveAllow(
+    chain_name: string,
+    token_address: string,
+    spender_address: string,
+    amount: string = ethers.constants.MaxUint256.toString()
+) {
+    const signer = get_signer(chain_name);
 
-    const transaction = await tokenContract.approve(spender_address, amount);
+    const erc20 = new Contract(token_address, ERC20.abi, signer);
+    const tx = await erc20
+        .connect(signer)
+        .approve(spender_address, amount);
+    await tx.wait();
 
-    const response = await send_tx(transaction, chain_id);
-
-    return response;
+    return tx;
 }
-
-
-
-

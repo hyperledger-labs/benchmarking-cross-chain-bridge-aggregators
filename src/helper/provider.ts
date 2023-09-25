@@ -11,6 +11,14 @@ export function get_provider(chain_name: string) {
     return rpc;
 }
 
+export function get_signer(chain_name: string) {
+    const KEY_PRIVATE = validate_keys().private;
+    const provider = get_provider(chain_name);
+    const wallet = new ethers.Wallet(KEY_PRIVATE, provider);
+
+    return wallet;
+}
+
 export async function create_tx(to: string, value: string, gas_limit: string, data: string, chain_id: number): Promise<string> {
 
     const KEY_PAIR = validate_keys();

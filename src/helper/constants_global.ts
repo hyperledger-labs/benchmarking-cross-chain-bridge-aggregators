@@ -122,7 +122,7 @@ export const SUPPORTED_CHAINS: { [key: string]: string[] } = {
     "LIFI": ["MAINNET", "GOERLI", "POLYGON"],
     "SOCKET": ["MAINNET", "POLYGON"],
     "UNISWAP": ["MAINNET", "GOERLI", "POLYGON"],
-    "COW": ["MAINNET", "GOERLI", "POLYGON"],
+    "COW": ["MAINNET", "GOERLI", "GNOSIS"],
     "SUSHI": ["MAINNET", "GOERLI", "POLYGON"],
     "XY": ["MAINNET", "POLYGON"],
     "CCIP": ["SEPOLIA", "MUMBAI"],
