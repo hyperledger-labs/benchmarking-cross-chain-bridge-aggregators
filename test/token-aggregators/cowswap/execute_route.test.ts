@@ -8,7 +8,7 @@ import { CoWReturn, OrderRequest } from '@benchmarking-cross-chain-bridges/token
 const sourceChain = 5;
 const destChain = 5;
 
-describe.skip('should sign orders for WETH -> USDC', () => {
+describe('should sign orders for WETH -> USDC', () => {
     it('should create a WETH SELL order on WETH to USDC on GOERLI', async () => {
         const amount = (1 * 10 ** 18).toString();
         const operation = 'sell';
@@ -37,7 +37,7 @@ describe.skip('should submit an order for WETH -> USDC', () => {
         const signature = (await sign_order(sourceChain, order)).signature;
         expect(signature.substring(0, 2)).to.equal('0x');
 
-        const res = await submit_order(sourceChain, orderRequest, order);
+        const res = await submit_order(sourceChain, sourceChain, fromToken, orderRequest, order);
         try {
             expect(res.substring(0, 2)).to.equal('0x');
         }
@@ -61,7 +61,7 @@ describe.skip('should submit an order for USDC -> WETH', () => {
         const signature = (await sign_order(sourceChain, order)).signature;
         expect(signature.substring(0, 2)).to.equal('0x');
 
-        const res = await submit_order(sourceChain, orderRequest, order);
+        const res = await submit_order(sourceChain, sourceChain, fromToken, orderRequest, order);
         try {
             expect(res.substring(0, 2)).to.equal('0x');
         }
