@@ -19,13 +19,13 @@ export function validate_chain(protocol_name: string, source_chain_id: number, t
     return [CHAIN_MAP[source_chain_id], CHAIN_MAP[to_chain_id]];
 }
 
-export function validate_tokens(from_token: string, to_token: string): boolean {
+export function validate_tokens(from_token: string, to_token: string, same_chain: boolean): boolean {
     if (!SUPPORTED_TOKENS.includes(from_token)) {
         throw new Error(`Invalid from_token: ${from_token}`);
     } else if (!SUPPORTED_TOKENS.includes(to_token)) {
         throw new Error(`Invalid to_token: ${to_token}`);
-    } else if (from_token === to_token) {
-        throw new Error(`from_token and to_token cannot be the same`);
+    } else if (from_token === to_token && same_chain) {
+        throw new Error(`from_token and to_token cannot be the same on same chain swap`);
     }
 
     return true;

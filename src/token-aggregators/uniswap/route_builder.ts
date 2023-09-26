@@ -20,7 +20,7 @@ import { create_router, create_swap_options } from './config';
  */
 export async function build_route(from_chain_id: number, to_chain_id: number, fromToken: string, toToken: string, amount: string): Promise<SwapRoute> {
 
-    validate_tokens(fromToken, toToken);
+    validate_tokens(fromToken, toToken, from_chain_id === to_chain_id);
     validate_chain('UNISWAP', from_chain_id, to_chain_id);
 
     if (from_chain_id !== to_chain_id) {
