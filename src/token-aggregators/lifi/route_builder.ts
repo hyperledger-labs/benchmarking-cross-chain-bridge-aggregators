@@ -7,7 +7,7 @@ import { TOKEN_MAP, get_lifi_url } from './constants_local';
 // Test without rate limiting at : https://apidocs.li.fi/reference/get_quote
 export async function build_route(fromChain: number, toChain: number, fromToken: string, toToken: string, fromAmount: string) {
     validate_chain('LIFI', fromChain, toChain);
-    validate_tokens(fromToken, toToken);
+    validate_tokens(fromToken, toToken, fromChain === toChain);
 
     const fromAddress = validate_keys().public;
     const lifi_url = get_lifi_url(fromChain);

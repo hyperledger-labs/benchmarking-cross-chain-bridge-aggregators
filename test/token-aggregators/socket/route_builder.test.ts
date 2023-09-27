@@ -14,7 +14,7 @@ describe('Socket:Router', () => {
             const unique_routes = true;
             const sort = 'gas';
 
-            build_route(from_chain_id, from_token_address, to_chain_id, to_token_address, amount, unique_routes, sort).then((route) => {
+            build_route(from_chain_id, to_chain_id, from_token_address, to_token_address, amount, unique_routes, sort).then((route) => {
                 expect(route.success).to.equal(true);
                 done();
             }
@@ -32,7 +32,7 @@ describe('Socket:Router', () => {
             const unique_routes = true;
             const sort = 'gas';
 
-            build_route(from_chain_id, from_token_address, to_chain_id, to_token_address, amount, unique_routes, sort).then((route) => {
+            build_route(from_chain_id, to_chain_id, from_token_address, to_token_address, amount, unique_routes, sort).then((route) => {
                 fs.writeFileSync('run-data/token-routes/socket-route.json', JSON.stringify(route));
                 expect(route.success).to.equal(true);
                 done();
@@ -51,7 +51,7 @@ describe('Socket:Router', () => {
             const unique_routes = true;
             const sort = 'gas';
 
-            build_route(from_chain_id, from_token_address, to_chain_id, to_token_address, amount, unique_routes, sort).then((route) => {
+            build_route(from_chain_id, to_chain_id, from_token_address, to_token_address, amount, unique_routes, sort).then((route) => {
                 expect(route.success).to.equal(true);
                 done();
             }
@@ -70,7 +70,7 @@ describe('Socket:Router', () => {
             const unique_routes = true;
             const sort = 'gas';
 
-            build_route(from_chain_id, from_token_address, to_chain_id, to_token_address, amount, unique_routes, sort).then((route) => {
+            build_route(from_chain_id, to_chain_id, from_token_address, to_token_address, amount, unique_routes, sort).then((route) => {
                 expect(route.success).to.equal(true);
                 done();
             }

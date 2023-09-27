@@ -6,7 +6,7 @@ import { TOKEN_MAP } from '../sushiswap/constants_local';
 export async function build_route(from_chain_id: number, to_chain_id: number, from_token: string, to_token: string, amount: string): Promise<Trade<Token, Token, TradeType.EXACT_INPUT>[]> {
 
     validate_chain("SUSHI", from_chain_id, to_chain_id);
-    validate_tokens(from_token, to_token);
+    validate_tokens(from_token, to_token, from_chain_id === to_chain_id);
 
     if (from_chain_id !== to_chain_id) {
         throw new Error("SUSHI: Only same chain swaps are supported");

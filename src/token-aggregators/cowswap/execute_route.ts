@@ -31,8 +31,8 @@ export async function sign_order(chainId: number, order: Order): Promise<SignOrd
     }
 }
 
-export async function submit_order(chainId: number, orderRequest: OrderRequest, order: Order) {
-    const sign_order_resp = await sign_order(chainId, order);
+export async function submit_order(fromChain: number, toChain: number, fromToken: string, orderRequest: OrderRequest, order: Order) {
+    const sign_order_resp = await sign_order(fromChain, order);
 
     const createOrder: CreateOrder = {
         sellToken: orderRequest.sellToken,
@@ -52,18 +52,13 @@ export async function submit_order(chainId: number, orderRequest: OrderRequest, 
         from: sign_order_resp.publicKey
     };
 
-    const chain_name = CHAIN_ID_MAP[chainId];
+    const chain_name = CHAIN_ID_MAP[fromChain];
 
-    try {
-        const tx = await approveAllow(
-            chain_name,
-            createOrder.sellToken,
-            '0xC92E8bdf79f0507f65a392b0ab4667716BFE0110',
-        );
-        console.log(tx.hash);
-    } catch (err) {
-        console.error(err);
-    }
+    await approveAllow(
+        chain_name,
+        fromToken,
+        '0xC92E8bdf79f0507f65a392b0ab4667716BFE0110',
+    );
 
     const url = `https://api.cow.fi/${chain_name.toLowerCase()}/api/v1/orders`;
 

@@ -9,7 +9,7 @@ export async function build_route(sourceChain: number, destChain: number, fromTo
     if (sourceChain !== destChain) throw new Error("Source and destination chains must be the same for COWswap");
 
     validate_chain("COW", sourceChain, destChain);
-    validate_tokens(fromToken, toToken);
+    validate_tokens(fromToken, toToken, sourceChain === destChain);
     const KEY_PUBLIC = validate_keys().public;
     const network = CHAIN_ID_MAP[sourceChain];
     const url = `https://api.cow.fi/${network.toLowerCase()}/api/v1/quote`;
