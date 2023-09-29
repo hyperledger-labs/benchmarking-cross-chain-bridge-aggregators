@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import fs from 'fs';
 
 import { Order } from '@gnosis.pm/gp-v2-contracts';
-import { Quote, CoWReturn } from '@benchmarking-cross-chain-bridges/token-aggregators/cowswap/types';
+import { COWQuote, COWReturn } from '@benchmarking-cross-chain-bridges/token-aggregators/cowswap/types';
 import { build_route } from '@benchmarking-cross-chain-bridges/token-aggregators/cowswap/route_builder';
 
 describe('should generate quotes for WETH -> USDC', () => {
@@ -15,8 +15,8 @@ describe('should generate quotes for WETH -> USDC', () => {
         const amount = (1 * 10 ** 18).toString();
         const operation = 'sell';
 
-        build_route(sourceChain, destChain, fromToken, toToken, amount, operation).then((cowReturn: CoWReturn) => {
-            const quote: Quote = cowReturn.resp;
+        build_route(sourceChain, destChain, fromToken, toToken, amount, operation).then((cowReturn: COWReturn) => {
+            const quote: COWQuote = cowReturn.resp;
             fs.writeFileSync('run-data/token-routes/cowswap-route-sell.json', JSON.stringify(quote));
             expect(quote).to.not.equal(null);
             expect(parseInt(quote.quote.feeAmount)).greaterThan(0);
@@ -34,8 +34,8 @@ describe('should generate quotes for WETH -> USDC', () => {
         const toToken = 'WETH';
         const amount = (1 * 10 ** 6).toString();
         const operation = 'buy';
-        build_route(sourceChain, destChain, fromToken, toToken, amount, operation).then((cowReturn: CoWReturn) => {
-            const quote: Quote = cowReturn.resp;
+        build_route(sourceChain, destChain, fromToken, toToken, amount, operation).then((cowReturn: COWReturn) => {
+            const quote: COWQuote = cowReturn.resp;
             fs.writeFileSync('run-data/token-routes/cowswap-route-buy.json', JSON.stringify(quote));
             expect(quote).to.not.equal(null);
             expect(parseInt(quote.quote.feeAmount)).greaterThan(0);

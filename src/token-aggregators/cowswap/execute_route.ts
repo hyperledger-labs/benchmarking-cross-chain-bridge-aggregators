@@ -10,9 +10,9 @@ import { get_signer } from "@benchmarking-cross-chain-bridges/helper/provider";
 import { approveAllow } from "@benchmarking-cross-chain-bridges/helper/token-misc";
 import { CHAIN_ID_MAP } from "@benchmarking-cross-chain-bridges/helper/constants_global";
 import { validate_keys } from "@benchmarking-cross-chain-bridges/helper/inp_validator";
-import { OrderRequest, CreateOrder, SignOrder } from './types';
+import { COWOrderRequest, COWCreateOrder, COWSignOrder } from './types';
 
-export async function sign_order(chainId: number, order: Order): Promise<SignOrder> {
+export async function sign_order(chainId: number, order: Order): Promise<COWSignOrder> {
     const chain = CHAIN_ID_MAP[chainId];
     const [trader] = [get_signer(chain)];
 
@@ -31,10 +31,10 @@ export async function sign_order(chainId: number, order: Order): Promise<SignOrd
     }
 }
 
-export async function submit_order(fromChain: number, toChain: number, fromToken: string, orderRequest: OrderRequest, order: Order) {
+export async function submit_order(fromChain: number, toChain: number, fromToken: string, orderRequest: COWOrderRequest, order: Order) {
     const sign_order_resp = await sign_order(fromChain, order);
 
-    const createOrder: CreateOrder = {
+    const createOrder: COWCreateOrder = {
         sellToken: orderRequest.sellToken,
         buyToken: orderRequest.buyToken,
         sellAmount: order.sellAmount,

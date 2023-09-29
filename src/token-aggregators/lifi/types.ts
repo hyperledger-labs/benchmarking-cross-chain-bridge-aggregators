@@ -1,4 +1,4 @@
-export type TransactionRequest = {
+export type LIFITransactionRequest = {
     data: string,
     to: string,
     value: string,

@@ -1,6 +1,6 @@
 import { CHAIN_MAP } from '@benchmarking-cross-chain-bridges/helper/constants_global';
 import { OrderBalance, OrderKind, Order } from '@gnosis.pm/gp-v2-contracts';
-import { OrderRequest, Quote } from './types';
+import { COWOrderRequest, COWQuote } from './types';
 
 function create_tokens(chain_name: string): { [key: string]: string } {
     return CHAIN_MAP[chain_name].token_map;
@@ -12,7 +12,7 @@ export const TOKEN_MAP: { [key: number]: { [key: string]: string } } = {
     100: create_tokens('GNOSIS'),
 };
 
-export function create_order(sourceChain: number, destChain: number, fromToken: string, toToken: string, amount: string, receiver: string, validTo: number, appData: string, sellTokenBalance: string, buyTokenBalance: string, from: string, kind: string): OrderRequest {
+export function create_order(sourceChain: number, destChain: number, fromToken: string, toToken: string, amount: string, receiver: string, validTo: number, appData: string, sellTokenBalance: string, buyTokenBalance: string, from: string, kind: string): COWOrderRequest {
     const fromToken_address = TOKEN_MAP[sourceChain][fromToken];
     const toToken_address = TOKEN_MAP[destChain][toToken];
 
@@ -22,7 +22,7 @@ export function create_order(sourceChain: number, destChain: number, fromToken: 
         sellAmountBeforeFee = '0';
         buyAmountAfterFee = amount;
     }
-    const orderRequest: OrderRequest = {
+    const orderRequest: COWOrderRequest = {
         sellToken: fromToken_address,
         buyToken: toToken_address,
         receiver: receiver,
@@ -40,7 +40,7 @@ export function create_order(sourceChain: number, destChain: number, fromToken: 
     return orderRequest;
 }
 
-export function get_order_from_quote(quote: Quote): Order {
+export function get_order_from_quote(quote: COWQuote): Order {
     const quote_obj = quote.quote;
 
     let order_kind = OrderKind.SELL;

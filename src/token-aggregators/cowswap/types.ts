@@ -1,19 +1,19 @@
 import { Order } from "@gnosis.pm/gp-v2-contracts";
 import { BigNumberish } from "ethers";
 
-export type CoWReturn = {
-    resp: Quote,
-    orderReq: OrderRequest,
+export type COWReturn = {
+    resp: COWQuote,
+    orderReq: COWOrderRequest,
     order: Order
 }
 
-export type SignOrder = {
+export type COWSignOrder = {
     signingScheme: string,
     signature: string,
     publicKey: string
 }
 
-export type OrderRequest = {
+export type COWOrderRequest = {
     sellToken: string,
     buyToken: string,
     receiver: string,
@@ -28,7 +28,7 @@ export type OrderRequest = {
     buyAmountAfterFee: string,
 };
 
-export type Quote = {
+export type COWQuote = {
     quote: {
         sellToken: string;
         buyToken: string;
@@ -49,7 +49,7 @@ export type Quote = {
     id: number;
 };
 
-export type SignedOrder = {
+export type COWSignedOrder = {
     sellToken: string,
     buyToken: string,
     sellAmount: number,
@@ -67,7 +67,7 @@ export type SignedOrder = {
     from: string
 }
 
-export type CreateOrder = {
+export type COWCreateOrder = {
     sellToken: string;
     buyToken: string;
     sellAmount: BigNumberish;
