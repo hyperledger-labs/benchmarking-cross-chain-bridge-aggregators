@@ -4,7 +4,7 @@ import { get_signer } from "@benchmarking-cross-chain-bridges/helper/provider";
 import { approveAllow } from "@benchmarking-cross-chain-bridges/helper/token-misc";
 import { CHAIN_ID_MAP } from "@benchmarking-cross-chain-bridges/helper/constants_global";
 import { get_lifi_url } from "./constants_local";
-import { TransactionRequest } from "./types";
+import { LIFITransactionRequest } from "./types";
 
 const getStatus = async (bridge: string, fromChain: number, toChain: number, txHash: string) => {
     const lifi_url = get_lifi_url(fromChain);
@@ -27,7 +27,7 @@ export async function submit_order(fromChain: number, toChain: number, fromToken
     const signer = get_signer(chain_name);
 
     const spenderAddress = quote.estimate.approvalAddress;
-    const transactionRequest: TransactionRequest = quote.transactionRequest;
+    const transactionRequest: LIFITransactionRequest = quote.transactionRequest;
     const bridge = quote.tool;
 
     await approveAllow(

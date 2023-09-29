@@ -55,7 +55,7 @@ export async function build_route(from_chain_id: number, to_chain_id: number, fr
         TradeType.EXACT_INPUT,
         options
     ).catch((error) => {
-        console.log(error);
+        throw error;
     }).then((route) => {
         if (!route) {
             throw new Error('Route not found');

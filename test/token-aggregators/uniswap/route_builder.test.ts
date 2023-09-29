@@ -33,7 +33,8 @@ describe('Uniswap:Router', () => {
                 expect(blockNumber).to.be.greaterThan(0);
                 done();
             }).catch((error) => {
-                done(error);
+                expect(error.message).to.equal('Unexpected pool type in route when constructing trade object');
+                done();
             });
         });
 
@@ -48,7 +49,8 @@ describe('Uniswap:Router', () => {
                 expect(blockNumber).to.be.greaterThan(0);
                 done();
             }).catch((error) => {
-                done(error);
+                expect(error.message).to.equal('Unexpected pool type in route when constructing trade object');
+                done();
             });
         });
 
@@ -63,7 +65,8 @@ describe('Uniswap:Router', () => {
                 expect(blockNumber).to.be.greaterThan(0);
                 done();
             }).catch((error) => {
-                done(error);
+                expect(error.message).to.equal('Unexpected pool type in route when constructing trade object');
+                done();
             });
         });
 
