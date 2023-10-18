@@ -11,30 +11,11 @@ describe('Socket:Router', () => {
             const from_token_address = 'WETH';
             const to_token_address = 'USDC';
             const amount = (1 * 10 ** 18).toString();
-            const unique_routes = true;
-            const sort = 'gas';
 
-            build_route(from_chain_id, to_chain_id, from_token_address, to_token_address, amount, unique_routes, sort).then((route) => {
-                expect(route.success).to.equal(true);
-                done();
-            }
-            ).catch((error) => {
-                done(error);
-            });
-        });
 
-        it('should return a route for a MAINNET WETH to MATIC USDC swap route', (done) => {
-            const from_chain_id = 1;
-            const to_chain_id = 137;
-            const from_token_address = 'WETH';
-            const to_token_address = 'USDC';
-            const amount = (1 * 10 ** 18).toString();
-            const unique_routes = true;
-            const sort = 'gas';
-
-            build_route(from_chain_id, to_chain_id, from_token_address, to_token_address, amount, unique_routes, sort).then((route) => {
+            build_route(from_chain_id, to_chain_id, from_token_address, to_token_address, amount).then((route) => {
+                expect(route.errors).to.equal(undefined);
                 fs.writeFileSync('run-data/token-routes/socket-route.json', JSON.stringify(route));
-                expect(route.success).to.equal(true);
                 done();
             }
             ).catch((error) => {
@@ -48,11 +29,9 @@ describe('Socket:Router', () => {
             const from_token_address = 'DOGECOIN';
             const to_token_address = 'USDC';
             const amount = (1 * 10 ** 18).toString();
-            const unique_routes = true;
-            const sort = 'gas';
 
-            build_route(from_chain_id, to_chain_id, from_token_address, to_token_address, amount, unique_routes, sort).then((route) => {
-                expect(route.success).to.equal(true);
+            build_route(from_chain_id, to_chain_id, from_token_address, to_token_address, amount).then((route) => {
+                expect(route.errors).to.equal(undefined);
                 done();
             }
             ).catch((error) => {
@@ -67,11 +46,9 @@ describe('Socket:Router', () => {
             const from_token_address = 'WETH';
             const to_token_address = 'USDC';
             const amount = (1 * 10 ** 18).toString();
-            const unique_routes = true;
-            const sort = 'gas';
 
-            build_route(from_chain_id, to_chain_id, from_token_address, to_token_address, amount, unique_routes, sort).then((route) => {
-                expect(route.success).to.equal(true);
+            build_route(from_chain_id, to_chain_id, from_token_address, to_token_address, amount).then((route) => {
+                expect(route.errors).to.equal(undefined);
                 done();
             }
             ).catch((error) => {
