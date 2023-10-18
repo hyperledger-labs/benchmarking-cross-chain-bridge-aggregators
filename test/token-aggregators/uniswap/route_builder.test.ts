@@ -79,7 +79,8 @@ describe('Uniswap:Router', () => {
             build_route(from_chain_id, to_chain_id, from_token, to_token, amount).then((route) => {
                 done(new Error('Expected an error, but got a route.'));
             }).catch((error) => {
-                expect(error.message).to.equal('from_token and to_token cannot be the same');
+                console.log(error);
+                expect(error.message).to.equal('from_token and to_token cannot be the same on same chain swap');
                 done();
             });
         });
