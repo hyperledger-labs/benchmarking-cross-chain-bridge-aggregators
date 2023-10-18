@@ -37,15 +37,16 @@
   },
   "homepage": "https://github.com/hyperledger-labs/benchmarking-cross-chain-bridges#readme",
   "dependencies": {
-    "@chainlink/contracts": "^0.7.1",
-    "@chainlink/contracts-ccip": "^0.7.6",
-    "@gnosis.pm/gp-v2-contracts": "^1.1.2",
-    "@lifi/sdk": "2.4.1",
-    "@openzeppelin/contracts": "^4.9.3",
+    "@chainlink/contracts": "0.8.0",
+    "@chainlink/contracts-ccip": "0.7.6",
+    "@gnosis.pm/gp-v2-contracts": "1.1.2",
+    "@lifi/sdk": "2.4.3",
+    "@openzeppelin/contracts": "5.0.0",
+    "@socket.tech/socket-v2-sdk": "1.23.3",
     "@sushiswap/sdk": "5.0.0-canary.116",
-    "@types/node": "^20.7.2",
-    "@uniswap/sdk-core": "4.0.7",
-    "@uniswap/smart-order-router": "3.16.32",
+    "@types/node": "20.8.7",
+    "@uniswap/sdk-core": "4.0.9",
+    "@uniswap/smart-order-router": "3.17.1",
     "cross-fetch": "4.0.0",
     "dotenv": "16.3.1",
     "ethers": "5.7.0",
@@ -53,10 +54,10 @@
     "typescript": "5.2.2"
   },
   "devDependencies": {
-    "@types/chai": "4.3.6",
-    "@types/mocha": "10.0.2",
+    "@types/chai": "4.3.9",
+    "@types/mocha": "10.0.3",
     "chai": "4.3.10",
     "mocha": "10.2.0",
-    "ts-node": "^10.9.1"
+    "ts-node": "10.9.1"
   }
 }
