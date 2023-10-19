@@ -20,7 +20,7 @@ describe.skip('should submit an GOERLI -> GOERLI order', () => {
 
         const methodParameters: UNISWAPMethodParameters = quote.methodParameters as UNISWAPMethodParameters;
 
-        const tx_hash = await submit_order(fromChain, toChain.toString(), fromToken, methodParameters);
+        const tx_hash = await submit_order(fromChain, fromToken, methodParameters);
 
         expect(tx_hash.substring(0, 2)).to.equal('0x');
     });
@@ -37,7 +37,7 @@ describe.skip('should submit an GOERLI -> GOERLI order', () => {
 
         const methodParameters: UNISWAPMethodParameters = quote.methodParameters as UNISWAPMethodParameters;
 
-        const tx_hash = await submit_order(fromChain, toChain.toString(), fromToken, methodParameters);
+        const tx_hash = await submit_order(fromChain, fromToken, methodParameters);
 
         expect(tx_hash.substring(0, 2)).to.equal('0x');
     });
