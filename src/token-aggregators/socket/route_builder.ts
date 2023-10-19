@@ -1,10 +1,12 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-import { validate_api_key, validate_chain, validate_tokens, validate_keys } from '@benchmarking-cross-chain-bridges/helper/inp_validator';
+import { validate_api_key, validate_chain, validate_tokens, validate_keys } from '@benchmarking-cross-chain-bridges//helper/inp_validator'
 import { TOKEN_MAP } from './constants_local'
 
-export async function build_route(from_chain_id: number, to_chain_id: number, from_token: string, to_token: string, amount: string, unique_routes: boolean, sort: string) {
+import { Socket, Path } from "@socket.tech/socket-v2-sdk";
+
+export async function build_route(from_chain_id: number, to_chain_id: number, from_token: string, to_token: string, amount: string, multiTx: boolean) {
 
     const SOCKET_API_KEY = validate_api_key('SOCKET');
     validate_chain('SOCKET', from_chain_id, to_chain_id);
@@ -14,23 +16,40 @@ export async function build_route(from_chain_id: number, to_chain_id: number, fr
     const from_token_address = TOKEN_MAP[from_chain_id][from_token];
     const to_token_address = TOKEN_MAP[to_chain_id][to_token];
 
-    try {
-        const response = await fetch(`https://api.socket.tech/v2/quote?fromChainId=${from_chain_id}&fromTokenAddress=${from_token_address}&toChainId=${to_chain_id}&toTokenAddress=${to_token_address}&fromAmount=${amount}&userAddress=${user_address}&uniqueRoutesPerBridge=${unique_routes}&sort=${sort}`, {
-            method: 'GET',
-            headers: {
-                'API-KEY': SOCKET_API_KEY,
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        });
+    const socket = new Socket({
+        apiKey: SOCKET_API_KEY,
+        defaultQuotePreferences: {
+            singleTxOnly: !multiTx,
+        },
+    });
 
-        if (!response.ok) {
-            throw new Error(`Request failed with status: ${response.status}`);
+    const tokenList = await socket.getTokenList({
+        fromChainId: from_chain_id,
+        toChainId: to_chain_id,
+    });
+
+    const fromToken = tokenList.from.tokenByAddress(from_token_address);
+    const toToken = tokenList.to.tokenByAddress(to_token_address);
+
+    const path = new Path({ fromToken, toToken });
+
+    const quote = await socket.getBestQuote(
+        {
+            path: path,
+            amount,
+            address: user_address,
+        },
+        {
+            bridgeWithGas: false,
+            singleTxOnly: !multiTx,
+            // @ts-ignore
+            excludeBridges: ['synapse', 'across']
         }
+    );
 
-        const responseData = await response.json();
-        return responseData;
-    } catch (error) {
-        throw error;
+    if (!quote) {
+        throw new Error("no quote available");
     }
+
+    return quote;
 }

@@ -5,7 +5,7 @@ import { build_route } from '@benchmarking-cross-chain-bridges/token-aggregators
 
 describe('XY:Router', () => {
     describe('build_route - should return route', () => {
-        it('should return a quote for a MAINNET WETH to MAINNET USDC swap', (done) => {
+        it('should return a quote for a ETHEREUM WETH to ETHEREUM USDC swap', (done) => {
             const fromChain = 1;
             const fromToken = 'WETH';
             const toChain = 1;
@@ -20,7 +20,7 @@ describe('XY:Router', () => {
             });
         });
 
-        it('should return a quote for a MAINNET WETH to MATIC USDC swap', (done) => {
+        it('should return a quote for a ETHEREUM WETH to MATIC USDC swap', (done) => {
             const fromChain = 1;
             const fromToken = 'WETH';
             const toChain = 137;
@@ -36,7 +36,7 @@ describe('XY:Router', () => {
             });
         });
 
-        it('should return a quote for a MATIC WETH to MAINNET USDC swap', (done) => {
+        it('should return a quote for a MATIC WETH to ETHEREUM USDC swap', (done) => {
             const fromChain = 137;
             const fromToken = 'WETH';
             const toChain = 1;

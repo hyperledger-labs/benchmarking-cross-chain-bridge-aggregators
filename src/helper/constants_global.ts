@@ -10,9 +10,9 @@ export interface CHAIN {
     address_map: { [key: string]: string },
 };
 
-export const MAINNET: CHAIN = {
+export const ETHEREUM: CHAIN = {
     chainId: 1,
-    name: 'MAINNET',
+    name: 'ETHEREUM',
     token_map: {
         "ETH": "0x0000000000000000000000000000000000000000",
         "WETH": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -119,19 +119,19 @@ export const SUPPORTED_TOKENS: string[] = [
 ];
 
 export const SUPPORTED_CHAINS: { [key: string]: string[] } = {
-    "LIFI": ["MAINNET", "GOERLI", "POLYGON"],
-    "SOCKET": ["MAINNET", "POLYGON"],
-    "UNISWAP": ["MAINNET", "GOERLI", "POLYGON"],
-    "COW": ["MAINNET", "GOERLI", "GNOSIS"],
-    "SUSHI": ["MAINNET", "GOERLI", "POLYGON"],
-    "XY": ["MAINNET", "POLYGON"],
+    "LIFI": ["ETHEREUM", "GOERLI", "POLYGON"],
+    "SOCKET": ["ETHEREUM", "POLYGON"],
+    "UNISWAP": ["ETHEREUM", "GOERLI", "POLYGON"],
+    "COW": ["ETHEREUM", "GOERLI", "GNOSIS"],
+    "SUSHI": ["ETHEREUM", "GOERLI", "POLYGON"],
+    "XY": ["ETHEREUM", "POLYGON"],
     "CCIP": ["SEPOLIA", "MUMBAI"],
     "HASHI": ["GOERLI", "GNOSIS"],
     "HYPERLANE": ["GOERLI", "SEPOLIA", "MUMBAI"],
 }
 
 export const CHAIN_ID_MAP: { [key: number]: string } = {
-    [MAINNET.chainId]: "MAINNET",
+    [ETHEREUM.chainId]: "ETHEREUM",
     [GOERLI.chainId]: "GOERLI",
     [SEPOLIA.chainId]: "SEPOLIA",
     [POLYGON.chainId]: "POLYGON",
@@ -140,7 +140,7 @@ export const CHAIN_ID_MAP: { [key: number]: string } = {
 };
 
 export const CHAIN_MAP: { [key: string]: CHAIN } = {
-    "MAINNET": MAINNET,
+    "ETHEREUM": ETHEREUM,
     "GOERLI": GOERLI,
     "SEPOLIA": SEPOLIA,
     "POLYGON": POLYGON,

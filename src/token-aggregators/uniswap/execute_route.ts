@@ -6,7 +6,7 @@ import { BigNumber } from "ethers";
 import { UNISWAPMethodParameters } from "./types";
 import { assert } from "console";
 
-export async function submit_order(sourceChain: number, destChain: string, fromToken: string, quote: UNISWAPMethodParameters) {
+export async function submit_order(sourceChain: number, fromToken: string, quote: UNISWAPMethodParameters) {
     const chain_name = CHAIN_ID_MAP[sourceChain];
     const signer = get_signer(chain_name);
 
