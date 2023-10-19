@@ -1,12 +1,12 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-import { validate_api_key, validate_chain, validate_tokens, validate_keys } from '../../helper/inp_validator'
+import { validate_api_key, validate_chain, validate_tokens, validate_keys } from '@benchmarking-cross-chain-bridges//helper/inp_validator'
 import { TOKEN_MAP } from './constants_local'
 
 import { Socket, Path } from "@socket.tech/socket-v2-sdk";
 
-export async function build_route(from_chain_id: number, to_chain_id: number, from_token: string, to_token: string, amount: string) {
+export async function build_route(from_chain_id: number, to_chain_id: number, from_token: string, to_token: string, amount: string, multiTx: boolean) {
 
     const SOCKET_API_KEY = validate_api_key('SOCKET');
     validate_chain('SOCKET', from_chain_id, to_chain_id);
@@ -19,7 +19,7 @@ export async function build_route(from_chain_id: number, to_chain_id: number, fr
     const socket = new Socket({
         apiKey: SOCKET_API_KEY,
         defaultQuotePreferences: {
-            singleTxOnly: false,
+            singleTxOnly: !multiTx,
         },
     });
 
@@ -41,7 +41,7 @@ export async function build_route(from_chain_id: number, to_chain_id: number, fr
         },
         {
             bridgeWithGas: false,
-            singleTxOnly: true,
+            singleTxOnly: !multiTx,
             // @ts-ignore
             excludeBridges: ['synapse', 'across']
         }

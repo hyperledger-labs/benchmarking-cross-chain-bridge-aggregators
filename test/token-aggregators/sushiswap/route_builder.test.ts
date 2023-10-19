@@ -1,5 +1,4 @@
 import { expect } from 'chai';
-import { ChainId } from '@sushiswap/sdk';
 import fs from 'fs';
 
 import { build_route } from '@benchmarking-cross-chain-bridges/token-aggregators/sushiswap/route_builder';
@@ -7,8 +6,8 @@ import { build_route } from '@benchmarking-cross-chain-bridges/token-aggregators
 describe('Sushiswap:Router', () => {
     describe('build_route', () => {
         it('should return a route for a GOERLI WETH to USDC swap', (done) => {
-            const from_chain_id = ChainId.GÖRLI;
-            const to_chain_id = ChainId.GÖRLI;
+            const from_chain_id = 5;
+            const to_chain_id = 5;
             const from_token = 'WETH';
             const to_token = 'USDC';
             const amount = (1 * 10 ** 18).toString();
@@ -20,9 +19,9 @@ describe('Sushiswap:Router', () => {
             });
         });
 
-        it('should return a route for a MAINNET WETH to USDC swap', (done) => {
-            const from_chain_id = ChainId.MAINNET;
-            const to_chain_id = ChainId.MAINNET;
+        it('should return a route for a ETHEREUM WETH to USDC swap', (done) => {
+            const from_chain_id = 1;
+            const to_chain_id = 1;
             const from_token = 'WETH';
             const to_token = 'USDC';
             const amount = (1 * 10 ** 18).toString();
@@ -35,9 +34,9 @@ describe('Sushiswap:Router', () => {
             });
         });
 
-        it('should return a route for a MAINNET USDC to WETH swap', (done) => {
-            const from_chain_id = ChainId.MAINNET;
-            const to_chain_id = ChainId.MAINNET;
+        it('should return a route for a ETHEREUM USDC to WETH swap', (done) => {
+            const from_chain_id = 1;
+            const to_chain_id = 1;
             const from_token = 'USDC';
             const to_token = 'WETH';
             const amount = (1 * 10 ** 6).toString();
@@ -49,9 +48,9 @@ describe('Sushiswap:Router', () => {
             });
         });
 
-        it('should return a route for a MAINNET USDC to WETH swap', (done) => {
-            const from_chain_id = ChainId.MAINNET;
-            const to_chain_id = ChainId.MAINNET;
+        it('should return a route for a ETHEREUM USDC to WETH swap', (done) => {
+            const from_chain_id = 1;
+            const to_chain_id = 1;
             const from_token = 'USDC';
             const to_token = 'WETH';
             const amount = (1 * 10 ** 6).toString();
@@ -63,9 +62,9 @@ describe('Sushiswap:Router', () => {
             });
         });
 
-        it('should fail a MAINNET USDC to USDC swap', (done) => {
-            const from_chain_id = ChainId.MAINNET;
-            const to_chain_id = ChainId.MAINNET;
+        it('should fail a ETHEREUM USDC to USDC swap', (done) => {
+            const from_chain_id = 1;
+            const to_chain_id = 1;
             const from_token = 'USDC';
             const to_token = 'USDC';
             const amount = (1 * 10 ** 6).toString();
@@ -77,9 +76,9 @@ describe('Sushiswap:Router', () => {
             });
         });
 
-        it('should fail a MAINNET DOGECOIN to USDC swap', (done) => {
-            const from_chain_id = ChainId.MAINNET;
-            const to_chain_id = ChainId.MAINNET;
+        it('should fail a ETHEREUM DOGECOIN to USDC swap', (done) => {
+            const from_chain_id = 1;
+            const to_chain_id = 1;
             const from_token = 'DOGECOIN';
             const to_token = 'USDC';
             const amount = (1 * 10 ** 6).toString();

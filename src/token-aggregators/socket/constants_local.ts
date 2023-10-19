@@ -5,7 +5,7 @@ function create_tokens(chain_name: string): { [key: string]: string } {
 }
 
 export const TOKEN_MAP: { [key: number]: { [key: string]: string } } = {
-    1: create_tokens('MAINNET'),
+    1: create_tokens('ETHEREUM'),
     5: create_tokens('GOERLI'),
     137: create_tokens('POLYGON'),
 };
