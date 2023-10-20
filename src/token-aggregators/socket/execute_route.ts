@@ -4,7 +4,7 @@ import { CHAIN_ID_MAP } from "@benchmarking-cross-chain-bridges/helper/constants
 import { approveAllow } from "@benchmarking-cross-chain-bridges/helper/token-misc";
 import { validate_api_key } from "@benchmarking-cross-chain-bridges/helper/inp_validator";
 
-export async function execute_route(sourceChain: number, fromToken: string, quote: SocketQuote, multiTx: boolean) {
+export async function submit_order(sourceChain: number, fromToken: string, quote: SocketQuote, multiTx: boolean) {
 
     if (multiTx) {
         const socket = new Socket({
