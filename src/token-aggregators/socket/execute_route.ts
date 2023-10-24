@@ -15,11 +15,13 @@ export async function submit_order(sourceChain: number, fromToken: string, quote
         });
 
         const executeRoute = await socket.start(quote);
-        await executeRouteRunnerMulti(sourceChain, executeRoute);
+        const hash = await executeRouteRunnerMulti(sourceChain, executeRoute);
+        return hash;
 
     } else {
         const txData = await Server.getSingleTx({ requestBody: { route: quote?.route, refuel: quote?.refuel } });
-        await executeRouteRunnerSingle(sourceChain, fromToken, txData);
+        const hash = await executeRouteRunnerSingle(sourceChain, fromToken, txData);
+        return hash;
     }
 }
 
@@ -75,4 +77,6 @@ async function executeRouteRunnerMulti(sourceChain: number, execute: AsyncGenera
         await sendTx.wait();
         next = await execute.next(sendTx.hash);
     }
+
+    return next.value;
 }
