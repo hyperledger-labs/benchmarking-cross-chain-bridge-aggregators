@@ -4,7 +4,7 @@ import { CHAIN_ID_MAP } from "@benchmarking-cross-chain-bridges/helper/constants
 import { approveAllow } from "@benchmarking-cross-chain-bridges/helper/token-misc";
 import { validate_api_key } from "@benchmarking-cross-chain-bridges/helper/inp_validator";
 
-export async function execute_route(sourceChain: number, fromToken: string, quote: SocketQuote, multiTx: boolean) {
+export async function submit_order(sourceChain: number, fromToken: string, quote: SocketQuote, multiTx: boolean) {
 
     if (multiTx) {
         const socket = new Socket({
@@ -15,11 +15,13 @@ export async function execute_route(sourceChain: number, fromToken: string, quot
         });
 
         const executeRoute = await socket.start(quote);
-        await executeRouteRunnerMulti(sourceChain, executeRoute);
+        const hash = await executeRouteRunnerMulti(sourceChain, executeRoute);
+        return hash;
 
     } else {
         const txData = await Server.getSingleTx({ requestBody: { route: quote?.route, refuel: quote?.refuel } });
-        await executeRouteRunnerSingle(sourceChain, fromToken, txData);
+        const hash = await executeRouteRunnerSingle(sourceChain, fromToken, txData);
+        return hash;
     }
 }
 
@@ -75,4 +77,6 @@ async function executeRouteRunnerMulti(sourceChain: number, execute: AsyncGenera
         await sendTx.wait();
         next = await execute.next(sendTx.hash);
     }
+
+    return next.value;
 }

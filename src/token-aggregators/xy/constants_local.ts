@@ -8,3 +8,6 @@ export const TOKEN_MAP: { [key: number]: { [key: string]: string } } = {
     1: create_tokens('ETHEREUM'),
     137: create_tokens('POLYGON'),
 };
+
+export const URL_QUOTES = "https://aggregator-api.xy.finance/v1/quote?";
+export const URL_SWAP = "https://aggregator-api.xy.finance/v1/buildTx?";
