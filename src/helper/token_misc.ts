@@ -3,6 +3,7 @@ import { get_signer } from "./provider";
 import { CHAIN_MAP } from "./constants_global";
 
 import ERC20 from "@openzeppelin/contracts/build/contracts/ERC20.json";
+import { tokenToString } from "typescript";
 
 export async function approveAllow(
     chain_name: string,

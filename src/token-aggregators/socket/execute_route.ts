@@ -1,7 +1,7 @@
 import { Server, SocketTx, SocketQuote, Socket, SingleTxOutputDTO } from "@socket.tech/socket-v2-sdk";
 import { get_signer, get_provider } from "@benchmarking-cross-chain-bridges/helper/provider";
 import { CHAIN_ID_MAP } from "@benchmarking-cross-chain-bridges/helper/constants_global";
-import { approveAllow } from "@benchmarking-cross-chain-bridges/helper/token-misc";
+import { approveAllow } from "@benchmarking-cross-chain-bridges/helper/token_misc";
 import { validate_api_key } from "@benchmarking-cross-chain-bridges/helper/inp_validator";
 
 export async function submit_order(sourceChain: number, fromToken: string, quote: SocketQuote, multiTx: boolean) {
