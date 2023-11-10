@@ -36,6 +36,9 @@ test
 ```
 
 ## Setup
+Install Foundry from https://book.getfoundry.sh/getting-started/installation:
+
+
 You can run
  ```shell
  yarn setup # to install the node packages, foundry packages, and create directories used
