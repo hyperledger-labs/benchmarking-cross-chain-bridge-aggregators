@@ -33,3 +33,31 @@ export async function approveAllow(
 
     return true;
 }
+
+export async function transferEventFromBlock(
+    chain_name: string,
+    to_token: string,
+    from_block: number,
+    to_block: number,
+    to_address: string,
+) {
+    const signer = get_signer(chain_name);
+
+    const token_address = CHAIN_MAP[chain_name].token_map[to_token];
+
+    const erc20 = new Contract(token_address, ERC20.abi, signer);
+
+    const filter = erc20.filters.Transfer(null, to_address);
+
+    const events = await erc20.queryFilter(filter, from_block, to_block);
+
+    let total_amount = ethers.BigNumber.from(0);
+
+    for (const event of events) {
+        if (event.args) {
+            total_amount = total_amount.add(event.args.value);
+        }
+    }
+
+    return total_amount.toNumber();
+}
