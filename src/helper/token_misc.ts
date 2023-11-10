@@ -61,3 +61,19 @@ export async function transferEventFromBlock(
 
     return total_amount.toNumber();
 }
+
+export async function getBalanceAtBlock(
+    chain_name: string,
+    token_name: string,
+    block_number: number,
+    address: string
+) {
+    const signer = get_signer(chain_name);
+    const token_address = CHAIN_MAP[chain_name].token_map[token_name];
+
+    const erc20 = new Contract(token_address, ERC20.abi, signer)
+
+    const balance = await erc20.callStatic.balanceOf(address, { blockTag: block_number });
+
+    return balance.toNumber();
+}
