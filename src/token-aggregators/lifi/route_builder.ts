@@ -1,8 +1,6 @@
-import { Order } from '@lifi/sdk';
-import { lifi } from './config';
-
 import { validate_chain, validate_tokens, validate_keys } from '@benchmarking-cross-chain-bridges/helper/inp_validator';
-import { TOKEN_MAP, get_lifi_url } from './constants_local';
+import { get_lifi_url } from './constants_local';
+import { LiFiTransaction } from './types';
 
 // Test without rate limiting at : https://apidocs.li.fi/reference/get_quote
 export async function build_route(fromChain: number, toChain: number, fromToken: string, toToken: string, fromAmount: string) {
@@ -30,6 +28,6 @@ export async function build_route(fromChain: number, toChain: number, fromToken:
         throw new Error(`Request failed with status: ${response.status}`);
     }
 
-    const data = await response.json();
+    const data: LiFiTransaction = await response.json();
     return data;
 }
