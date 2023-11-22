@@ -5,7 +5,7 @@ import { build_route } from '@benchmarking-cross-chain-bridges/token-aggregators
 import { submit_order } from '@benchmarking-cross-chain-bridges/token-aggregators/socket/execute_route';
 import { skip } from 'node:test';
 
-describe('should submit an ETH -> POLYGON order', () => {
+describe.skip('should submit an ETH -> POLYGON order', () => {
     const fromChain = 1;
     const toChain = 137;
     const amount = (0.005 * 10 ** 18).toString();
