@@ -147,3 +147,12 @@ export const CHAIN_MAP: { [key: string]: CHAIN } = {
     "MUMBAI": MUMBAI,
     "GNOSIS": GNOSIS,
 };
+
+export const TOKEN_TYPE_MAP: { [key: string]: string } = {
+    "ETH": "NATIVE",
+    "WETH": "ERC20",
+    "MATIC": "NATIVE",
+    "DAI": "STABLE-ERC20",
+    "USDC": "STABLE-ERC20",
+    "LINK": "ERC677",
+};
