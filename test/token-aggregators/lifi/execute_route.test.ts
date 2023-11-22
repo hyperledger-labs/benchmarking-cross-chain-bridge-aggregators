@@ -6,15 +6,17 @@ import { submit_order } from '@benchmarking-cross-chain-bridges/token-aggregator
 describe.skip('should submit an GOERLI -> GOERLI order', () => {
     it('should submit a swap for WETH to USDC swap', async () => {
         const fromChain = 5;
-        const fromToken = 'WETH';
+        const fromToken = 'ETH';
         const toChain = 5;
         const toToken = 'USDC';
         const fromAmount = (0.005 * 10 ** 18).toString();
 
         const quote = await build_route(fromChain, toChain, fromToken, toToken, fromAmount)
+        console.log(quote);
         expect(quote).to.not.equal(null);
 
         const txHash = await submit_order(fromChain, toChain, fromToken, quote);
+        console.log(txHash);
         expect(txHash.substring(0, 2)).to.equal('0x');
     });
 });
