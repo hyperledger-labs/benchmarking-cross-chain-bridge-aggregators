@@ -12,11 +12,9 @@ describe.skip('should submit an GOERLI -> GOERLI order', () => {
         const fromAmount = (0.005 * 10 ** 18).toString();
 
         const quote = await build_route(fromChain, toChain, fromToken, toToken, fromAmount)
-        console.log(quote);
         expect(quote).to.not.equal(null);
 
         const txHash = await submit_order(fromChain, toChain, fromToken, quote);
-        console.log(txHash);
         expect(txHash.substring(0, 2)).to.equal('0x');
     });
 });
