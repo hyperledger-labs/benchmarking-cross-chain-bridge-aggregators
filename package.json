@@ -22,7 +22,10 @@
     "test:message-aggregators": "mocha 'test/message-aggregators/**/*.test.ts'",
     "test:foundry-contracts": "RPC_SEPOLIA=ENTER_YOUR_SEPOLIA_RPC_HERE && forge test --rpc-url $RPC_SEPOLIA",
     "test:all": "mocha 'test/**/**/*.test.ts' && yarn test:foundry-contracts",
+    "clear:benchmarks": "rm -rf benchmark-data/*",
+    "clear:run-data": "rm -rf run-data/*",
     "clear:dry-run": "rm -rf broadcast/*/*/dry-run",
+    "clear:all": "yarn clear:benchmarks && yarn clear:dry-run && yarn clear:run-data",
     "setup:yarn": "yarn",
     "setup:contracts": "forge install",
     "setup": "yarn setup:yarn && yarn setup:contracts && mkdir -p run-data/token-routes"
