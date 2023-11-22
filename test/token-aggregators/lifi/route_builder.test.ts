@@ -8,7 +8,7 @@ describe('LiFi:Router', () => {
     describe('build_route - return route OR status 429 (rate limit)', () => {
         it('should return a route for a GOERLI WETH to GOERLI USDC swap', (done) => {
             const fromChain = 5;
-            const fromToken = 'WETH';
+            const fromToken = 'ETH';
             const toChain = 5;
             const toToken = 'USDC';
             const fromAmount = (1 * 10 ** 18).toString();
@@ -18,7 +18,7 @@ describe('LiFi:Router', () => {
                 done();
             }).catch((error) => {
                 if (error.message === 'Request failed with status: 429') {
-                    console.log('Rate Limited (status: 429)');
+                    console.error('Rate Limited (status: 429)');
                     skip();
                     done();
                 } else {
@@ -38,15 +38,14 @@ describe('LiFi:Router', () => {
                 fs.writeFileSync('run-data/token-routes/lifi-route.json', JSON.stringify(route));
 
                 expect(route).to.not.equal(null);
-                console.log(route);
                 done();
             }).catch((error) => {
                 if (error.message === 'Request failed with status: 429') {
-                    console.log('Rate Limited (status: 429)');
+                    console.error('Rate Limited (status: 429)');
                     skip();
                     done();
                 } else {
-                    console.log(error);
+                    console.error(error);
                     done(error);
                 }
             });
@@ -64,7 +63,7 @@ describe('LiFi:Router', () => {
                 done();
             }).catch((error) => {
                 if (error.message === 'Request failed with status: 429') {
-                    console.log('Rate Limited (status: 429)');
+                    console.error('Rate Limited (status: 429)');
                     skip();
                     done();
                 } else {
@@ -85,7 +84,7 @@ describe('LiFi:Router', () => {
                 done();
             }).catch((error) => {
                 if (error.message === 'Request failed with status: 429') {
-                    console.log('Rate Limited (status: 429)');
+                    console.error('Rate Limited (status: 429)');
                     skip();
                     done();
                 } else {
