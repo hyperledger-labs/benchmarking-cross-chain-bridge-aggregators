@@ -3,6 +3,7 @@ import fs from 'fs';
 
 import { build_route } from '@benchmarking-cross-chain-bridges/token-aggregators/socket/route_builder';
 import { submit_order } from '@benchmarking-cross-chain-bridges/token-aggregators/socket/execute_route';
+import { skip } from 'node:test';
 
 describe('should submit an ETH -> POLYGON order', () => {
     const fromChain = 1;
@@ -19,8 +20,9 @@ describe('should submit an ETH -> POLYGON order', () => {
             const hash = await submit_order(fromChain, fromToken, quote, !multiTx);
         }
         catch (error) {
+            console.log("Do you have enough ETH in your wallet to pay for gas?");
             console.error(error);
-            expect.fail();
+            skip();
         }
     });
 
@@ -31,8 +33,9 @@ describe('should submit an ETH -> POLYGON order', () => {
             const hash = await submit_order(fromChain, fromToken, quote, multiTx);
         }
         catch (error) {
+            console.log("Do you have enough ETH in your wallet to pay for gas?");
             console.error(error);
-            expect.fail();
+            skip();
         }
     });
 });

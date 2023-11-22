@@ -1,10 +1,10 @@
 import axios from "axios";
-// @benchmarking-cross-chain-bridges
+
 import { get_signer } from "@benchmarking-cross-chain-bridges/helper/provider";
-import { approveAllow } from "@benchmarking-cross-chain-bridges/helper/token-misc";
+import { approveAllow } from "@benchmarking-cross-chain-bridges/helper/token_misc";
 import { CHAIN_ID_MAP } from "@benchmarking-cross-chain-bridges/helper/constants_global";
 import { get_lifi_url } from "./constants_local";
-import { LIFITransactionRequest } from "./types";
+import { TransactionRequest } from "./types";
 
 const getStatus = async (bridge: string, fromChain: number, toChain: number, txHash: string) => {
     const lifi_url = get_lifi_url(fromChain);
@@ -27,7 +27,7 @@ export async function submit_order(fromChain: number, toChain: number, fromToken
     const signer = get_signer(chain_name);
 
     const spenderAddress = quote.estimate.approvalAddress;
-    const transactionRequest: LIFITransactionRequest = quote.transactionRequest;
+    const transactionRequest: TransactionRequest = quote.transactionRequest;
     const bridge = quote.tool;
 
     await approveAllow(

@@ -6,7 +6,7 @@ import { skip } from 'node:test';
 
 describe('LiFi:Router', () => {
     describe('build_route - return route OR status 429 (rate limit)', () => {
-        it.skip('should return a route for a GOERLI WETH to GOERLI USDC swap', (done) => {
+        it('should return a route for a GOERLI WETH to GOERLI USDC swap', (done) => {
             const fromChain = 5;
             const fromToken = 'WETH';
             const toChain = 5;
@@ -38,6 +38,7 @@ describe('LiFi:Router', () => {
                 fs.writeFileSync('run-data/token-routes/lifi-route.json', JSON.stringify(route));
 
                 expect(route).to.not.equal(null);
+                console.log(route);
                 done();
             }).catch((error) => {
                 if (error.message === 'Request failed with status: 429') {
@@ -45,6 +46,7 @@ describe('LiFi:Router', () => {
                     skip();
                     done();
                 } else {
+                    console.log(error);
                     done(error);
                 }
             });

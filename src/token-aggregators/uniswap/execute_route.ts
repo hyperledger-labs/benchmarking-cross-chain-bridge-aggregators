@@ -1,5 +1,5 @@
 import { get_signer } from "@benchmarking-cross-chain-bridges/helper/provider";
-import { approveAllow } from "@benchmarking-cross-chain-bridges/helper/token-misc";
+import { approveAllow } from "@benchmarking-cross-chain-bridges/helper/token_misc";
 import { CHAIN_ID_MAP } from "@benchmarking-cross-chain-bridges/helper/constants_global";
 
 import { BigNumber } from "ethers";

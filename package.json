@@ -7,6 +7,7 @@
     "test": "test"
   },
   "scripts": {
+    "benchmark:lifi": "mocha 'src/benchmark-runner/lifi.benchmark.ts'",
     "test:ccip": "mocha 'test/message-aggregators/CCIP/*.test.ts'",
     "test:hashi": "mocha 'test/message-aggregators/Hashi/*.test.ts'",
     "test:hyperlane": "mocha 'test/message-aggregators/Hyperlane/*.test.ts'",

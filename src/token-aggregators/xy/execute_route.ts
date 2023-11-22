@@ -2,7 +2,7 @@ import { get_signer } from "@benchmarking-cross-chain-bridges/helper/provider";
 import { CHAIN_ID_MAP } from "@benchmarking-cross-chain-bridges/helper/constants_global";
 
 import { XYRoute, XYTx } from "./types";
-import { approveAllow } from "@benchmarking-cross-chain-bridges/helper/token-misc";
+import { approveAllow } from "@benchmarking-cross-chain-bridges/helper/token_misc";
 import { URL_SWAP } from "./constants_local";
 import { validate_keys } from "@benchmarking-cross-chain-bridges/helper/inp_validator";
 
