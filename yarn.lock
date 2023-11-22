@@ -485,22 +485,22 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@lifi/sdk@2.4.3":
-  version "2.4.3"
-  resolved "https://registry.yarnpkg.com/@lifi/sdk/-/sdk-2.4.3.tgz#36621c8cef39baa4f65b2db0045cd8cd7fc93bd5"
-  integrity sha512-9/oGg6TB+d+7DRrRWg9hlVeXM2EkC1dWkvnw2KaWbV0kCrClGtwjak6h5Dre1mnQty9wb2Dw4i7SPohXYZA5ZA==
+"@lifi/sdk@2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@lifi/sdk/-/sdk-2.5.0.tgz#561e93fd6ad915166007b7e99479be305d6ae9e3"
+  integrity sha512-wx/3Ff0DAfYyV8VSWSQ/Qiy3DlwdrIfG841hbwqJK3AGxK0ulunLl1rKpMQrRdEEwkqAFNKZuJ8by0lGf9YccQ==
   dependencies:
     "@ethersproject/abi" "^5.7.0"
     "@ethersproject/contracts" "^5.7.0"
-    "@lifi/types" "^9.0.3"
+    "@lifi/types" "^9.3.0"
     bignumber.js "^9.1.2"
     eth-rpc-errors "^4.0.3"
     ethers "^5.7.2"
 
-"@lifi/types@^9.0.3":
-  version "9.2.0"
-  resolved "https://registry.yarnpkg.com/@lifi/types/-/types-9.2.0.tgz#581b3e849e9f8fc94dfe50b10ed8dd0d0e160cf7"
-  integrity sha512-Cn556lXnpJBwLuhy0z+Orp6VPRAOBgC+yfEBtK5Mw8OMhc0k5hac6vVlnd5MhjwOkSwlLntN7lrLDDl9+/BZng==
+"@lifi/types@^9.3.0":
+  version "9.3.1"
+  resolved "https://registry.yarnpkg.com/@lifi/types/-/types-9.3.1.tgz#99bf27c7f0315ebf2cec6de2b1fde6da4dc10792"
+  integrity sha512-TAcAMAqvojphbsVMYgeGW3SyAjvxDlIYab9PPCshzFLmv9uAXqbOXtqIeeY5wsWE/DXEmci5RFNaxe51Pgt0hA==
   dependencies:
     ethers "^5.7.2"
 
@@ -613,22 +613,22 @@
   resolved "https://registry.yarnpkg.com/@tsconfig/node16/-/node16-1.0.4.tgz#0b92dcc0cc1c81f6f306a381f28e31b1a56536e9"
   integrity sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==
 
-"@types/chai@4.3.9":
-  version "4.3.9"
-  resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.3.9.tgz#144d762491967db8c6dea38e03d2206c2623feec"
-  integrity sha512-69TtiDzu0bcmKQv3yg1Zx409/Kd7r0b5F1PfpYJfSHzLGtB53547V4u+9iqKYsTu/O2ai6KTb0TInNpvuQ3qmg==
+"@types/chai@4.3.11":
+  version "4.3.11"
+  resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.3.11.tgz#e95050bf79a932cb7305dd130254ccdf9bde671c"
+  integrity sha512-qQR1dr2rGIHYlJulmr8Ioq3De0Le9E4MJ5AiaeAETJJpndT1uUNHsGFK3L/UIu+rbkQSdj8J/w2bCsBZc/Y5fQ==
 
-"@types/mocha@10.0.3":
-  version "10.0.3"
-  resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-10.0.3.tgz#4804fe9cd39da26eb62fa65c15ea77615a187812"
-  integrity sha512-RsOPImTriV/OE4A9qKjMtk2MnXiuLLbcO3nCXK+kvq4nr0iMfFgpjaX3MPLb6f7+EL1FGSelYvuJMV6REH+ZPQ==
+"@types/mocha@10.0.6":
+  version "10.0.6"
+  resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-10.0.6.tgz#818551d39113081048bdddbef96701b4e8bb9d1b"
+  integrity sha512-dJvrYWxP/UcXm36Qn36fxhUKu8A/xMRXVT2cliFF1Z7UA9liG5Psj3ezNSZw+5puH2czDXRLcXQxf8JbJt0ejg==
 
-"@types/node@20.8.8":
-  version "20.8.8"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.8.8.tgz#adee050b422061ad5255fc38ff71b2bb96ea2a0e"
-  integrity sha512-YRsdVxq6OaLfmR9Hy816IMp33xOBjfyOgUd77ehqg96CFywxAPbDbXvAsuN2KVg2HOT8Eh6uAfU+l4WffwPVrQ==
+"@types/node@20.9.4":
+  version "20.9.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.9.4.tgz#cc8f970e869c26834bdb7ed480b30ede622d74c7"
+  integrity sha512-wmyg8HUhcn6ACjsn8oKYjkN/zUzQeNtMy44weTJSM6p4MMzEOuKbA3OjJ267uPCOW7Xex9dyrNTful8XTQYoDA==
   dependencies:
-    undici-types "~5.25.1"
+    undici-types "~5.26.4"
 
 "@uniswap/default-token-list@^11.2.0":
   version "11.6.0"
@@ -683,10 +683,10 @@
     tiny-invariant "^1.1.0"
     toformat "^2.0.0"
 
-"@uniswap/smart-order-router@3.17.2":
-  version "3.17.2"
-  resolved "https://registry.yarnpkg.com/@uniswap/smart-order-router/-/smart-order-router-3.17.2.tgz#06b6c921bb5f586940ad48282c96a1f5c9f6e31e"
-  integrity sha512-N5AuS5WgzT8/P9bDCPv5OPWEB8RXkJLQEHAFFZKYrghOGdxkba8u0qPdSrE8tgYqhLTA8Babou1shrX5aS//Vw==
+"@uniswap/smart-order-router@3.19.0":
+  version "3.19.0"
+  resolved "https://registry.yarnpkg.com/@uniswap/smart-order-router/-/smart-order-router-3.19.0.tgz#6134407ee696d48fc2baa7b65e3ddef0e029868f"
+  integrity sha512-M6Owl1UQmyJycJ8PncK6qgsohIwazmRhVZv/TPLJyMilpgdg03B+p/YhRfqfHRoRsfqnOAyeYhCvC/4cN7QtUg==
   dependencies:
     "@uniswap/default-token-list" "^11.2.0"
     "@uniswap/permit2-sdk" "^1.2.0"
@@ -2009,15 +2009,15 @@ type-detect@^4.0.0, type-detect@^4.0.5, type-detect@^4.0.8:
   resolved "https://registry.yarnpkg.com/type-detect/-/type-detect-4.0.8.tgz#7646fb5f18871cfbb7749e69bd39a6388eb7450c"
   integrity sha512-0fr/mIH1dlO+x7TlcMy+bIDqKPsw/70tVyeHW787goQjhmqaZe10uwLujubK9q9Lg6Fiho1KUKDYz0Z7k7g5/g==
 
-typescript@5.2.2:
-  version "5.2.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.2.2.tgz#5ebb5e5a5b75f085f22bc3f8460fba308310fa78"
-  integrity sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==
+typescript@5.3.2:
+  version "5.3.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.3.2.tgz#00d1c7c1c46928c5845c1ee8d0cc2791031d4c43"
+  integrity sha512-6l+RyNy7oAHDfxC4FzSJcz9vnjTKxrLpDG5M2Vu4SHRVNg6xzqZp6LYSR9zjqQTu8DU/f5xwxUdADOkbrIX2gQ==
 
-undici-types@~5.25.1:
-  version "5.25.3"
-  resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-5.25.3.tgz#e044115914c85f0bcbb229f346ab739f064998c3"
-  integrity sha512-Ga1jfYwRn7+cP9v8auvEXN1rX3sWqlayd4HP7OKk4mZWylEmu3KzXDUGrQUN6Ol7qo1gPvB2e5gX6udnyEPgdA==
+undici-types@~5.26.4:
+  version "5.26.5"
+  resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-5.26.5.tgz#bcd539893d00b56e964fd2657a4866b221a65617"
+  integrity sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==
 
 unfetch@^4.2.0:
   version "4.2.0"
