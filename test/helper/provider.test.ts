@@ -1,4 +1,4 @@
-import { create_tx, send_tx, get_provider } from '@benchmarking-cross-chain-bridges/helper/provider';
+import { create_tx, send_tx, get_gas_price, get_latest_blockNum, get_provider } from '@benchmarking-cross-chain-bridges/helper/provider';
 import { expect } from 'chai';
 
 describe('provider:get_provider', () => {
@@ -30,7 +30,24 @@ describe('provider:create_tx', () => {
     });
 });
 
-describe('send_tx', () => {
+describe('provider:get_gas_price', () => {
+    it('should return a gas price', async () => {
+        const network = 'GOERLI';
+        const gas_price = await get_gas_price(network);
+        expect(gas_price).to.be.a('number');
+    });
+});
+
+describe('provider:get_latest_blockNum', () => {
+    it('should return a block number', async () => {
+        const network = 'GOERLI';
+        const block_number = await get_latest_blockNum(network);
+        expect(block_number).to.be.a('number');
+        console.log(block_number);
+    });
+});
+
+describe('provider:send_tx', () => {
     it.skip('should send a transaction', async () => {
         const to = '0x6Cc9397c3B38739daCbfaA68EaD5F5D77Ba5F455'; // GOERLI PoW Faucet
         const value = '1';

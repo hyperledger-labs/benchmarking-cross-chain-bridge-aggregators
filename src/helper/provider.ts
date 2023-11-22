@@ -19,6 +19,21 @@ export function get_signer(chain_name: string) {
     return wallet;
 }
 
+export async function get_gas_price(chain_name: string): Promise<number> {
+    const provider = get_provider(chain_name);
+    const gasPrice = await provider.getGasPrice();
+
+    return gasPrice.toNumber();
+}
+
+export async function get_latest_blockNum(chain_name: string): Promise<number> {
+    const provider = get_provider(chain_name);
+    const blockNumber = await provider.getBlockNumber();
+
+    return blockNumber;
+}
+
+
 export async function create_tx(to: string, value: string, gas_limit: string, data: string, chain_id: number): Promise<string> {
 
     const KEY_PAIR = validate_keys();
