@@ -20,7 +20,7 @@ describe('should submit an ETH -> POLYGON order', () => {
             const hash = await submit_order(fromChain, fromToken, quote, !multiTx);
         }
         catch (error) {
-            console.log("Do you have enough ETH in your wallet to pay for gas?");
+            console.error("Do you have enough ETH in your wallet to pay for gas?");
             console.error(error);
             skip();
         }
@@ -33,7 +33,7 @@ describe('should submit an ETH -> POLYGON order', () => {
             const hash = await submit_order(fromChain, fromToken, quote, multiTx);
         }
         catch (error) {
-            console.log("Do you have enough ETH in your wallet to pay for gas?");
+            console.error("Do you have enough ETH in your wallet to pay for gas?");
             console.error(error);
             skip();
         }

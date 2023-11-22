@@ -43,7 +43,6 @@ describe('provider:get_latest_blockNum', () => {
         const network = 'GOERLI';
         const block_number = await get_latest_blockNum(network);
         expect(block_number).to.be.a('number');
-        console.log(block_number);
     });
 });
 
@@ -60,7 +59,7 @@ describe('provider:send_tx', () => {
         await send_tx(signed_transaction, chain_id).then((response) => {
             expect(response).to.be.a('object');
         }).catch((error) => {
-            console.log(error);
+            console.error(error);
         }
         );
     });
