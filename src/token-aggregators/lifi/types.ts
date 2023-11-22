@@ -40,7 +40,10 @@ export type Estimate = {
     executionDuration: number,
     fromAmountUSD: string,
     toAmountUSD: string,
-    toolData?: any,
+    toolData?: {
+        path: string[],
+        routerAddress: string,
+    }
 }
 
 export type Action = {
