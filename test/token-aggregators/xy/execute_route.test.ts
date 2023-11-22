@@ -11,15 +11,16 @@ describe('XY:Router', () => {
         const toToken = 'USDC';
         const fromAmount = (1 * 10 ** 18).toString();
 
-        const quotes = await build_route(fromChain, toChain, fromToken, toToken, fromAmount);
-        const quote = quotes.routes[0];
-
         try {
+            const quotes = await build_route(fromChain, toChain, fromToken, toToken, fromAmount);
+            const quote = quotes.routes[0];
             const hash = await submit_order(fromChain, fromToken, quote);
+
+            console.log('hash:', hash);
+            expect(hash).to.be.a('string');
         } catch (error) {
-            console.error(error);
-            expect.fail();
+            console.error('Error in the test:', error);
+            done(error);
         }
-        done();
     });
 });

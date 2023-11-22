@@ -49,8 +49,7 @@ export async function submit_order(sourceChain: number, fromToken: string, quote
 
         return tx;
     } catch (error) {
-        console.log(swapTx.tx)
-        console.error(error);
+        throw error;
     }
 }
 
