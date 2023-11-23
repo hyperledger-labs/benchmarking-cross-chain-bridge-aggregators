@@ -11,7 +11,7 @@ export async function build_route(sourceChain: number, destChain: number, fromTo
     const KEY_PUBLIC = validate_keys().public;
     const network = get_support_chain_id(sourceChain);
     const url = `https://api.cow.fi/${network}/api/v1/quote`;
-    console.log(url);
+
     const current_unix_timestamp = Math.round((new Date()).getTime() / 1000);
     if (operation !== "sell" && operation !== "buy") throw new Error("Operation must be either 'sell' or 'buy'");
 

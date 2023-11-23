@@ -97,7 +97,6 @@ const token_to_coingecko_id: { [key: string]: string } = {
 }
 
 export async function get_token_price(token: string): Promise<number> {
-    console.log('Getting token price for', token, token_to_coingecko_id[token]);
     try {
         const response = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${token_to_coingecko_id[token]}&vs_currencies=usd`);
 
