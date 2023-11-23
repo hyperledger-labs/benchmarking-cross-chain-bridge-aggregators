@@ -1,8 +1,7 @@
 
 import { validate_chain, validate_tokens, validate_keys } from '@benchmarking-cross-chain-bridges/helper/inp_validator';
-import { CHAIN_ID_MAP } from '@benchmarking-cross-chain-bridges/helper/constants_global';
 import { COWOrderRequest, COWQuote, COWReturn } from './types';
-import { create_order, get_order_from_quote } from './constants_local';
+import { create_order, get_order_from_quote, get_support_chain_id } from './constants_local';
 
 export async function build_route(sourceChain: number, destChain: number, fromToken: string, toToken: string, amount: string, operation: string, valid_time: number = 30): Promise<COWReturn> {
     if (sourceChain !== destChain) throw new Error("Source and destination chains must be the same for COWswap");
@@ -10,10 +9,10 @@ export async function build_route(sourceChain: number, destChain: number, fromTo
     validate_chain("COW", sourceChain, destChain);
     validate_tokens(fromToken, toToken, sourceChain === destChain);
     const KEY_PUBLIC = validate_keys().public;
-    const network = CHAIN_ID_MAP[sourceChain];
-    const url = `https://api.cow.fi/${network.toLowerCase()}/api/v1/quote`;
+    const network = get_support_chain_id(sourceChain);
+    const url = `https://api.cow.fi/${network}/api/v1/quote`;
+    console.log(url);
     const current_unix_timestamp = Math.round((new Date()).getTime() / 1000);
-
     if (operation !== "sell" && operation !== "buy") throw new Error("Operation must be either 'sell' or 'buy'");
 
     //  cast keccak "Hyperledger Benchmark Cross-Chain Bridges - Shankar"

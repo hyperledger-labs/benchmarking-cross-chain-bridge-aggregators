@@ -1,5 +1,6 @@
 import { CHAIN_MAP } from '@benchmarking-cross-chain-bridges/helper/constants_global';
 import { OrderBalance, OrderKind, Order } from '@gnosis.pm/gp-v2-contracts';
+import { SupportedChainId } from '@cowprotocol/cow-sdk'
 import { COWOrderRequest, COWQuote } from './types';
 
 function create_tokens(chain_name: string): { [key: string]: string } {
@@ -60,5 +61,18 @@ export function get_order_from_quote(quote: COWQuote): Order {
         kind: order_kind,
         partiallyFillable: quote_obj.partiallyFillable,
         receiver: quote_obj.receiver
+    }
+}
+
+export function get_support_chain_id(chain_id: number): string {
+    switch (chain_id) {
+        case SupportedChainId.MAINNET:
+            return "mainnet";
+        case SupportedChainId.GOERLI:
+            return "goerli";
+        case SupportedChainId.GNOSIS_CHAIN:
+            return "gnosis";
+        default:
+            throw new Error(`Chain id ${chain_id} is not supported`);
     }
 }
