@@ -7,7 +7,12 @@
     "test": "test"
   },
   "scripts": {
+    "benchmark:cowswap": "mocha 'src/benchmark-runner/cowswap.benchmark.ts'",
     "benchmark:lifi": "mocha 'src/benchmark-runner/lifi.benchmark.ts'",
+    "benchmark:socket": "mocha 'src/benchmark-runner/socket.benchmark.ts'",
+    "benchmark:uniswap": "mocha 'src/benchmark-runner/uniswap.benchmark.ts'",
+    "benchmark:xy": "mocha 'src/benchmark-runner/xy.benchmark.ts'",
+    "benchmark:all": "mocha 'src/benchmark-runner/*.benchmark.ts'",
     "test:ccip": "mocha 'test/message-aggregators/CCIP/*.test.ts'",
     "test:hashi": "mocha 'test/message-aggregators/Hashi/*.test.ts'",
     "test:hyperlane": "mocha 'test/message-aggregators/Hyperlane/*.test.ts'",
@@ -43,6 +48,7 @@
   "dependencies": {
     "@chainlink/contracts": "0.8.0",
     "@chainlink/contracts-ccip": "0.7.6",
+    "@cowprotocol/cow-sdk": "4.0.3",
     "@gnosis.pm/gp-v2-contracts": "1.1.2",
     "@lifi/sdk": "2.5.0",
     "@openzeppelin/contracts": "5.0.0",

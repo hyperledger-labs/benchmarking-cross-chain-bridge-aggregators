@@ -1,7 +1,7 @@
 import { CHAIN_MAP } from '@benchmarking-cross-chain-bridges/helper/constants_global';
 
 enum LIFI_URLS {
-    MAINNET = 'https://li.quest/v1',
+    MAINNET = 'https://staging.li.quest/v1',
     TESTNET = 'https://staging.li.quest/v1',
 }
 

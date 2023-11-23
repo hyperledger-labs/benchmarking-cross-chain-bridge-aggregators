@@ -1,8 +1,8 @@
 import { create_api_report, create_report_network } from './helper';
-import { LiFiTransaction } from '@benchmarking-cross-chain-bridges/token-aggregators/lifi/types';
 import { APIReport, Network, Aggregator, Asset, Fee, Latency } from '@benchmarking-cross-chain-bridges/benchmark-runner/types/APIReport';
+import { CHAIN_ID_MAP, TOKEN_MAP } from '@benchmarking-cross-chain-bridges/helper/constants_global';
+import { LiFiTransaction } from '@benchmarking-cross-chain-bridges/token-aggregators/lifi/types';
 import { build_route } from '@benchmarking-cross-chain-bridges/token-aggregators/lifi/route_builder';
-import { CHAIN_ID_MAP } from '@benchmarking-cross-chain-bridges/helper/constants_global';
 
 export async function report_generator(quote: LiFiTransaction, fromChain: number, toChain: number, fromToken: string, toToken: string, fromAmount: string, api_latency: Latency[0]) {
     const protocol = 'lifi';
@@ -16,7 +16,7 @@ export async function report_generator(quote: LiFiTransaction, fromChain: number
     const source_network: Network = obj.source_network;
     const destination_network: Network = obj.destination_network;
 
-    const trade_amount = parseInt(fromAmount) / 10 ** quote.action.fromToken.decimals;
+    const trade_amount = parseInt(fromAmount) / 10 ** TOKEN_MAP[fromToken].decimals;
     const query_latency: Latency = [api_latency];
 
     var net_trade_fee: number = 0;
