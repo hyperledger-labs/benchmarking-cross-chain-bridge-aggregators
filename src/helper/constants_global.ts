@@ -64,6 +64,7 @@ export const POLYGON: CHAIN = {
     name: 'POLYGON',
     token_map: {
         "MATIC": "0x0000000000000000000000000000000000000000",
+        "WMATIC": "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
         "WETH": "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
         "DAI": "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
         "USDC": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
@@ -116,6 +117,7 @@ export const SUPPORTED_TOKENS: string[] = [
     "DAI",
     "USDC",
     "LINK",
+    "WMATIC",
 ];
 
 export const SUPPORTED_CHAINS: { [key: string]: string[] } = {
@@ -150,9 +152,10 @@ export const CHAIN_MAP: { [key: string]: CHAIN } = {
 
 export const TOKEN_TYPE_MAP: { [key: string]: string } = {
     "ETH": "NATIVE",
-    "WETH": "ERC20",
+    "WETH": "WRAPPED-ERC20",
     "MATIC": "NATIVE",
     "DAI": "STABLE-ERC20",
     "USDC": "STABLE-ERC20",
     "LINK": "ERC677",
+    "WMATIC": "WRAPPED-ERC20",
 };
