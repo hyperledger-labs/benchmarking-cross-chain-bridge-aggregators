@@ -10,6 +10,12 @@ export interface CHAIN {
     address_map: { [key: string]: string },
 };
 
+export interface TOKEN {
+    name: string,
+    type: string,
+    decimals: number,
+}
+
 export const ETHEREUM: CHAIN = {
     chainId: 1,
     name: 'ETHEREUM',
@@ -150,12 +156,54 @@ export const CHAIN_MAP: { [key: string]: CHAIN } = {
     "GNOSIS": GNOSIS,
 };
 
-export const TOKEN_TYPE_MAP: { [key: string]: string } = {
-    "ETH": "NATIVE",
-    "WETH": "WRAPPED-ERC20",
-    "MATIC": "NATIVE",
-    "DAI": "STABLE-ERC20",
-    "USDC": "STABLE-ERC20",
-    "LINK": "ERC677",
-    "WMATIC": "WRAPPED-ERC20",
+export const ETH: TOKEN = {
+    name: "ETH",
+    type: "NATIVE",
+    decimals: 18,
+};
+
+export const WETH: TOKEN = {
+    name: "WETH",
+    type: "WRAPPED-ERC20",
+    decimals: 18,
+};
+
+export const MATIC: TOKEN = {
+    name: "MATIC",
+    type: "NATIVE",
+    decimals: 18,
+};
+
+export const DAI: TOKEN = {
+    name: "DAI",
+    type: "STABLE-ERC20",
+    decimals: 18,
+};
+
+export const USDC: TOKEN = {
+    name: "USDC",
+    type: "STABLE-ERC20",
+    decimals: 6,
+};
+
+export const LINK: TOKEN = {
+    name: "LINK",
+    type: "ERC677",
+    decimals: 18,
+};
+
+export const WMATIC: TOKEN = {
+    name: "WMATIC",
+    type: "WRAPPED-ERC20",
+    decimals: 18,
+};
+
+export const TOKEN_MAP: { [key: string]: TOKEN } = {
+    "ETH": ETH,
+    "WETH": WETH,
+    "MATIC": MATIC,
+    "DAI": DAI,
+    "USDC": USDC,
+    "LINK": LINK,
+    "WMATIC": WMATIC,
 };
