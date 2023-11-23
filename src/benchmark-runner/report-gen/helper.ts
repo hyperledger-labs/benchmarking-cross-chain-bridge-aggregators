@@ -22,7 +22,8 @@ function report_count(input_dir: string): number {
 }
 
 export function create_api_report(protocol_name: string, creation_date_time: string, protocol: string, source_network: Network, aggregator: Aggregator, destination_network: Network, trade_value: Asset, net_fee: Fee, latencies: Latency): APIReport {
-    const run_id = report_count(`${report_dir}/${protocol_name}`) + 1;
+    const path = report_dir + '/' + protocol_name + '/' + source_network.network.name + '/' + destination_network.network.name;
+    const run_id = report_count(path) + 1;
     const report: APIReport = {
         "run_id": run_id,
         "creation_date_time": creation_date_time,
@@ -35,7 +36,7 @@ export function create_api_report(protocol_name: string, creation_date_time: str
         "latencies": latencies,
     };
 
-    fs.writeFileSync(`${report_dir}/${protocol_name}/${run_id}.json`, JSON.stringify(report, null, 2));
+    fs.writeFileSync(`${path}/${run_id}.json`, JSON.stringify(report, null, 2));
 
     return report;
 }
