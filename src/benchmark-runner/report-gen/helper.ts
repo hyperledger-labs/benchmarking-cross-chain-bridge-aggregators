@@ -1,7 +1,8 @@
 import fs from 'fs';
+import axios from 'axios';
 import { APIReport, Asset, Fee, Latency, Network } from '@benchmarking-cross-chain-bridges/benchmark-runner/types/APIReport';
 import { Aggregator } from '@benchmarking-cross-chain-bridges/benchmark-runner/types/ExecutedReport';
-import { CHAIN_MAP, TOKEN_TYPE_MAP } from '@benchmarking-cross-chain-bridges/helper/constants_global';
+import { CHAIN_MAP, TOKEN_MAP } from '@benchmarking-cross-chain-bridges/helper/constants_global';
 import { get_gas_price, get_latest_blockNum } from '@benchmarking-cross-chain-bridges/helper/provider';
 
 const report_dir = 'benchmark-data';
@@ -56,7 +57,7 @@ export async function create_report_network(source_chain_name: string, dest_chai
         },
         token: {
             name: fromToken,
-            type: TOKEN_TYPE_MAP[fromToken],
+            type: TOKEN_MAP[fromToken].type,
             address: CHAIN_MAP[source_chain_name].token_map[fromToken],
         }
     };
@@ -73,7 +74,7 @@ export async function create_report_network(source_chain_name: string, dest_chai
         },
         token: {
             name: toToken,
-            type: TOKEN_TYPE_MAP[toToken],
+            type: TOKEN_MAP[toToken].type,
             address: CHAIN_MAP[dest_chain_name].token_map[toToken],
         }
     };
@@ -83,4 +84,28 @@ export async function create_report_network(source_chain_name: string, dest_chai
         source_network: source_network,
         destination_network: destination_network,
     }
+}
+
+const token_to_coingecko_id: { [key: string]: string } = {
+    "ETH": "ethereum",
+    "WETH": "weth",
+    "USDC": "usd-coin",
+    "DAI": "dai",
+    "MATIC": "matic-network",
+    "WMATIC": "wmatic",
+}
+
+export async function get_token_price(token: string): Promise<number> {
+    console.log('Getting token price for', token, token_to_coingecko_id[token]);
+    try {
+        const response = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${token_to_coingecko_id[token]}&vs_currencies=usd`);
+
+        return response.data[token_to_coingecko_id[token]].usd;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+export function scale_two_decimals(num: number, den: number): number {
+    return Math.round((num / den) * 100) / 100;
 }
