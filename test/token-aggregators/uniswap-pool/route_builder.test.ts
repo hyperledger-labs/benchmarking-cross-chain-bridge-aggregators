@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import fs from 'fs';
 
-import { build_route } from '@benchmarking-cross-chain-bridges/token-aggregators/uniswap/route_builder';
+import { build_route } from '@benchmarking-cross-chain-bridges/token-aggregators/uniswap-pool/route_builder';
 
 describe('Uniswap:Router', () => {
     describe('build_route', () => {

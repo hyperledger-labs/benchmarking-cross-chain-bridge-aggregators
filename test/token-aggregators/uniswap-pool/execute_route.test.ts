@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 
-import { build_route } from '@benchmarking-cross-chain-bridges/token-aggregators/uniswap/route_builder';
-import { submit_order } from '@benchmarking-cross-chain-bridges/token-aggregators/uniswap/execute_route';
-import { UNISWAPMethodParameters } from '@benchmarking-cross-chain-bridges/token-aggregators/uniswap/types';
+import { build_route } from '@benchmarking-cross-chain-bridges/token-aggregators/uniswap-pool/route_builder';
+import { submit_order } from '@benchmarking-cross-chain-bridges/token-aggregators/uniswap-pool/execute_route';
+import { UNISWAPMethodParameters } from '@benchmarking-cross-chain-bridges/token-aggregators/uniswap-pool/types';
 
 describe.skip('should submit an GOERLI -> GOERLI order', () => {
     const fromChain = 5;
