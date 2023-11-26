@@ -1,5 +1,5 @@
-import { create_api_report, create_report_network, get_token_price, scale_two_decimals } from './helper';
-import { APIReport, Network, Aggregator, Asset, Fee, Latency } from '@benchmarking-cross-chain-bridges/benchmark-runner/types/APIReport';
+import { create_api_report, create_report_network, get_token_price, scale_two_decimals } from '@benchmarking-cross-chain-bridges/benchmark/report-gen/helper';
+import { APIReport, Network, Aggregator, Asset, Fee, Latency } from '@benchmarking-cross-chain-bridges/benchmark/types/APIReport';
 import { CHAIN_ID_MAP, TOKEN_MAP } from '@benchmarking-cross-chain-bridges/helper/constants_global';
 import { Order } from '@gnosis.pm/gp-v2-contracts';
 import { COWOrderRequest, COWQuote, COWReturn } from '@benchmarking-cross-chain-bridges/token-aggregators/cowswap/types';
@@ -56,7 +56,7 @@ export async function report_generator(quote: COWQuote, fromChain: number, toCha
         amount_usd: scale_two_decimals(net_trade_fee * token_usd_price, fromTokenDecimals),
     };
 
-    const api_report: APIReport = create_api_report(protocol, date_time, protocol, source_network, aggregator, destination_network, trade_value, net_fee, query_latency);
+    const api_report: APIReport = create_api_report(protocol, date_time, source_network, aggregator, destination_network, trade_value, net_fee, query_latency);
 
     return api_report;
 }
@@ -69,7 +69,6 @@ export async function make_api_report(fromChain: number, toChain: number, fromTo
     const quote: COWQuote = obj.resp;
     const order: Order = obj.order;
     const orderReq: COWOrderRequest = obj.orderReq;
-
 
     const query_end = new Date().getTime();
 

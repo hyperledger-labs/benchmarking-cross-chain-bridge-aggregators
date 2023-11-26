@@ -1,5 +1,5 @@
-import { create_api_report, create_report_network } from './helper';
-import { APIReport, Network, Aggregator, Asset, Fee, Latency } from '@benchmarking-cross-chain-bridges/benchmark-runner/types/APIReport';
+import { create_api_report, create_report_network, get_token_price, scale_two_decimals } from '@benchmarking-cross-chain-bridges/benchmark/report-gen/helper';
+import { APIReport, Network, Aggregator, Asset, Fee, Latency } from '@benchmarking-cross-chain-bridges/benchmark/types/APIReport';
 import { CHAIN_ID_MAP, TOKEN_MAP } from '@benchmarking-cross-chain-bridges/helper/constants_global';
 import { LiFiTransaction } from '@benchmarking-cross-chain-bridges/token-aggregators/lifi/types';
 import { build_route } from '@benchmarking-cross-chain-bridges/token-aggregators/lifi/route_builder';
@@ -62,7 +62,7 @@ export async function report_generator(quote: LiFiTransaction, fromChain: number
         amount_usd: net_trade_fee
     };
 
-    const api_report: APIReport = create_api_report(protocol, date_time, protocol, source_network, aggregator, destination_network, trade_value, net_fee, query_latency);
+    const api_report: APIReport = create_api_report(protocol, date_time, source_network, aggregator, destination_network, trade_value, net_fee, query_latency);
 
     return api_report;
 }
