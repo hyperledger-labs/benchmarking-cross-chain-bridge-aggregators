@@ -1,19 +1,20 @@
 import { expect } from 'chai';
 
-import { build_route } from '@benchmarking-cross-chain-bridges/token-aggregators/uniswap-pool/route_builder';
-import { submit_order } from '@benchmarking-cross-chain-bridges/token-aggregators/uniswap-pool/execute_route';
-import { UNISWAPMethodParameters } from '@benchmarking-cross-chain-bridges/token-aggregators/uniswap-pool/types';
+import { build_route } from '@benchmarking-cross-chain-bridges/token-aggregators/uniswap/route_builder';
+import { submit_order } from '@benchmarking-cross-chain-bridges/token-aggregators/uniswap/execute_route';
+import { UNISWAPMethodParameters } from '@benchmarking-cross-chain-bridges/token-aggregators/uniswap/types';
 
 describe.skip('should submit an GOERLI -> GOERLI order', () => {
     const fromChain = 5;
     const toChain = 5;
+    const router_type = 'swap_router_02';
 
     it('should submit a swap for WETH to USDC swap', async () => {
         const fromToken = 'WETH';
         const toToken = 'USDC';
         const amount = (0.005 * 10 ** 18).toString();
 
-        const quote = await build_route(fromChain, toChain, fromToken, toToken, amount);
+        const quote = await build_route(fromChain, toChain, fromToken, toToken, amount, router_type);
 
         expect(quote).to.not.equal(null);
         expect(quote.methodParameters).to.not.equal(undefined);
@@ -30,7 +31,7 @@ describe.skip('should submit an GOERLI -> GOERLI order', () => {
         const toToken = 'WETH';
         const amount = (400000 * 10 ** 6).toString();
 
-        const quote = await build_route(fromChain, toChain, fromToken, toToken, amount);
+        const quote = await build_route(fromChain, toChain, fromToken, toToken, amount, router_type);
 
         expect(quote).to.not.equal(null);
         expect(quote.methodParameters).to.not.equal(undefined);

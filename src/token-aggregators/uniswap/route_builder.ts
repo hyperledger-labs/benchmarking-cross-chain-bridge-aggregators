@@ -1,6 +1,7 @@
 import {
     AlphaRouter,
     SwapOptionsSwapRouter02,
+    SwapOptionsUniversalRouter,
     SwapRoute,
 } from '@uniswap/smart-order-router'
 
@@ -8,7 +9,7 @@ import { TradeType, CurrencyAmount, Token, Ether } from '@uniswap/sdk-core'
 
 import { validate_chain, validate_tokens } from '@benchmarking-cross-chain-bridges/helper/inp_validator';
 import { TOKEN_MAP } from './constants_local';
-import { create_router, create_swap_options } from './config';
+import { define_alpha_router, create_router } from './config';
 /**
  * Builds a swap route using the AlphaRouter from the @uniswap/smart-order-router package.
  * @param chainId - The chain ID of the network.
@@ -18,7 +19,7 @@ import { create_router, create_swap_options } from './config';
  * @returns A Promise that resolves to a SwapRoute object.
  * @throws An error if the fromToken or toToken is invalid, or if the private or public key is missing.
  */
-export async function build_route(from_chain_id: number, to_chain_id: number, fromToken: string, toToken: string, amount: string): Promise<SwapRoute> {
+export async function build_route(from_chain_id: number, to_chain_id: number, fromToken: string, toToken: string, amount: string, router_type: string): Promise<SwapRoute> {
 
     validate_tokens(fromToken, toToken, from_chain_id === to_chain_id);
     validate_chain('UNISWAP', from_chain_id, to_chain_id);
@@ -29,8 +30,8 @@ export async function build_route(from_chain_id: number, to_chain_id: number, fr
 
     // Create a router for the input chain with the provider
     // using the default configuring in config.ts
-    const router: AlphaRouter = create_router(from_chain_id);
-    const options: SwapOptionsSwapRouter02 = create_swap_options();
+    const router: AlphaRouter = define_alpha_router(from_chain_id);
+    const options: SwapOptionsSwapRouter02 | SwapOptionsUniversalRouter = create_router(router_type);
 
     let from_token: Token | Ether;
     if (fromToken === 'ETH') {
