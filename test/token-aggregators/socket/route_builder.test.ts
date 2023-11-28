@@ -7,15 +7,15 @@ const amount = (1 * 10 ** 18).toString();
 const multiTx = false;
 describe('Socket:Router', () => {
     describe('build_route', () => {
-        it('should return a route for a ETHEREUM WETH to USDC swap route', (done) => {
-            const from_chain_id = 1;
-            const to_chain_id = 1;
-            const from_token_address = 'WETH';
-            const to_token_address = 'USDC';
+        it('should return a route for a ETHEREUM WETH to MATIC WMATIC swap route', (done) => {
+            const fromChain = 1;
+            const toChain = 137;
+            const fromToken = 'WETH';
+            const toToken = 'WMATIC';
 
-            build_route(from_chain_id, to_chain_id, from_token_address, to_token_address, amount, multiTx).then((route) => {
-                expect(route.errors).to.equal(undefined);
-                fs.writeFileSync('run-data/token-routes/socket-route.json', JSON.stringify(route));
+            build_route(fromChain, toChain, fromToken, toToken, amount, !multiTx).then((route) => {
+                expect(route.route.routeId).to.not.equal(undefined);
+                fs.writeFileSync('run-data/token-routes/socket-route-cross-chain.json', JSON.stringify(route));
                 done();
             }
             ).catch((error) => {
@@ -23,14 +23,30 @@ describe('Socket:Router', () => {
             });
         });
 
-        it('should return a route for a ETHEREUM DOGECOIN to USDC swap route', (done) => {
-            const from_chain_id = 1;
-            const to_chain_id = 137;
-            const from_token_address = 'DOGECOIN';
-            const to_token_address = 'USDC';
+        it('should return a route for a ETHEREUM WETH to USDC swap route', (done) => {
+            const fromChain = 1;
+            const toChain = 1;
+            const fromToken = 'WETH';
+            const toToken = 'USDC';
 
-            build_route(from_chain_id, to_chain_id, from_token_address, to_token_address, amount, multiTx).then((route) => {
-                expect(route.errors).to.equal(undefined);
+            build_route(fromChain, toChain, fromToken, toToken, amount, !multiTx).then((route) => {
+                expect(route.route.routeId).to.not.equal(undefined);
+                fs.writeFileSync('run-data/token-routes/socket-route-same-chain.json', JSON.stringify(route));
+                done();
+            }
+            ).catch((error) => {
+                done(error);
+            });
+        });
+
+        it('should fail to return a route for a ETHEREUM DOGECOIN to USDC swap route', (done) => {
+            const fromChain = 1;
+            const toChain = 137;
+            const fromToken = 'DOGECOIN';
+            const toToken = 'USDC';
+
+            build_route(fromChain, toChain, fromToken, toToken, amount, multiTx).then((route) => {
+                expect(route.route.routeId).to.not.equal(undefined);
                 done();
             }
             ).catch((error) => {
@@ -40,13 +56,13 @@ describe('Socket:Router', () => {
         });
 
         it('should fail a GOERLI WETH to USDC swap route', (done) => {
-            const from_chain_id = 5;
-            const to_chain_id = 5;
-            const from_token_address = 'WETH';
-            const to_token_address = 'USDC';
+            const fromChain = 5;
+            const toChain = 5;
+            const fromToken = 'WETH';
+            const toToken = 'USDC';
 
-            build_route(from_chain_id, to_chain_id, from_token_address, to_token_address, amount, multiTx).then((route) => {
-                expect(route.errors).to.equal(undefined);
+            build_route(fromChain, toChain, fromToken, toToken, amount, multiTx).then((route) => {
+                expect(route.route.routeId).to.not.equal(undefined);
                 done();
             }
             ).catch((error) => {
