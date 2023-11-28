@@ -22,6 +22,5 @@ gnosis = "${RPC_GNOSIS}"
 [etherscan]
 goerli = { key = "${ETHERSCAN_API_KEY}" }
 sepolia = { key = "${ETHERSCAN_API_KEY}" }
-# TODO: figure out how to get etherscan api keys to work for mumbai and gnosis
-mumbai = { key = "${POLYSCAN_API_KEY}", url = "https://api-testnet.polygonscan.com/api", chain = "Mumbai" }
-gnosis = { key = "${GNOSISCAN_API_KEY}", url = "https://api.gnosisscan.io/api", chain = "Gnosis" }
+mumbai = { key = "${POLYSCAN_API_KEY}", url = "https://api-testnet.polygonscan.com/api" }
+gnosis = { key = "${GNOSISCAN_API_KEY}", url = "https://api.gnosisscan.io/api" }
