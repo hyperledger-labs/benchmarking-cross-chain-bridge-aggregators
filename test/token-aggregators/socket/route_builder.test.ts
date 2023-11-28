@@ -15,7 +15,7 @@ describe('Socket:Router', () => {
 
             build_route(fromChain, toChain, fromToken, toToken, amount, !multiTx).then((route) => {
                 expect(route.route.routeId).to.not.equal(undefined);
-                fs.writeFileSync('run-data/token-routes/socket-route.json', JSON.stringify(route));
+                fs.writeFileSync('run-data/token-routes/socket-route-cross-chain.json', JSON.stringify(route));
                 done();
             }
             ).catch((error) => {
@@ -31,6 +31,7 @@ describe('Socket:Router', () => {
 
             build_route(fromChain, toChain, fromToken, toToken, amount, !multiTx).then((route) => {
                 expect(route.route.routeId).to.not.equal(undefined);
+                fs.writeFileSync('run-data/token-routes/socket-route-same-chain.json', JSON.stringify(route));
                 done();
             }
             ).catch((error) => {
