@@ -41,9 +41,7 @@ export async function build_route(from_chain_id: number, to_chain_id: number, fr
         },
         {
             bridgeWithGas: false,
-            singleTxOnly: !multiTx,
-            // @ts-ignore
-            excludeBridges: ['synapse', 'across']
+            singleTxOnly: !multiTx
         }
     );
 
