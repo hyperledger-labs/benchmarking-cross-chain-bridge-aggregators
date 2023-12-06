@@ -16,7 +16,7 @@ describe('Socket:Router', () => {
 
             build_route(fromChain, toChain, fromToken, toToken, amount, multiTx).then((route: SocketQuote) => {
                 expect(route.route.routeId).to.not.equal(undefined);
-                console.log(typeof route); fs.writeFileSync('run-data/token-routes/socket-route-cross-chain-multiTx.json', JSON.stringify(route));
+                fs.writeFileSync('run-data/token-routes/socket-route-cross-chain-multiTx.json', JSON.stringify(route));
                 done();
             }
             ).catch((error) => {
@@ -48,8 +48,6 @@ describe('Socket:Router', () => {
 
             build_route(fromChain, toChain, fromToken, toToken, amount, !multiTx).then((route: SocketQuote) => {
                 expect(route.route.routeId).to.not.equal(undefined);
-                // console log the type of route
-                console.log(typeof route);
                 fs.writeFileSync('run-data/token-routes/socket-route-same-chain-multiTx.json', JSON.stringify(route));
                 done();
             }
