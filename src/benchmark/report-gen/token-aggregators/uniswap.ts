@@ -70,7 +70,7 @@ export async function report_generator(quote: SwapRoute, fromChain: number, toCh
         amount_usd: net_trade_fee
     };
 
-    const api_report: APIReport = create_api_report(protocol, date_time, source_network, aggregator, destination_network, trade_value, net_fee, query_latency);
+    const api_report: APIReport = create_api_report(protocol, date_time, source_network, aggregator, destination_network, trade_value, net_fee, query_latency, quote);
 
     return api_report;
 }

@@ -77,7 +77,7 @@ export async function report_generator(quotes: XYQuote, fromChain: number, toCha
         amount_usd: scale_two_decimals(net_trade_fee * fee_token_usd_price, fee_token_decimals),
     };
 
-    const api_report: APIReport = create_api_report(protocol, date_time, source_network, aggregator, destination_network, trade_value, net_fee, query_latency);
+    const api_report: APIReport = create_api_report(protocol, date_time, source_network, aggregator, destination_network, trade_value, net_fee, query_latency, quote);
 
     return api_report;
 }
@@ -86,7 +86,7 @@ export async function make_api_report(fromChain: number, toChain: number, fromTo
     const query_start = new Date().getTime();
 
     const quote: XYQuote = await build_route(fromChain, toChain, fromToken, toToken, fromAmount)
-
+    console.log(quote);
     if (quote.routes.length == 0) {
         throw new Error(`No routes found for ${fromToken} -> ${toToken} from ${CHAIN_ID_MAP[fromChain]} -> ${CHAIN_ID_MAP[toChain]}`);
     }
