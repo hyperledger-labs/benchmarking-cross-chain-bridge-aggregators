@@ -38,23 +38,55 @@ export async function report_generator(quotes: XYQuote, fromChain: number, toCha
 
     const quote: XYRoute = quotes.routes[max_dest_usd_val_route];
 
-    const fee_token = quote.bridgeDescription.bridgeFeeToken.symbol;
-    const fee_token_decimals = 10 ** quote.bridgeDescription.bridgeFeeToken.decimals;
-    const fee_token_usd_price = await get_token_price(fee_token);
+    //@ts-ignore
+    var fee_token: string = quote.withholdingFeeToken.symbol;
+    //@ts-ignore
+    var fee_token_decimals: number = 10 ** quote.withholdingFeeToken.decimals;
+    var fee_token_usd_price: number = await get_token_price(fee_token);
 
-    net_trade_fee = parseFloat(quote.bridgeDescription.bridgeFeeAmount) + parseFloat(quote.affiliateFeeAmount) + parseFloat(quote.withholdingFeeAmount);
 
-    var aggregator_fee: Aggregator["fee"] = [{
-        name: quote.srcSwapDescription.provider,
-        amount: parseInt(quote.bridgeDescription.bridgeFeeAmount),
+    var aggregator_fee: Aggregator["fee"] = [];
+
+    if (quote.routeType == "xy_router_cross_chain") {
+        fee_token = quote.bridgeDescription.bridgeFeeToken.symbol;
+        fee_token_decimals = 10 ** quote.bridgeDescription.bridgeFeeToken.decimals;
+        fee_token_usd_price = await get_token_price(fee_token);
+
+        net_trade_fee = parseFloat(quote.bridgeDescription.bridgeFeeAmount);
+
+        aggregator_fee.push({
+            name: quote.srcSwapDescription.provider + "-Fee",
+            amount: parseInt(quote.bridgeDescription.bridgeFeeAmount),
+            percentage: 0.0,
+            gas_price: undefined,
+            usd_price: fee_token_usd_price
+        });
+    }
+
+    const affiliate_fee: Aggregator["fee"][0] = {
+        name: "AFFILIATE-FEE",
+        amount: parseInt(quote.affiliateFeeAmount),
         percentage: 0.0,
         gas_price: undefined,
-        usd_price: fee_token_usd_price
-    }];
+        usd_price: parseInt(quote.affiliateFeeAmount)
+    };
+
+    const withholding_fee: Aggregator["fee"][0] = {
+        name: "WITHHOLDING-FEE",
+        amount: parseInt(quote.withholdingFeeAmount),
+        percentage: 0.0,
+        gas_price: undefined,
+        usd_price: parseInt(quote.withholdingFeeAmount)
+    };
+
+    net_trade_fee += parseInt(quote.affiliateFeeAmount) + parseInt(quote.withholdingFeeAmount);
+
+    aggregator_fee.push(affiliate_fee);
+    aggregator_fee.push(withholding_fee);
 
     const aggregator: Aggregator = {
         name: quote.srcSwapDescription.provider,
-        address: quote.bridgeDescription.bridgeContractAddress,
+        address: quote.contractAddress,
         fee: aggregator_fee,
         total_fee: scale_two_decimals(net_trade_fee * fee_token_usd_price, fee_token_decimals)
     };
@@ -86,7 +118,7 @@ export async function make_api_report(fromChain: number, toChain: number, fromTo
     const query_start = new Date().getTime();
 
     const quote: XYQuote = await build_route(fromChain, toChain, fromToken, toToken, fromAmount)
-    console.log(quote);
+
     if (quote.routes.length == 0) {
         throw new Error(`No routes found for ${fromToken} -> ${toToken} from ${CHAIN_ID_MAP[fromChain]} -> ${CHAIN_ID_MAP[toChain]}`);
     }

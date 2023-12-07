@@ -14,6 +14,7 @@ describe('XY:Router', () => {
 
             build_route(fromChain, toChain, fromToken, toToken, fromAmount).then((route) => {
                 expect(route.success).to.equal(true);
+                fs.writeFileSync('run-data/token-routes/xy-route-same-chain.json', JSON.stringify(route));
                 done();
             }).catch((error) => {
                 done(error);
@@ -28,7 +29,7 @@ describe('XY:Router', () => {
             const fromAmount = (1 * 10 ** 18).toString();
 
             build_route(fromChain, toChain, fromToken, toToken, fromAmount).then((route) => {
-                fs.writeFileSync('run-data/token-routes/xy-route.json', JSON.stringify(route));
+                fs.writeFileSync('run-data/token-routes/xy-route-cross-chain.json', JSON.stringify(route));
                 expect(route.success).to.equal(true);
                 done();
             }).catch((error) => {
