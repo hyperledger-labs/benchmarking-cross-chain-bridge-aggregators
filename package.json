@@ -7,6 +7,7 @@
     "test": "test"
   },
   "scripts": {
+    "benchmark:auto": "./src/benchmark/runners/token-aggregators/auto_run.sh --time-interval 120 --time-scale s --run-count 2",
     "benchmark:ccip": "mocha 'src/benchmark/runners/message-aggregators/runners/CCIP.benchmark.ts'",
     "benchmark:hashi": "mocha 'src/benchmark/runners/message-aggregators/Hashi.benchmark.ts'",
     "benchmark:hyperlane": "mocha 'src/benchmark/runners/message-aggregators/Hyperlane.benchmark.ts'",
@@ -16,7 +17,7 @@
     "benchmark:uniswap": "mocha 'src/benchmark/runners/token-aggregators/uniswap.benchmark.ts'",
     "benchmark:xy": "mocha 'src/benchmark/runners/token-aggregators/xy.benchmark.ts'",
     "benchmark:message-aggregators": "mocha 'src/benchmark/runners/message-aggregators/*.benchmark.ts'",
-    "benchmark:token-aggregators": "mocha 'src/benchmark/runners/token-aggregators/*.benchmark.ts",
+    "benchmark:token-aggregators": "mocha 'src/benchmark/runners/token-aggregators/*.benchmark.ts'",
     "benchmark:all": "mocha 'src/benchmark/runners/*/*.benchmark.ts'",
     "test:ccip": "mocha 'test/message-aggregators/CCIP/*.test.ts'",
     "test:hashi": "mocha 'test/message-aggregators/Hashi/*.test.ts'",
@@ -35,6 +36,7 @@
     "clear:benchmarks": "rm -rf benchmark-data/*",
     "clear:run-data": "rm -rf run-data/*",
     "clear:dry-run": "rm -rf broadcast/*/*/dry-run",
+    "clear:logs": "rm -rf benchmark-data/logs/*",
     "clear:all": "yarn clear:benchmarks && yarn clear:dry-run && yarn clear:run-data",
     "setup:yarn": "yarn",
     "setup:contracts": "forge install",
