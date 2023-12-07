@@ -1,6 +1,6 @@
 import fs from 'fs';
 import axios from 'axios';
-import { APIReport, Asset, Fee, Latency, Network } from '../types/APIReport';
+import { APIReport, Asset, CoinGeckoPrice, Fee, Latency, Network } from '../types/APIReport';
 import { Aggregator } from '../types/ExecutedReport';
 import { CHAIN_MAP, TOKEN_MAP } from '@benchmarking-cross-chain-bridges/helper/constants_global';
 import { get_gas_price, get_latest_blockNum } from '@benchmarking-cross-chain-bridges/helper/provider';
@@ -21,9 +21,23 @@ function report_count(input_dir: string): number {
     }
 }
 
-export function create_api_report(protocol_name: string, creation_date_time: string, source_network: Network, aggregator: Aggregator, destination_network: Network, trade_value: Asset, net_fee: Fee, latencies: Latency, quote: any): APIReport {
+export async function create_api_report(protocol_name: string, creation_date_time: string, source_network: Network, aggregator: Aggregator, destination_network: Network, trade_value: Asset, net_fee: Fee, latencies: Latency, quote: any): Promise<APIReport> {
 
     const path = report_dir + '/' + protocol_name + '/' + source_network.network.name + '/' + destination_network.network.name;
+
+    const coin_gecko_name = destination_network.token.name;
+    const coin_gecko_from_token_price = await get_token_price(source_network.token.name);
+    const coin_gecko_to_token_price = await get_token_price(destination_network.token.name);
+    const coin_gecko_pair_price_per = scale_two_decimals(coin_gecko_from_token_price, coin_gecko_to_token_price);
+    const coin_gecko_pair_price = scale_two_decimals(coin_gecko_pair_price_per * trade_value.actual_value, 10 ** TOKEN_MAP[source_network.token.name].decimals);
+
+    const coin_gecko_price: CoinGeckoPrice = {
+        name: coin_gecko_name,
+        price_per: coin_gecko_pair_price_per,
+        price_amount: coin_gecko_pair_price,
+    }
+
+    console.log(coin_gecko_price);
 
     const run_id = report_count(path) + 1;
     const report: APIReport = {
@@ -36,6 +50,7 @@ export function create_api_report(protocol_name: string, creation_date_time: str
         "trade_value": trade_value,
         "net_fee": net_fee,
         "latencies": latencies,
+        "coin_gecko_price": coin_gecko_price,
     };
 
     fs.writeFileSync(`${path}/${run_id}.json`, JSON.stringify(report, null, 2));

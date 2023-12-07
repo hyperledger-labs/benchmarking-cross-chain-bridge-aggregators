@@ -8,6 +8,7 @@ export type APIReport = {
     trade_value: Asset,
     net_fee: Fee,
     latencies: Latency,
+    coin_gecko_price: CoinGeckoPrice,
 }
 
 export type Network = {
@@ -60,3 +61,9 @@ export type Latency = Array<{
     end_timestamp: number,
     latency: number
 }>
+
+export type CoinGeckoPrice = {
+    name: string,
+    price_per: number,
+    price_amount: number,
+}
