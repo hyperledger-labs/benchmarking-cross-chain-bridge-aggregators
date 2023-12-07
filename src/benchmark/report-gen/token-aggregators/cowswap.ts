@@ -56,7 +56,7 @@ export async function report_generator(quote: COWQuote, fromChain: number, toCha
         amount_usd: scale_two_decimals(net_trade_fee * token_usd_price, fromTokenDecimals),
     };
 
-    const api_report: APIReport = create_api_report(protocol, date_time, source_network, aggregator, destination_network, trade_value, net_fee, query_latency, quote);
+    const api_report: APIReport = await create_api_report(protocol, date_time, source_network, aggregator, destination_network, trade_value, net_fee, query_latency, quote);
 
     return api_report;
 }

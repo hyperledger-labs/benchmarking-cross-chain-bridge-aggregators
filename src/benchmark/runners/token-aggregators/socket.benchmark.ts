@@ -10,7 +10,7 @@ describe('Benchmarking Socket', () => {
         const fromChain = 1;
         const toChain = 137;
 
-        it('should create an order for ETH to MATIC swap', async () => {
+        it('should create an order for ETH to USDC swap', async () => {
             const fromToken = 'WETH';
             const toToken = 'USDC';
             const fromAmount = (1 * 10 ** 18).toString();
@@ -25,7 +25,7 @@ describe('Benchmarking Socket', () => {
         const fromChain = 1;
         const toChain = 1;
 
-        it('should create an order for ETH to MATIC swap', async () => {
+        it('should create an order for ETH to USDC swap', async () => {
             const fromToken = 'WETH';
             const toToken = 'USDC';
             const fromAmount = (1 * 10 ** 18).toString();

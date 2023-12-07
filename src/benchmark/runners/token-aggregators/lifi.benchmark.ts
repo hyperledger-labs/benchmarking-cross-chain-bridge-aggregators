@@ -38,9 +38,9 @@ describe('Benchmarking Lifi', () => {
         const fromChain = 1;
         const toChain = 137;
 
-        it('should benchmark WETH to MATIC swap', async () => {
+        it('should benchmark WETH to USDC swap', async () => {
             const fromToken = 'WETH';
-            const toToken = 'MATIC';
+            const toToken = 'USDC';
             const fromAmount = (1 * 10 ** 18).toString();
 
             const report: APIReport = await make_api_report(fromChain, toChain, fromToken, toToken, fromAmount);

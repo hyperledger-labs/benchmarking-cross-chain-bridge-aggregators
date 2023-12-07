@@ -109,7 +109,7 @@ export async function report_generator(quotes: XYQuote, fromChain: number, toCha
         amount_usd: scale_two_decimals(net_trade_fee * fee_token_usd_price, fee_token_decimals),
     };
 
-    const api_report: APIReport = create_api_report(protocol, date_time, source_network, aggregator, destination_network, trade_value, net_fee, query_latency, quote);
+    const api_report: APIReport = await create_api_report(protocol, date_time, source_network, aggregator, destination_network, trade_value, net_fee, query_latency, quote);
 
     return api_report;
 }
