@@ -10,7 +10,7 @@ const report_dir = 'benchmark-data';
 function report_count(input_dir: string): number {
     try {
         const files = fs.readdirSync(input_dir);
-        return files.length;
+        return files.length / 2;
     } catch (error: any) {
         if (error.code === 'ENOENT') {
             fs.mkdirSync(input_dir, { recursive: true });
