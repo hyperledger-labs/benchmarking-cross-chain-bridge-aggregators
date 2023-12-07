@@ -10,7 +10,7 @@ const report_dir = 'benchmark-data';
 function report_count(input_dir: string): number {
     try {
         const files = fs.readdirSync(input_dir);
-        return files.length;
+        return files.length / 2;
     } catch (error: any) {
         if (error.code === 'ENOENT') {
             fs.mkdirSync(input_dir, { recursive: true });
@@ -21,7 +21,7 @@ function report_count(input_dir: string): number {
     }
 }
 
-export function create_api_report(protocol_name: string, creation_date_time: string, source_network: Network, aggregator: Aggregator, destination_network: Network, trade_value: Asset, net_fee: Fee, latencies: Latency): APIReport {
+export function create_api_report(protocol_name: string, creation_date_time: string, source_network: Network, aggregator: Aggregator, destination_network: Network, trade_value: Asset, net_fee: Fee, latencies: Latency, quote: any): APIReport {
 
     const path = report_dir + '/' + protocol_name + '/' + source_network.network.name + '/' + destination_network.network.name;
 
@@ -39,7 +39,7 @@ export function create_api_report(protocol_name: string, creation_date_time: str
     };
 
     fs.writeFileSync(`${path}/${run_id}.json`, JSON.stringify(report, null, 2));
-
+    fs.writeFileSync(`${path}/${run_id}.quote.json`, JSON.stringify(quote, null, 2));
     return report;
 }
 

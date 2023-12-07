@@ -2,20 +2,21 @@ import { expect } from 'chai';
 import fs from 'fs';
 
 import { build_route } from '@benchmarking-cross-chain-bridges/token-aggregators/socket/route_builder';
+import { SocketQuote } from '@socket.tech/socket-v2-sdk';
 
 const amount = (1 * 10 ** 18).toString();
-const multiTx = false;
+const multiTx = true;
 describe('Socket:Router', () => {
     describe('build_route', () => {
-        it('should return a route for a ETHEREUM WETH to MATIC WMATIC swap route', (done) => {
+        it('should return a route for a ETHEREUM WETH to MATIC WMATIC multi swap route', (done) => {
             const fromChain = 1;
             const toChain = 137;
             const fromToken = 'WETH';
             const toToken = 'WMATIC';
 
-            build_route(fromChain, toChain, fromToken, toToken, amount, !multiTx).then((route) => {
+            build_route(fromChain, toChain, fromToken, toToken, amount, multiTx).then((route: SocketQuote) => {
                 expect(route.route.routeId).to.not.equal(undefined);
-                fs.writeFileSync('run-data/token-routes/socket-route-cross-chain.json', JSON.stringify(route));
+                fs.writeFileSync('run-data/token-routes/socket-route-cross-chain-multiTx.json', JSON.stringify(route));
                 done();
             }
             ).catch((error) => {
@@ -23,15 +24,31 @@ describe('Socket:Router', () => {
             });
         });
 
-        it('should return a route for a ETHEREUM WETH to USDC swap route', (done) => {
+        it('should return a route for a ETHEREUM WETH to USDC multi swap route', (done) => {
             const fromChain = 1;
             const toChain = 1;
             const fromToken = 'WETH';
             const toToken = 'USDC';
 
-            build_route(fromChain, toChain, fromToken, toToken, amount, !multiTx).then((route) => {
+            build_route(fromChain, toChain, fromToken, toToken, amount, multiTx).then((route: SocketQuote) => {
                 expect(route.route.routeId).to.not.equal(undefined);
-                fs.writeFileSync('run-data/token-routes/socket-route-same-chain.json', JSON.stringify(route));
+                fs.writeFileSync('run-data/token-routes/socket-route-same-chain-multiTx.json', JSON.stringify(route));
+                done();
+            }
+            ).catch((error) => {
+                done(error);
+            });
+        });
+
+        it('should return a route for a ETHEREUM WETH to USDC single swap route', (done) => {
+            const fromChain = 1;
+            const toChain = 1;
+            const fromToken = 'WETH';
+            const toToken = 'USDC';
+
+            build_route(fromChain, toChain, fromToken, toToken, amount, !multiTx).then((route: SocketQuote) => {
+                expect(route.route.routeId).to.not.equal(undefined);
+                fs.writeFileSync('run-data/token-routes/socket-route-same-chain-multiTx.json', JSON.stringify(route));
                 done();
             }
             ).catch((error) => {
