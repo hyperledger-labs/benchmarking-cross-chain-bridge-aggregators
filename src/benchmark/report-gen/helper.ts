@@ -1,7 +1,7 @@
 import fs from 'fs';
 import axios from 'axios';
 import { APIReport, Asset, CoinGeckoPrice, Fee, Latency, Network } from '../types/APIReport';
-import { Aggregator } from '../types/ExecutedReport';
+import { Aggregator } from '../types/APIReport';
 import { CHAIN_MAP, TOKEN_MAP } from '@benchmarking-cross-chain-bridges/helper/constants_global';
 import { get_gas_price, get_latest_blockNum } from '@benchmarking-cross-chain-bridges/helper/provider';
 
@@ -25,21 +25,9 @@ export async function create_api_report(protocol_name: string, creation_date_tim
 
     const path = report_dir + '/' + protocol_name + '/' + source_network.network.name + '/' + destination_network.network.name;
 
-    const coin_gecko_name = destination_network.token.name;
-    const coin_gecko_from_token_price = await get_token_price(source_network.token.name);
-    const coin_gecko_to_token_price = await get_token_price(destination_network.token.name);
-    const coin_gecko_pair_price_per = scale_two_decimals(coin_gecko_from_token_price, coin_gecko_to_token_price);
-    const coin_gecko_pair_price = scale_two_decimals(coin_gecko_pair_price_per * trade_value.actual_value, 10 ** TOKEN_MAP[source_network.token.name].decimals);
-
-    const coin_gecko_price: CoinGeckoPrice = {
-        name: coin_gecko_name,
-        price_per: coin_gecko_pair_price_per,
-        price_amount: coin_gecko_pair_price,
-    }
-
-    console.log(coin_gecko_price);
-
     const run_id = report_count(path) + 1;
+    const coin_gecko_price = await get_coin_gecko_price(run_id, source_network, destination_network, trade_value.actual_value);
+
     const report: APIReport = {
         "run_id": run_id,
         "creation_date_time": creation_date_time,
@@ -127,4 +115,36 @@ export async function get_token_price(token: string): Promise<number> {
 }
 export function scale_two_decimals(num: number, den: number = 1): number {
     return Math.round((num / den) * 100) / 100;
+}
+
+export async function get_coin_gecko_price(run_id: number, source_chain: Network, dest_chain: Network, raw_value: number): Promise<CoinGeckoPrice> {
+    // if benchmark-data/coin_gecko_price/run_id.json exists, then return the price else fetch from coingecko and save it
+
+    if (fs.existsSync(`${report_dir}/coin_gecko_price/${run_id}.json`)) {
+        const coin_gecko_price = JSON.parse(fs.readFileSync(`${report_dir}/coin_gecko_price/${run_id}.json`, 'utf-8'));
+        return coin_gecko_price;
+    }
+
+    const fromToken = source_chain.token;
+    const toToken = dest_chain.token;
+
+    const coin_gecko_name = fromToken.name;
+    const coin_gecko_from_token_price = await get_token_price(fromToken.name);
+    const coin_gecko_to_token_price = await get_token_price(toToken.name);
+    const coin_gecko_pair_price_per = scale_two_decimals(coin_gecko_from_token_price, coin_gecko_to_token_price);
+    const coin_gecko_pair_price = scale_two_decimals(coin_gecko_pair_price_per * raw_value, 10 ** TOKEN_MAP[fromToken.name].decimals);
+
+    const coin_gecko_price: CoinGeckoPrice = {
+        name: coin_gecko_name,
+        price_per: coin_gecko_pair_price_per,
+        price_amount: coin_gecko_pair_price,
+    }
+
+
+    if (!fs.existsSync(`${report_dir}/coin_gecko_price`)) {
+        fs.mkdirSync(`${report_dir}/coin_gecko_price`, { recursive: true });
+    }
+
+    fs.writeFileSync(`${report_dir}/coin_gecko_price/${run_id}.json`, JSON.stringify(coin_gecko_price, null, 2));
+    return coin_gecko_price;
 }
