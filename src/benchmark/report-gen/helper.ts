@@ -7,10 +7,18 @@ import { get_gas_price, get_latest_blockNum } from '@benchmarking-cross-chain-br
 
 const report_dir = 'benchmark-data';
 
-export function report_count(input_dir: string): number {
+export function report_count(input_dir: string, time_frame: number = 5): number {
     try {
         const files = fs.readdirSync(input_dir);
-        return files.length / 2;
+        const count = files.length / 2;
+        const last_report: APIReport = JSON.parse(fs.readFileSync(`${input_dir}/${count}.json`, 'utf-8'));
+        const last_report_date = new Date(last_report.creation_date_time);
+        const current_date = new Date();
+        const diff = current_date.getTime() - last_report_date.getTime();
+        if (diff < time_frame * 60 * 1000) {
+            return count - 1;
+        }
+        return count;
     } catch (error: any) {
         if (error.code === 'ENOENT') {
             fs.mkdirSync(input_dir, { recursive: true });
