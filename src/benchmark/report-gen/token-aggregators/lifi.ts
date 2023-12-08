@@ -3,6 +3,7 @@ import { APIReport, Network, Aggregator, Asset, Fee, Latency } from '@benchmarki
 import { CHAIN_ID_MAP, TOKEN_MAP } from '@benchmarking-cross-chain-bridges/helper/constants_global';
 import { LiFiTransaction } from '@benchmarking-cross-chain-bridges/token-aggregators/lifi/types';
 import { build_route } from '@benchmarking-cross-chain-bridges/token-aggregators/lifi/route_builder';
+import { approveAllow } from '@benchmarking-cross-chain-bridges/helper/token_misc';
 
 export async function report_generator(quote: LiFiTransaction, fromChain: number, toChain: number, fromToken: string, toToken: string, fromAmount: string, api_latency: Latency[0]) {
     const protocol = 'lifi';
@@ -45,17 +46,27 @@ export async function report_generator(quote: LiFiTransaction, fromChain: number
         total_fee: net_trade_fee
     };
 
+    const actual_value = parseInt(fromAmount);
+    const actual_value_usd = scale_two_decimals(parseFloat(quote.estimate.fromAmountUSD));
+    const effective_trade_value_usd = scale_two_decimals(parseFloat(quote.estimate.toAmountUSD));
+    const difference_in_value = actual_value_usd - effective_trade_value_usd;
+    const approximated_gas_cost = parseInt(quote.estimate.gasCosts[0].amount);
+    const approximated_gas_cost_usd = parseFloat(quote.estimate.gasCosts[0].amountUSD);
+    const final_value_usd = effective_trade_value_usd - approximated_gas_cost_usd;
+
     const trade_value: Asset = {
         name: fromToken,
         description: `Trade value of ${trade_amount} ${fromToken} from ${source_chain_name} to ${dest_chain_name} for ${toToken}`,
-        actual_value: parseInt(quote.estimate.fromAmount),
-        actual_value_usd: parseInt(quote.estimate.fromAmountUSD),
-        effective_trade_value_usd: parseInt(quote.estimate.toAmountUSD),
-        difference_in_value: parseInt(quote.estimate.fromAmountUSD) - parseInt(quote.estimate.toAmountUSD),
-        approximated_gas_cost: parseInt(quote.estimate.gasCosts[0].amount),
-        gas_usd_price: parseFloat(quote.estimate.gasCosts[0].amountUSD),
-        final_value_usd: parseInt(quote.estimate.toAmountUSD) - parseInt(quote.estimate.gasCosts[0].amountUSD),
+        actual_value: actual_value,
+        actual_value_usd: actual_value_usd,
+        effective_trade_value_usd: effective_trade_value_usd,
+        difference_in_value: difference_in_value,
+        approximated_gas_cost: approximated_gas_cost,
+        approximated_gas_cost_usd: approximated_gas_cost_usd,
+        final_value_usd: final_value_usd
     };
+
+    net_trade_fee += approximated_gas_cost_usd;
 
     const net_fee: Fee = {
         name: "NET-FEE",

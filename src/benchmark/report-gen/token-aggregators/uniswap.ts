@@ -50,6 +50,7 @@ export async function report_generator(quote: SwapRoute, fromChain: number, toCh
     const effective_trade_value_usd = actual_value_usd - net_trade_fee;
     const difference_in_value = actual_value_usd - effective_trade_value_usd;
     const approximated_gas_cost = quote.estimatedGasUsed.toNumber();
+    const approximated_gas_cost_usd = 0;
     const gas_usd_price = source_network.network.gas_price;
     const final_value_usd = scale_two_decimals(parseFloat(quote.quoteGasAdjusted.toExact()));
 
@@ -61,7 +62,7 @@ export async function report_generator(quote: SwapRoute, fromChain: number, toCh
         effective_trade_value_usd: effective_trade_value_usd,
         difference_in_value: difference_in_value,
         approximated_gas_cost: approximated_gas_cost,
-        gas_usd_price: gas_usd_price,
+        approximated_gas_cost_usd: approximated_gas_cost_usd,
         final_value_usd: final_value_usd,
     };
 

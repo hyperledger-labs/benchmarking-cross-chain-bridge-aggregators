@@ -22,3 +22,4 @@ node_modules
 run-data/
 child_process
 benchmark-data
+benchmark-plots

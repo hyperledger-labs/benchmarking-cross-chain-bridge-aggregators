@@ -46,7 +46,7 @@ export type Asset = {
     effective_trade_value_usd: number,
     difference_in_value: number,
     approximated_gas_cost: number,
-    gas_usd_price: number,
+    approximated_gas_cost_usd: number,
     final_value_usd: number,
 }
 

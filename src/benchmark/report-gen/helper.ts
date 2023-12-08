@@ -28,6 +28,11 @@ export async function create_api_report(protocol_name: string, creation_date_tim
     const run_id = report_count(path) + 1;
     const coin_gecko_price = await get_coin_gecko_price(run_id, source_network, destination_network, trade_value.actual_value);
 
+    if (trade_value.approximated_gas_cost_usd == 0) {
+        trade_value.approximated_gas_cost_usd = scale_two_decimals(trade_value.approximated_gas_cost * coin_gecko_price.price_per, 10 ** 9);
+        net_fee.amount_usd += trade_value.approximated_gas_cost_usd;
+    }
+
     const report: APIReport = {
         "run_id": run_id,
         "creation_date_time": creation_date_time,

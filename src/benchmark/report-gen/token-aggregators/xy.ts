@@ -92,16 +92,23 @@ export async function report_generator(quotes: XYQuote, fromChain: number, toCha
     };
 
     const actual_value = parseInt(fromAmount);
+    const actual_value_usd = scale_two_decimals(parseFloat(quote.srcQuoteTokenUsdValue));
+    const effective_trade_value_usd = scale_two_decimals(parseFloat(quote.dstQuoteTokenUsdValue));
+    const difference_in_value = actual_value_usd - effective_trade_value_usd;
+    const approximated_gas_cost = parseInt(quote.estimatedGas);
+    const approximated_gas_cost_usd = 0;
+    const final_value_usd = scale_two_decimals(parseFloat(quote.dstQuoteTokenUsdValue) - parseInt(quote.estimatedGas) * fee_token_usd_price, fee_token_decimals);
+
     const trade_value: Asset = {
         name: fromToken,
         description: `Trade value of ${trade_amount} ${fromToken} from ${source_chain_name} to ${dest_chain_name} for ${toToken}`,
         actual_value: actual_value,
-        actual_value_usd: parseFloat(quote.srcQuoteTokenUsdValue),
-        effective_trade_value_usd: parseFloat(quote.dstQuoteTokenUsdValue),
-        difference_in_value: parseFloat(quote.srcQuoteTokenUsdValue) - parseFloat(quote.dstQuoteTokenUsdValue),
-        approximated_gas_cost: parseInt(quote.estimatedGas),
-        gas_usd_price: source_network.network.gas_price,
-        final_value_usd: parseFloat(quote.dstQuoteTokenUsdValue) - scale_two_decimals(parseInt(quote.estimatedGas) * fee_token_usd_price, fee_token_decimals),
+        actual_value_usd: actual_value_usd,
+        effective_trade_value_usd: effective_trade_value_usd,
+        difference_in_value: difference_in_value,
+        approximated_gas_cost: approximated_gas_cost,
+        approximated_gas_cost_usd: approximated_gas_cost_usd,
+        final_value_usd: final_value_usd,
     };
 
     const net_fee: Fee = {

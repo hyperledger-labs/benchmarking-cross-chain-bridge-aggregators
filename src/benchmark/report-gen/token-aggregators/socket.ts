@@ -37,7 +37,7 @@ export async function report_generator(quote: SocketQuote | SocketQuoteSingleCha
 
     const aggregator_fee: Aggregator["fee"] = socket_obj.aggregator_fee;
     const aggregator_name: string = socket_obj.aggregator_name;
-    const net_trade_fee: number = socket_obj.net_trade_fee;
+    let net_trade_fee: number = socket_obj.net_trade_fee;
 
     const aggregator: Aggregator = {
         name: aggregator_name,
@@ -50,8 +50,8 @@ export async function report_generator(quote: SocketQuote | SocketQuoteSingleCha
     const actual_value_usd = scale_two_decimals(quote.route.inputValueInUsd);
     const effective_trade_value_usd = scale_two_decimals(quote.route.outputValueInUsd);
     const difference_in_value = actual_value_usd - effective_trade_value_usd;
-    const approximated_gas_cost = scale_two_decimals(quote.route.totalGasFeesInUsd);
-    const gas_usd_price = gas_price;
+    const approximated_gas_cost = 0;
+    const approximated_gas_cost_usd = scale_two_decimals(quote.route.totalGasFeesInUsd);
     const final_value_usd = effective_trade_value_usd - approximated_gas_cost;
 
     const trade_value: Asset = {
@@ -62,9 +62,11 @@ export async function report_generator(quote: SocketQuote | SocketQuoteSingleCha
         effective_trade_value_usd: effective_trade_value_usd,
         difference_in_value: difference_in_value,
         approximated_gas_cost: approximated_gas_cost,
-        gas_usd_price: gas_usd_price,
+        approximated_gas_cost_usd: approximated_gas_cost_usd,
         final_value_usd: final_value_usd,
     };
+
+    net_trade_fee += approximated_gas_cost_usd;
 
     const net_fee: Fee = {
         name: "NET-FEE",
