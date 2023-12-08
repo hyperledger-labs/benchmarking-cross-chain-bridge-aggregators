@@ -51,7 +51,6 @@ export async function report_generator(quote: SwapRoute, fromChain: number, toCh
     const difference_in_value = actual_value_usd - effective_trade_value_usd;
     const approximated_gas_cost_gwei = quote.estimatedGasUsed.toNumber();
     const approximated_gas_cost_usd = 0;
-    const gas_usd_price = source_network.network.gas_price_gwei;
     const effective_trade_value_usd_with_gas = scale_two_decimals(parseFloat(quote.quoteGasAdjusted.toExact()));
 
     const trade_value: Asset = {

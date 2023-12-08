@@ -75,13 +75,13 @@ export async function create_report_network(protocol: string, source_chain_name:
     const source_block_num = await get_latest_blockNum(source_chain_name);
     const from_native_token = CHAIN_MAP[source_chain_name].native_token.name;
     const coin_gecko_from_token_price = await get_coin_gecko_price(run_id, from_native_token, "USD");
-    const gas_usd_price_from_network = coin_gecko_from_token_price.price_per * source_gas_price_gwei * 10e-9;
+    const gas_price_usd_from_network = coin_gecko_from_token_price.price_per * source_gas_price_gwei * 10e-9;
 
     const source_network: Network = {
         network: {
             name: source_chain_name,
             gas_price_gwei: source_gas_price_gwei,
-            gas_usd_price: gas_usd_price_from_network,
+            gas_price_usd: gas_price_usd_from_network,
             last_block_num: source_block_num,
             queried_at: date_time,
         },
@@ -98,12 +98,12 @@ export async function create_report_network(protocol: string, source_chain_name:
     const dest_block_num = await get_latest_blockNum(dest_chain_name);
     const to_native_token = CHAIN_MAP[dest_chain_name].native_token.name;
     const coin_gecko_to_token_price = await get_coin_gecko_price(run_id, to_native_token, "USD");
-    const gas_usd_price_to_network = coin_gecko_to_token_price.price_per * dest_gas_price_gwei * 10e-9;
+    const gas_price_usd_to_network = coin_gecko_to_token_price.price_per * dest_gas_price_gwei * 10e-9;
     const destination_network: Network = {
         network: {
             name: dest_chain_name,
             gas_price_gwei: dest_gas_price_gwei,
-            gas_usd_price: gas_usd_price_to_network,
+            gas_price_usd: gas_price_usd_to_network,
             last_block_num: dest_block_num,
             queried_at: date_time,
         },

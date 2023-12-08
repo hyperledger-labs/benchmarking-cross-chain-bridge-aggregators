@@ -15,7 +15,7 @@ export type Network = {
     network: {
         name: string,
         gas_price_gwei: number,
-        gas_usd_price: number,
+        gas_price_usd: number,
         last_block_num: number,
         queried_at: string,
     },
