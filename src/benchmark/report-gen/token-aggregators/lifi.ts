@@ -3,7 +3,6 @@ import { APIReport, Network, Aggregator, Asset, Fee, Latency } from '@benchmarki
 import { CHAIN_ID_MAP, TOKEN_MAP } from '@benchmarking-cross-chain-bridges/helper/constants_global';
 import { LiFiTransaction } from '@benchmarking-cross-chain-bridges/token-aggregators/lifi/types';
 import { build_route } from '@benchmarking-cross-chain-bridges/token-aggregators/lifi/route_builder';
-import { approveAllow } from '@benchmarking-cross-chain-bridges/helper/token_misc';
 
 export async function report_generator(quote: LiFiTransaction, fromChain: number, toChain: number, fromToken: string, toToken: string, fromAmount: string, api_latency: Latency[0]) {
     const protocol = 'lifi';
@@ -11,7 +10,7 @@ export async function report_generator(quote: LiFiTransaction, fromChain: number
     const source_chain_name = CHAIN_ID_MAP[fromChain];
     const dest_chain_name = CHAIN_ID_MAP[toChain];
 
-    const obj = await create_report_network(source_chain_name, dest_chain_name, fromToken, toToken);
+    const obj = await create_report_network(protocol, source_chain_name, dest_chain_name, fromToken, toToken);
 
     const date_time: string = obj.date_time;
     const source_network: Network = obj.source_network;
@@ -30,7 +29,7 @@ export async function report_generator(quote: LiFiTransaction, fromChain: number
             name: fee.name,
             amount: parseInt(fee.amount),
             percentage: parseFloat(fee.percentage),
-            gas_price: undefined,
+            gas_price_gwei: undefined,
             usd_price: parseFloat(fee.amountUSD)
         }];
 
@@ -50,9 +49,9 @@ export async function report_generator(quote: LiFiTransaction, fromChain: number
     const actual_value_usd = scale_two_decimals(parseFloat(quote.estimate.fromAmountUSD));
     const effective_trade_value_usd = scale_two_decimals(parseFloat(quote.estimate.toAmountUSD));
     const difference_in_value = actual_value_usd - effective_trade_value_usd;
-    const approximated_gas_cost = parseInt(quote.estimate.gasCosts[0].amount);
+    const approximated_gas_cost_gwei = parseInt(quote.estimate.gasCosts[0].amount);
     const approximated_gas_cost_usd = parseFloat(quote.estimate.gasCosts[0].amountUSD);
-    const final_value_usd = effective_trade_value_usd - approximated_gas_cost_usd;
+    const effective_trade_value_usd_with_gas = effective_trade_value_usd - approximated_gas_cost_usd;
 
     const trade_value: Asset = {
         name: fromToken,
@@ -61,15 +60,15 @@ export async function report_generator(quote: LiFiTransaction, fromChain: number
         actual_value_usd: actual_value_usd,
         effective_trade_value_usd: effective_trade_value_usd,
         difference_in_value: difference_in_value,
-        approximated_gas_cost: approximated_gas_cost,
+        approximated_gas_cost_gwei: approximated_gas_cost_gwei,
         approximated_gas_cost_usd: approximated_gas_cost_usd,
-        final_value_usd: final_value_usd
+        effective_trade_value_usd_with_gas: effective_trade_value_usd_with_gas
     };
 
     net_trade_fee += approximated_gas_cost_usd;
 
     const net_fee: Fee = {
-        name: "NET-FEE",
+        name: "TOTAL FEE WITH GAS",
         amount_usd: net_trade_fee
     };
 

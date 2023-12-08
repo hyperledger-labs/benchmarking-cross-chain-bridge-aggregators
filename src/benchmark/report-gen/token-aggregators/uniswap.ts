@@ -10,7 +10,7 @@ export async function report_generator(quote: SwapRoute, fromChain: number, toCh
     const source_chain_name = CHAIN_ID_MAP[fromChain];
     const dest_chain_name = CHAIN_ID_MAP[toChain];
 
-    const obj = await create_report_network(source_chain_name, dest_chain_name, fromToken, toToken);
+    const obj = await create_report_network(protocol, source_chain_name, dest_chain_name, fromToken, toToken);
 
     const date_time: string = obj.date_time;
     const source_network: Network = obj.source_network;
@@ -31,7 +31,7 @@ export async function report_generator(quote: SwapRoute, fromChain: number, toCh
         name: quote.route[0].protocol + "-FEE",
         amount: fee_amount,
         percentage: fee_percentage * 100,
-        gas_price: source_network.network.gas_price,
+        gas_price_gwei: source_network.network.gas_price_gwei,
         usd_price: scale_two_decimals(parseFloat(quote.quote.toExact()) * fee_percentage)
     }];
 
@@ -49,10 +49,10 @@ export async function report_generator(quote: SwapRoute, fromChain: number, toCh
     const actual_value_usd = scale_two_decimals(parseFloat(quote.quote.toExact()));
     const effective_trade_value_usd = actual_value_usd - net_trade_fee;
     const difference_in_value = actual_value_usd - effective_trade_value_usd;
-    const approximated_gas_cost = quote.estimatedGasUsed.toNumber();
+    const approximated_gas_cost_gwei = quote.estimatedGasUsed.toNumber();
     const approximated_gas_cost_usd = 0;
-    const gas_usd_price = source_network.network.gas_price;
-    const final_value_usd = scale_two_decimals(parseFloat(quote.quoteGasAdjusted.toExact()));
+    const gas_usd_price = source_network.network.gas_price_gwei;
+    const effective_trade_value_usd_with_gas = scale_two_decimals(parseFloat(quote.quoteGasAdjusted.toExact()));
 
     const trade_value: Asset = {
         name: fromToken,
@@ -61,13 +61,13 @@ export async function report_generator(quote: SwapRoute, fromChain: number, toCh
         actual_value_usd: actual_value_usd,
         effective_trade_value_usd: effective_trade_value_usd,
         difference_in_value: difference_in_value,
-        approximated_gas_cost: approximated_gas_cost,
+        approximated_gas_cost_gwei: approximated_gas_cost_gwei,
         approximated_gas_cost_usd: approximated_gas_cost_usd,
-        final_value_usd: final_value_usd,
+        effective_trade_value_usd_with_gas: effective_trade_value_usd_with_gas,
     };
 
     const net_fee: Fee = {
-        name: "NET-FEE",
+        name: "TOTAL FEE WITH GAS",
         amount_usd: net_trade_fee
     };
 

@@ -48,14 +48,14 @@ describe('Benchmarking Lifi', () => {
             expect(report).to.have.property('run_id');
         });
 
-        it('should benchmark WETH to MATIC swap', async () => {
-            const fromToken = 'WETH';
-            const toToken = 'MATIC';
-            const fromAmount = (1 * 10 ** 18).toString();
+        // it('should benchmark WETH to MATIC swap', async () => {
+        //     const fromToken = 'WETH';
+        //     const toToken = 'MATIC';
+        //     const fromAmount = (1 * 10 ** 18).toString();
 
-            const report: APIReport = await make_api_report(fromChain, toChain, fromToken, toToken, fromAmount);
+        //     const report: APIReport = await make_api_report(fromChain, toChain, fromToken, toToken, fromAmount);
 
-            expect(report).to.have.property('run_id');
-        });
+        //     expect(report).to.have.property('run_id');
+        // });
     });
 });

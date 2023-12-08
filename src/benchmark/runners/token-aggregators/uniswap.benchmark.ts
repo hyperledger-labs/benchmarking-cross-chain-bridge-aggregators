@@ -27,7 +27,7 @@ describe('Benchmarking Uniswap (Pool errors may occur!)', () => {
         const toToken = 'DAI';
         const amount = (1 * 10 ** 18).toString();
 
-        it('should benchmark ETH to USDC swap with universal router', async () => {
+        it('should benchmark ETH to DAI swap with universal router', async () => {
             const report: APIReport = await make_api_report(sourceChain, destChain, fromToken, toToken, amount);
 
             expect(report).to.have.property('run_id');

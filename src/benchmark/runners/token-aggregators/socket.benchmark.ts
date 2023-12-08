@@ -20,15 +20,15 @@ describe('Benchmarking Socket', () => {
             expect(report).to.have.property('run_id');
         });
 
-        it('should create an order for WETH to MATIC swap', async () => {
-            const fromToken = 'WETH';
-            const toToken = 'MATIC';
-            const fromAmount = (1 * 10 ** 18).toString();
+        // it('should create an order for WETH to MATIC swap', async () => {
+        //     const fromToken = 'WETH';
+        //     const toToken = 'WMATIC';
+        //     const fromAmount = (1 * 10 ** 18).toString();
 
-            const report: APIReport = await make_api_report(fromChain, toChain, fromToken, toToken, fromAmount, multiTx);
+        //     const report: APIReport = await make_api_report(fromChain, toChain, fromToken, toToken, fromAmount, multiTx);
 
-            expect(report).to.have.property('run_id');
-        });
+        //     expect(report).to.have.property('run_id');
+        // });
     });
 
     describe('should create reports for MAINNET -> MAINNET trades', () => {

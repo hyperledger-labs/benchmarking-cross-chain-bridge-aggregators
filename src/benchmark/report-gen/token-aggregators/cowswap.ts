@@ -1,4 +1,4 @@
-import { create_api_report, create_report_network, get_token_price, scale_two_decimals } from '@benchmarking-cross-chain-bridges/benchmark/report-gen/helper';
+import { create_api_report, create_report_network, get_coin_gecko_price, report_count, scale_two_decimals } from '@benchmarking-cross-chain-bridges/benchmark/report-gen/helper';
 import { APIReport, Network, Aggregator, Asset, Fee, Latency } from '@benchmarking-cross-chain-bridges/benchmark/types/APIReport';
 import { CHAIN_ID_MAP, TOKEN_MAP } from '@benchmarking-cross-chain-bridges/helper/constants_global';
 import { Order } from '@gnosis.pm/gp-v2-contracts';
@@ -11,7 +11,7 @@ export async function report_generator(quote: COWQuote, fromChain: number, toCha
     const source_chain_name = CHAIN_ID_MAP[fromChain];
     const dest_chain_name = CHAIN_ID_MAP[toChain];
 
-    const obj = await create_report_network(source_chain_name, dest_chain_name, fromToken, toToken);
+    const obj = await create_report_network(protocol, source_chain_name, dest_chain_name, fromToken, toToken);
 
     const date_time: string = obj.date_time;
     const source_network: Network = obj.source_network;
@@ -20,14 +20,19 @@ export async function report_generator(quote: COWQuote, fromChain: number, toCha
     const fromTokenDecimals = 10 ** TOKEN_MAP[fromToken].decimals;
     const trade_amount = parseInt(fromAmount) / fromTokenDecimals;
     const query_latency: Latency = [api_latency];
-    const token_usd_price = await get_token_price(fromToken);
+
+    const run_id = report_count('benchmark-data/' + protocol + '/' + source_network.network.name + '/' + destination_network.network.name) + 1;
+
+    const token_pair_price = await get_coin_gecko_price(run_id, fromToken, "USD")
+
+    const token_usd_price = token_pair_price.price_per;
 
     var net_trade_fee: number = parseInt(quote.quote.feeAmount);
     var aggregator_fee: Aggregator["fee"] = [{
         name: quote.quote.kind,
         amount: parseInt(quote.quote.feeAmount),
         percentage: 0.0,
-        gas_price: undefined,
+        gas_price_gwei: undefined,
         usd_price: token_usd_price
     }];
 
@@ -42,9 +47,9 @@ export async function report_generator(quote: COWQuote, fromChain: number, toCha
     const actual_value_usd = scale_two_decimals(actual_value * token_usd_price, fromTokenDecimals);
     const effective_trade_value_usd = scale_two_decimals(parseInt(quote.quote.sellAmount) * token_usd_price, fromTokenDecimals);
     const difference_in_value = actual_value_usd - effective_trade_value_usd;
-    const approximated_gas_cost = 0;
+    const approximated_gas_cost_gwei = 0;
     const approximated_gas_cost_usd = 0;
-    const final_value_usd = scale_two_decimals(parseInt(quote.quote.sellAmount) * token_usd_price, fromTokenDecimals);
+    const effective_trade_value_usd_with_gas = scale_two_decimals(parseInt(quote.quote.sellAmount) * token_usd_price, fromTokenDecimals);
 
     const trade_value: Asset = {
         name: fromToken,
@@ -53,13 +58,13 @@ export async function report_generator(quote: COWQuote, fromChain: number, toCha
         actual_value_usd: actual_value_usd,
         effective_trade_value_usd: effective_trade_value_usd,
         difference_in_value: difference_in_value,
-        approximated_gas_cost: approximated_gas_cost,
+        approximated_gas_cost_gwei: approximated_gas_cost_gwei,
         approximated_gas_cost_usd: approximated_gas_cost_usd,
-        final_value_usd: final_value_usd
+        effective_trade_value_usd_with_gas: effective_trade_value_usd_with_gas
     };
 
     const net_fee: Fee = {
-        name: "NET-FEE",
+        name: "TOTAL FEE WITH GAS",
         amount_usd: scale_two_decimals(net_trade_fee * token_usd_price, fromTokenDecimals),
     };
 

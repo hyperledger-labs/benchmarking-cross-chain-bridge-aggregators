@@ -6,7 +6,7 @@ export type APIReport = {
     aggregator: Aggregator,
     destination_network: Network,
     trade_value: Asset,
-    net_fee: Fee,
+    gas_included_fee: Fee,
     latencies: Latency,
     coin_gecko_trade_price: CoinGeckoPrice,
 }
@@ -14,7 +14,7 @@ export type APIReport = {
 export type Network = {
     network: {
         name: string,
-        gas_price: number,
+        gas_price_gwei: number,
         gas_usd_price: number,
         last_block_num: number,
         queried_at: string,
@@ -30,7 +30,7 @@ export type Aggregator = {
         name: string,
         amount: number,
         percentage: number | undefined,
-        gas_price: number | undefined,
+        gas_price_gwei: number | undefined,
         usd_price: number
     }>,
     total_fee: number
@@ -43,9 +43,9 @@ export type Asset = {
     actual_value_usd: number,
     effective_trade_value_usd: number,
     difference_in_value: number,
-    approximated_gas_cost: number,
+    approximated_gas_cost_gwei: number,
     approximated_gas_cost_usd: number,
-    final_value_usd: number,
+    effective_trade_value_usd_with_gas: number,
 }
 
 export type Fee = {

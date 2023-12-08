@@ -41,21 +41,21 @@ export async function create_api_report(protocol_name: string, creation_date_tim
     const coin_gecko_price = await get_coin_gecko_price(run_id, source_network.trade_token.name, destination_network.trade_token.name);
 
     if (trade_value.approximated_gas_cost_usd == 0) {
-        trade_value.approximated_gas_cost_usd = scale_two_decimals(trade_value.approximated_gas_cost * coin_gecko_price.price_per, 10e9);
+        trade_value.approximated_gas_cost_usd = scale_two_decimals(trade_value.approximated_gas_cost_gwei * coin_gecko_price.price_per, 10e9);
         net_fee.amount_usd += trade_value.approximated_gas_cost_usd;
     }
 
     const report: APIReport = {
-        "run_id": run_id,
-        "creation_date_time": creation_date_time,
-        "protocol": protocol_name,
-        "source_network": source_network,
-        "aggregator": aggregator,
-        "destination_network": destination_network,
-        "trade_value": trade_value,
-        "net_fee": net_fee,
-        "latencies": latencies,
-        "coin_gecko_trade_price": coin_gecko_price,
+        run_id: run_id,
+        creation_date_time: creation_date_time,
+        protocol: protocol_name,
+        source_network: source_network,
+        aggregator: aggregator,
+        destination_network: destination_network,
+        trade_value: trade_value,
+        gas_included_fee: net_fee,
+        latencies: latencies,
+        coin_gecko_trade_price: coin_gecko_price
     };
 
     fs.writeFileSync(`${path}/${run_id}.json`, JSON.stringify(report, null, 2));
@@ -71,16 +71,16 @@ export async function create_report_network(protocol: string, source_chain_name:
     const date_time = new Date().toISOString();
     const run_id = report_count(`${report_dir}/${protocol}/${source_chain_name}/${dest_chain_name}`) + 1;
 
-    const source_gas_price = await get_gas_price(source_chain_name) * 10e-9;
+    const source_gas_price_gwei = await get_gas_price(source_chain_name) * 10e-9;
     const source_block_num = await get_latest_blockNum(source_chain_name);
     const from_native_token = CHAIN_MAP[source_chain_name].native_token.name;
     const coin_gecko_from_token_price = await get_coin_gecko_price(run_id, from_native_token, "USD");
-    const gas_usd_price_from_network = coin_gecko_from_token_price.price_per * source_gas_price * 10e-9;
+    const gas_usd_price_from_network = coin_gecko_from_token_price.price_per * source_gas_price_gwei * 10e-9;
 
     const source_network: Network = {
         network: {
             name: source_chain_name,
-            gas_price: source_gas_price,
+            gas_price_gwei: source_gas_price_gwei,
             gas_usd_price: gas_usd_price_from_network,
             last_block_num: source_block_num,
             queried_at: date_time,
@@ -94,15 +94,15 @@ export async function create_report_network(protocol: string, source_chain_name:
 
     };
 
-    const dest_gas_price = await get_gas_price(dest_chain_name) * 10e-9;
+    const dest_gas_price_gwei = await get_gas_price(dest_chain_name) * 10e-9;
     const dest_block_num = await get_latest_blockNum(dest_chain_name);
     const to_native_token = CHAIN_MAP[dest_chain_name].native_token.name;
     const coin_gecko_to_token_price = await get_coin_gecko_price(run_id, to_native_token, "USD");
-    const gas_usd_price_to_network = coin_gecko_to_token_price.price_per * dest_gas_price * 10e-9;
+    const gas_usd_price_to_network = coin_gecko_to_token_price.price_per * dest_gas_price_gwei * 10e-9;
     const destination_network: Network = {
         network: {
             name: dest_chain_name,
-            gas_price: dest_gas_price,
+            gas_price_gwei: dest_gas_price_gwei,
             gas_usd_price: gas_usd_price_to_network,
             last_block_num: dest_block_num,
             queried_at: date_time,

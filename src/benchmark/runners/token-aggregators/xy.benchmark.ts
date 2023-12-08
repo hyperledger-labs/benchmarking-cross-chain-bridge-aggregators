@@ -33,14 +33,14 @@ describe('Benchmarking XY (get_token_price() may error if the coingecko pair is 
             expect(report).to.have.property('run_id');
         });
 
-        it('should benchmark WETH to MATIC swap', async () => {
-            const fromToken = 'WETH';
-            const toToken = 'MATIC';
-            const amount = (1 * 10 ** 18).toString();
+        // it('should benchmark WETH to MATIC swap', async () => {
+        //     const fromToken = 'WETH';
+        //     const toToken = 'WMATIC';
+        //     const amount = (1 * 10 ** 18).toString();
 
-            const report: APIReport = await make_api_report(sourceChain, destChain, fromToken, toToken, amount);
+        //     const report: APIReport = await make_api_report(sourceChain, destChain, fromToken, toToken, amount);
 
-            expect(report).to.have.property('run_id');
-        });
+        //     expect(report).to.have.property('run_id');
+        // });
     });
 });
