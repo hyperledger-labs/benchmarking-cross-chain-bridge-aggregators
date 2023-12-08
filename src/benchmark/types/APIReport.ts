@@ -8,7 +8,7 @@ export type APIReport = {
     trade_value: Asset,
     net_fee: Fee,
     latencies: Latency,
-    coin_gecko_price: CoinGeckoPrice,
+    coin_gecko_trade_price: CoinGeckoPrice,
 }
 
 export type Network = {
@@ -18,11 +18,8 @@ export type Network = {
         last_block_num: number,
         queried_at: string,
     },
-    token: {
-        name: string,
-        type: string,
-        address: string,
-    }
+    trade_token: Token,
+    native_token: CoinGeckoPrice
 }
 
 export type Aggregator = {
@@ -62,8 +59,13 @@ export type Latency = Array<{
     latency: number
 }>
 
-export type CoinGeckoPrice = {
+export type Token = {
     name: string,
+    type: string,
+    address: string,
+}
+
+export type CoinGeckoPrice = {
+    pair: string,
     price_per: number,
-    price_amount: number,
 }
