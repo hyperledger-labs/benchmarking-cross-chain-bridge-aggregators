@@ -4,8 +4,8 @@ import { CHAIN_ID_MAP, TOKEN_MAP } from '@benchmarking-cross-chain-bridges/helpe
 import { build_route } from '@benchmarking-cross-chain-bridges/token-aggregators/uniswap/route_builder';
 import { SwapRoute } from '@uniswap/smart-order-router';
 
-export async function report_generator(quote: SwapRoute, fromChain: number, toChain: number, fromToken: string, toToken: string, fromAmount: string, api_latency: Latency[0], router_type: string) {
-    const protocol = 'uniswap-' + router_type;
+export async function report_generator(quote: SwapRoute, fromChain: number, toChain: number, fromToken: string, toToken: string, fromAmount: string, api_latency: Latency[0]) {
+    const protocol = 'uniswap-universal';
 
     const source_chain_name = CHAIN_ID_MAP[fromChain];
     const dest_chain_name = CHAIN_ID_MAP[toChain];
@@ -39,7 +39,7 @@ export async function report_generator(quote: SwapRoute, fromChain: number, toCh
     aggregator_fee.push(fee_obj[0]);
 
     const aggregator: Aggregator = {
-        name: "Uniswap" + router_type,
+        name: "Uniswapuniversal",
         address: quote.route[0].poolAddresses[0],
         fee: aggregator_fee,
         total_fee: net_trade_fee
@@ -76,10 +76,10 @@ export async function report_generator(quote: SwapRoute, fromChain: number, toCh
     return api_report;
 }
 
-export async function make_api_report(fromChain: number, toChain: number, fromToken: string, toToken: string, fromAmount: string, router_type: string): Promise<APIReport> {
+export async function make_api_report(fromChain: number, toChain: number, fromToken: string, toToken: string, fromAmount: string): Promise<APIReport> {
     const query_start = new Date().getTime();
 
-    const quote: SwapRoute = await build_route(fromChain, toChain, fromToken, toToken, fromAmount, router_type)
+    const quote: SwapRoute = await build_route(fromChain, toChain, fromToken, toToken, fromAmount, 'universal')
 
     const query_end = new Date().getTime();
 
@@ -90,7 +90,7 @@ export async function make_api_report(fromChain: number, toChain: number, fromTo
         latency: query_end - query_start
     };
 
-    const report: APIReport = await report_generator(quote, fromChain, toChain, fromToken, toToken, fromAmount, api_latency, router_type);
+    const report: APIReport = await report_generator(quote, fromChain, toChain, fromToken, toToken, fromAmount, api_latency);
 
     return report;
 }
