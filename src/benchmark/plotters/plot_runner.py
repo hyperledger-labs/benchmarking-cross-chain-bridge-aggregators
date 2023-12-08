@@ -9,14 +9,15 @@ def plot_runner(benchmark_data_folder, aggregator, source_chain, dest_chain):
     obj = load_json_data(benchmark_data_folder, aggregator, source_chain, dest_chain)
 
     timestamps_list = obj['timestamps']
-    gas_prices_list = obj['gas_prices']
-    net_fees_list = obj['net_fees']
+    total_fees_list = obj['total_fees']
     coin_gecko_prices_list = obj['coin_gecko_prices']
-    actual_values = obj['raw_amounts']
+    source_gas_prices_list = obj['source_gas_prices']
+    dest_gas_prices_list = obj['dest_gas_prices']
+    effective_trade_value_usd_list = obj['effective_trade_value_usd']
 
-    plot_quote_vs_coingecko(timestamps_list, coin_gecko_prices_list, actual_values, aggregator, source_chain, dest_chain)
+    plot_quote_vs_coingecko(timestamps_list, coin_gecko_prices_list, effective_trade_value_usd_list, aggregator, source_chain, dest_chain)
 
-    plot_net_fee_vs_gas_price(timestamps_list, gas_prices_list, net_fees_list, aggregator, source_chain, dest_chain)
+    plot_net_fee_vs_gas_price(timestamps_list, source_gas_prices_list, dest_gas_prices_list,total_fees_list, aggregator, source_chain, dest_chain)
 
 def get_chain_names(arg_value, benchmark_data_folder, ignore_folders, path_modifier=''):
     if arg_value == 'all':
