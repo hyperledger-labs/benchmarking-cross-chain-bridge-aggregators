@@ -1,5 +1,6 @@
 import plotly.graph_objects as go
 from utils import create_plot_dir
+import numpy as np
 
 def plot_quote_vs_coingecko(timestamps, coin_gecko_prices, actual_values, aggregator, source_chain, dest_chain):
     fig = go.Figure()
@@ -12,7 +13,7 @@ def plot_quote_vs_coingecko(timestamps, coin_gecko_prices, actual_values, aggreg
 
     # Update layout
     fig.update_layout(
-        title=f'CoinGecko Price and Actual Values<br>Source Chain: {source_chain}, Dest Chain: {dest_chain}, Aggregator: {aggregator}',
+        title=f'CoinGecko Price and Quoted Values<br>Source Chain: {source_chain}, Dest Chain: {dest_chain}, Aggregator: {aggregator}',
         xaxis_title='Timestamp',
         yaxis_title='Price (USD)',
         showlegend=True
