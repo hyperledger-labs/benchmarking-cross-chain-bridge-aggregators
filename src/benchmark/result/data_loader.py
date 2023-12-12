@@ -75,6 +75,16 @@ def load_json_data(benchmark_data_folder, aggregator_name, source_chain_name, de
 
     return obj
 
-def convert_pd_to_csv(pd, filename):
+def save_obj(obj):
+    for filename in obj:
+        save_df(obj, filename)
+
+def save_df(obj, filename):
+    df = obj[filename]
+
+    table_path = 'benchmark-tables/'
+    filename = table_path + filename
+
     os.makedirs(os.path.dirname(filename), exist_ok=True)
-    pd.to_csv(filename, index=False)
+    df.to_csv(filename + '.csv', index=False)
+    df.to_latex(filename + '.tex', index=False, float_format="%.2f")

@@ -1,8 +1,8 @@
 import plotly.graph_objects as go
 from utils import create_plot_dir
-import numpy as np
 
 def plot_net_fee_vs_gas_price(timestamps, gas_prices_source, gas_prices_dest, total_fees, aggregator, source_chain, dest_chain):
+    # Create figure
     fig = go.Figure()
 
     # Plotting Net Fees
@@ -20,20 +20,13 @@ def plot_net_fee_vs_gas_price(timestamps, gas_prices_source, gas_prices_dest, to
         xaxis_title='Timestamp',
         yaxis_title='Total Fee',
         showlegend=True,
-        yaxis2=dict(
-            title=f'Gas Price ({source_chain.lower()})',
-            overlaying='y',
-            side='right'
-        ),
-        yaxis3=dict(
-            title=f'Gas Price ({dest_chain.lower()})',
-            overlaying='y',
-            side='right',
-            position=0.95  # Adjust the position for better visibility
-        )
+        yaxis2=dict(title=f'Gas Price ({source_chain.lower()})', overlaying='y', side='right'),
+        yaxis3=dict(title=f'Gas Price ({dest_chain.lower()})', overlaying='y', side='right', position=0.5)  # Adjusted position value
     )
 
+    # Set plot directory and filename
     plot_dir = 'benchmark-plots/net_fee_vs_gas_price'
     plot_filename = f'{aggregator}_{source_chain}_to_{dest_chain}.png'
 
+    # Create plot directory and save the plot
     create_plot_dir(fig, plot_dir, plot_filename)

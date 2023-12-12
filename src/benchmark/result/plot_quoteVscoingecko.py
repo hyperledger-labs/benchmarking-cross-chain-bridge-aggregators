@@ -16,6 +16,7 @@ def plot_quote_vs_coingecko(timestamps, coin_gecko_prices, actual_values, aggreg
         title=f'CoinGecko Price and Quoted Values<br>Source Chain: {source_chain}, Dest Chain: {dest_chain}, Aggregator: {aggregator}',
         xaxis_title='Timestamp',
         yaxis_title='Price (USD)',
+        yaxis=dict(range=[2150, 2410]),
         showlegend=True
     )
 

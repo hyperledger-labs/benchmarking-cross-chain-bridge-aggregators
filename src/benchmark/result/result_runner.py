@@ -2,12 +2,13 @@ import os
 import argparse
 import numpy as np
 
-from data_loader import load_json_data, convert_pd_to_csv
+from data_loader import load_json_data, save_obj
 from plot_feeVsgas import plot_net_fee_vs_gas_price
 from plot_quoteVscoingecko import plot_quote_vs_coingecko
 from plot_diff_in_quote import plot_diff_in_quotes
 from table_average_latency import table_average_latency
 from table_average_price_diff import table_average_price_diff
+from table_average_net_fee import table_average_net_fee
 
 def plot_runner(benchmark_data_folder, aggregator, source_chain, dest_chain):
     obj = load_json_data(benchmark_data_folder, aggregator, source_chain, dest_chain)
@@ -28,11 +29,16 @@ def plot_runner(benchmark_data_folder, aggregator, source_chain, dest_chain):
 
     latency_table = table_average_latency(latency_list, coin_gecko_prices_list, effective_trade_value_usd_list, aggregator, source_chain, dest_chain)
 
-    price_diff_table = table_average_price_diff(coin_gecko_prices_list, effective_trade_value_usd_list, aggregator, source_chain, dest_chain)
+    price_diff_tables = table_average_price_diff(coin_gecko_prices_list, effective_trade_value_usd_list, aggregator, source_chain, dest_chain)
+
+    net_fee_table = table_average_net_fee(total_fees_list, effective_trade_value_usd_list, aggregator, source_chain, dest_chain)
 
     obj = {
         'latency_table': latency_table,
-        'price_diff_table': price_diff_table
+        'price_diff_table_net': price_diff_tables['avg_table_df'],
+        'price_diff_table_over': price_diff_tables['count_over_table_df'],
+        'price_diff_table_under': price_diff_tables['count_under_table_df'],
+        'net_fee_table': net_fee_table
     }
 
     return obj
@@ -60,8 +66,11 @@ ignore_folders = ['coin_gecko_price', 'logs', 'uniswap-swap']
 aggregator_names = get_chain_names(args.aggregator, benchmark_data_folder, ignore_folders, '')
 
 obj = {
-    "latency_table": None,
-    "price_diff": None
+    'latency_table': None,
+    'price_diff_table_net': None,
+    'price_diff_table_over': None,
+    'price_diff_table_under': None,
+    'net_fee_table': None
 }
 
 for aggregator in aggregator_names:
@@ -71,11 +80,4 @@ for aggregator in aggregator_names:
         for dest_chain in dest_chain_names:
             obj = plot_runner(benchmark_data_folder, aggregator, source_chain, dest_chain)
 
-
-
-table_path = 'benchmark-tables/'
-convert_pd_to_csv(obj['latency_table'], table_path + 'latency_table.csv')
-convert_pd_to_csv(obj['price_diff_table'], table_path + 'price_diff_table.csv')
-
-print(obj['latency_table'])
-print(obj['price_diff_table'])
+save_obj(obj)
