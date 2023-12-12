@@ -24,3 +24,4 @@ child_process
 benchmark-data*
 benchmark-plots*
 src/benchmark/plotters/__pycache__
+benchmark-tables
