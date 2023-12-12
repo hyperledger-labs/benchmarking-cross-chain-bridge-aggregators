@@ -34,8 +34,8 @@ def load_json_data(benchmark_data_folder, aggregator_name, source_chain_name, de
                 # total_fee = entry['aggregator']['total_fee']
                 coin_gecko_price = entry['coin_gecko_trade_price']['price_per']
 
-                source_gas = entry['source_network']['network']['gas_price_usd']
-                dest_gas = entry['destination_network']['network']['gas_price_usd']
+                source_gas = entry['source_network']['network']['gas_price_usd'] # type: ignore
+                dest_gas = entry['destination_network']['network']['gas_price_usd'] # type: ignore
 
                 effective_trade_value_usd = entry['trade_value']['effective_trade_value_usd']
                 latency = entry['latencies'][0]['latency']
