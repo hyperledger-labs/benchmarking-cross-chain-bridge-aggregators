@@ -1,38 +1,39 @@
-import plotly.graph_objects as go
+import matplotlib.pyplot as plt
 from utils import create_plot_dir
+import matplotlib
+matplotlib.use('Agg')
 
 def plot_net_fee_vs_gas_price(timestamps, gas_prices_source, gas_prices_dest, total_fees, aggregator, source_chain, dest_chain):
     # Create figure
-    fig = go.Figure()
+    fig, ax1 = plt.subplots(figsize=(12, 6))
 
     # Plotting Net Fees
-    fig.add_trace(go.Scatter(x=timestamps, y=total_fees, mode='lines', name='Total Fee', line=dict(color='blue')))
+    ax1.plot(timestamps, total_fees, label=f'Total Fee {aggregator}', color='blue')
+    ax1.set_xlabel('Timestamp')
+    ax1.set_ylabel('Total Fee', color='blue')
+    ax1.tick_params('y', colors='blue')
+    ax1.set_ylim(0, 200)
+
 
     # Create a secondary y-axis for Gas Prices on Source Chain
-    fig.add_trace(go.Scatter(x=timestamps, y=gas_prices_source, mode='lines', name=f'Gas Price ({source_chain.lower()})', line=dict(color='gray', dash='dash'), yaxis='y2'))
+    ax2 = ax1.twinx()
+    ax2.plot(timestamps, gas_prices_source, label=f'Gas Price ({source_chain.lower()})', linestyle='--', color='gray')
+    ax2.set_ylabel(f'Gas Price ({source_chain.lower()})', color='gray')
+    ax2.tick_params('y', colors='gray')
 
-    if source_chain == dest_chain:
-        # Update layout
-        fig.update_layout(
-            title=f'Total Fee (USD) vs. Gas Prices (USD)<br>Source Chain: {source_chain}, Aggregator: {aggregator}',
-            xaxis_title='Timestamp',
-            yaxis_title='Total Fee',
-            showlegend=True,
-            yaxis2=dict(title=f'Gas Price ({source_chain.lower()})', overlaying='y', side='right'),
-        )
-    else:
+    if source_chain != dest_chain:
         # Create a tertiary y-axis for Gas Prices on Destination Chain
-        fig.add_trace(go.Scatter(x=timestamps, y=gas_prices_dest, mode='lines', name=f'Gas Price ({dest_chain.lower()})', line=dict(color='black', dash='dash'), yaxis='y3'))
+        ax3 = ax1.twinx()
+        ax3.spines['right'].set_position(('outward', 60))
+        ax3.plot(timestamps, gas_prices_dest, label=f'Gas Price ({dest_chain.lower()})', linestyle='--', color='black')
+        ax3.set_ylabel(f'Gas Price ({dest_chain.lower()})', color='black')
+        ax3.tick_params('y', colors='black')
 
-        # Update layout
-        fig.update_layout(
-            title=f'Total Fee (USD) vs. Gas Prices (USD)<br>Source Chain: {source_chain}, Dest Chain: {dest_chain}, Aggregator: {aggregator}',
-            xaxis_title='Timestamp',
-            yaxis_title='Total Fee',
-            showlegend=True,
-            yaxis2=dict(title=f'Gas Price ({source_chain.lower()})', overlaying='y', side='right'),
-            yaxis3=dict(title=f'Gas Price ({dest_chain.lower()})', overlaying='y', side='right', position=0.5)  # Adjusted position value
-        )
+    # Update layout
+    if source_chain == dest_chain:
+        plt.title(f'Total Fee (USD) vs. Gas Prices (USD)\nSource Chain: {source_chain}, Aggregator: {aggregator}')
+    else:
+        plt.title(f'Total Fee (USD) vs. Gas Prices (USD)\nSource Chain: {source_chain}, Dest Chain: {dest_chain}, Aggregator: {aggregator}')
 
     # Set plot directory and filename
     plot_dir = 'benchmark-plots/net_fee_vs_gas_price'
@@ -40,3 +41,17 @@ def plot_net_fee_vs_gas_price(timestamps, gas_prices_source, gas_prices_dest, to
 
     # Create plot directory and save the plot
     create_plot_dir(fig, plot_dir, plot_filename)
+
+    # Close the figure
+    plt.close(fig)
+
+    if source_chain == dest_chain:
+        return {
+            'same_chain': fig,
+            'cross_chain': None
+        }
+
+    return {
+        'same_chain': None,
+        'cross_chain': fig
+    }

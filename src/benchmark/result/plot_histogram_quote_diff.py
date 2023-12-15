@@ -1,5 +1,6 @@
 import pandas as pd
-import plotly.graph_objects as go
+import numpy as np
+import matplotlib.pyplot as plt
 from utils import create_plot_dir
 
 def plot_histogram_quote_diff():
@@ -25,19 +26,30 @@ def plot_histogram_quote_diff():
         total_over.append(df[over_col].sum())
         total_under.append(df[under_col].sum())
 
-    # Plot the side-by-side bars using Plotly
-    fig = go.Figure()
-    fig.add_trace(go.Bar(x=ranges, y=total_over, name='Over', marker=dict(color='skyblue')))
-    fig.add_trace(go.Bar(x=ranges, y=total_under, name='Under', marker=dict(color='orange')))
+    # Plot the side-by-side bars using Matplotlib
+    bar_width = 0.35
+    index = np.arange(len(ranges))
 
-    fig.update_layout(title='Total Over/Under Quotes vs CoinGecko for Each Range Across Protocols',
-                    xaxis_title='Over/Under Ranges',
-                    yaxis_title='Total Over/Under',
-                    barmode='group')
+    fig, ax = plt.subplots()
+    ax.bar(index, total_over, bar_width, label='Over', color='skyblue')
+    ax.bar(index + bar_width, total_under, bar_width, label='Under', color='orange')
+
+    ax.set_title('Total Over/Under Quotes vs CoinGecko for Each Range Across Protocols')
+    ax.set_xlabel('Over/Under Ranges')
+    ax.set_ylabel('Total Over/Under')
+    ax.set_xticks(index + bar_width / 2)
+    ax.set_xticklabels(ranges)
+    ax.legend()
 
     # Set plot directory and filename
-    plot_dir = 'benchmark-plots/coin_gecko_vs_quote'
+    plot_dir = 'benchmark-plots'
     plot_filename = "over_under_histogram"
 
     # Create plot directory and save the plot
     create_plot_dir(fig, plot_dir, plot_filename)
+
+    # Close the figure
+    plt.close(fig)
+
+# Call the function to generate and display the plot
+plot_histogram_quote_diff()

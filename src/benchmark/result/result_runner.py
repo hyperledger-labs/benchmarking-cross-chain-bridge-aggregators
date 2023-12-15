@@ -4,11 +4,19 @@ import argparse
 from data_loader import load_json_data, save_obj
 from plot_feeVsgas import plot_net_fee_vs_gas_price
 from plot_quoteVscoingecko import plot_quote_vs_coingecko
-from plot_diff_in_quote import plot_diff_in_quotes
+from plot_quote_difference import plot_quote_difference
 from table_average_latency import table_average_latency
 from table_average_price_diff import table_average_price_diff
 from table_average_net_fee import table_average_net_fee
 from plot_histogram_quote_diff import plot_histogram_quote_diff
+import matplotlib
+matplotlib.use('Agg')
+
+figs = {
+    'quote_difference': {'same_chain': [], 'cross_chain': []},
+    'net_fee_vs_gas_price': {'same_chain': [], 'cross_chain': []},
+    'coin_gecko_vs_quote': {'same_chain': [], 'cross_chain': []}
+}
 
 def plot_runner(benchmark_data_folder, aggregator, source_chain, dest_chain):
     obj = load_json_data(benchmark_data_folder, aggregator, source_chain, dest_chain)
@@ -21,19 +29,23 @@ def plot_runner(benchmark_data_folder, aggregator, source_chain, dest_chain):
     effective_trade_value_usd_list = obj['effective_trade_value_usd']
     latency_list = obj['latency']
 
-    plot_quote_vs_coingecko(timestamps_list, coin_gecko_prices_list, effective_trade_value_usd_list, aggregator, source_chain, dest_chain)
+    fig_quote_vs_gecko = plot_quote_vs_coingecko(timestamps_list, coin_gecko_prices_list, effective_trade_value_usd_list, aggregator, source_chain, dest_chain)
 
-    plot_net_fee_vs_gas_price(timestamps_list, source_gas_prices_list, dest_gas_prices_list,total_fees_list, aggregator, source_chain, dest_chain)
+    fig_fee_vs_gas = plot_net_fee_vs_gas_price(timestamps_list, source_gas_prices_list, dest_gas_prices_list, total_fees_list, aggregator, source_chain, dest_chain)
 
-    plot_diff_in_quotes(timestamps_list, coin_gecko_prices_list, effective_trade_value_usd_list, aggregator, source_chain, dest_chain)
+    fig_quote_diff = plot_quote_difference(timestamps_list, coin_gecko_prices_list, effective_trade_value_usd_list, aggregator, source_chain, dest_chain)
+
+    key_chain = 'same_chain' if source_chain == dest_chain else 'cross_chain'
+
+    figs['quote_difference'][key_chain].append(fig_quote_diff[key_chain])
+    figs['net_fee_vs_gas_price'][key_chain].append(fig_fee_vs_gas[key_chain])
+    figs['coin_gecko_vs_quote'][key_chain].append(fig_quote_vs_gecko[key_chain])
 
     latency_table = table_average_latency(latency_list, coin_gecko_prices_list, effective_trade_value_usd_list, aggregator, source_chain, dest_chain)
-
     price_diff_tables = table_average_price_diff(coin_gecko_prices_list, effective_trade_value_usd_list, aggregator, source_chain, dest_chain)
-
     net_fee_table = table_average_net_fee(total_fees_list, effective_trade_value_usd_list, aggregator, source_chain, dest_chain)
 
-    obj = {
+    result_obj = {
         'latency_table': latency_table,
         'price_diff_table_net': price_diff_tables['avg_table_df'],
         'price_diff_table_over': price_diff_tables['count_over_table_df'],
@@ -41,7 +53,7 @@ def plot_runner(benchmark_data_folder, aggregator, source_chain, dest_chain):
         'net_fee_table': net_fee_table
     }
 
-    return obj
+    return result_obj
 
 def get_chain_names(arg_value, benchmark_data_folder, ignore_folders, path_modifier=''):
     if arg_value == 'all':
