@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 # Create an empty DataFrame
-data = pd.DataFrame(columns=['aggregator', 'source-chain', 'dest-chain', 'avg-over', 'count-over', 'avg-under', 'count-under', 'avg-latency', 'count-total'])
+data = pd.DataFrame(columns=['aggregator', 'source-chain', 'dest-chain', 'avg-over', 'avg-under', 'avg-latency'])
 
 def table_average_latency(latency, coin_gecko_prices, quote_value, aggregator, source_chain, dest_chain):
     global data  # Ensure you are referencing the global variable
@@ -21,11 +21,8 @@ def table_average_latency(latency, coin_gecko_prices, quote_value, aggregator, s
         'source-chain': [source_chain],
         'dest-chain': [dest_chain],
         'avg-over': [avg_latency_over],
-        'count-over': [len(latency_over)],
         'avg-under': [avg_latency_under],
-        'count-under': [len(latency_under)],
-        'avg-latency': [avg_latency],
-        'count-total': [len(latency)]
+        'avg-latency': [avg_latency]
     })
 
     # Concatenate the new data with the existing data

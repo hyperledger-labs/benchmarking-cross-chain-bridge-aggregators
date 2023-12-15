@@ -1,6 +1,5 @@
 import os
 import argparse
-import numpy as np
 
 from data_loader import load_json_data, save_obj
 from plot_feeVsgas import plot_net_fee_vs_gas_price
@@ -9,6 +8,7 @@ from plot_diff_in_quote import plot_diff_in_quotes
 from table_average_latency import table_average_latency
 from table_average_price_diff import table_average_price_diff
 from table_average_net_fee import table_average_net_fee
+from plot_histogram_quote_diff import plot_histogram_quote_diff
 
 def plot_runner(benchmark_data_folder, aggregator, source_chain, dest_chain):
     obj = load_json_data(benchmark_data_folder, aggregator, source_chain, dest_chain)
@@ -65,7 +65,7 @@ ignore_folders = ['coin_gecko_price', 'logs', 'uniswap-swap']
 
 aggregator_names = get_chain_names(args.aggregator, benchmark_data_folder, ignore_folders, '')
 
-obj = {
+tables_obj = {
     'latency_table': None,
     'price_diff_table_net': None,
     'price_diff_table_over': None,
@@ -73,11 +73,19 @@ obj = {
     'net_fee_table': None
 }
 
+plots_obj = {
+    'quote_vs_coingecko': 'coin_gecko_vs_quote',
+    'net_fee_vs_gas_price': 'net_fee_vs_gas_price',
+    'diff_in_quotes': 'difference_in_quotes'
+
+}
+
 for aggregator in aggregator_names:
     source_chain_names = get_chain_names(args.source_chain, benchmark_data_folder, ignore_folders, aggregator)
     for source_chain in source_chain_names:
         dest_chain_names = get_chain_names(args.dest_chain, benchmark_data_folder, ignore_folders, aggregator + '/' + source_chain)
         for dest_chain in dest_chain_names:
-            obj = plot_runner(benchmark_data_folder, aggregator, source_chain, dest_chain)
+            tables_obj = plot_runner(benchmark_data_folder, aggregator, source_chain, dest_chain)
 
-save_obj(obj)
+save_obj(tables_obj)
+plot_histogram_quote_diff()
