@@ -1,6 +1,5 @@
 import plotly.graph_objects as go
 from utils import create_plot_dir
-import numpy as np
 
 def plot_quote_vs_coingecko(timestamps, coin_gecko_prices, actual_values, aggregator, source_chain, dest_chain):
     fig = go.Figure()
@@ -20,7 +19,7 @@ def plot_quote_vs_coingecko(timestamps, coin_gecko_prices, actual_values, aggreg
         showlegend=True
     )
 
-    plot_dir = 'benchmark-plots/coin_gecko_vs_actual_values_line'
-    plot_filename = f'{aggregator}_{source_chain}_to_{dest_chain}.png'
+    plot_dir = 'benchmark-plots/coin_gecko_vs_quote'
+    plot_filename = f'{aggregator}_{source_chain}_to_{dest_chain}'
 
     create_plot_dir(fig, plot_dir, plot_filename)

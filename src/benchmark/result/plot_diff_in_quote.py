@@ -1,6 +1,6 @@
+import numpy as np
 import plotly.graph_objects as go
 from utils import create_plot_dir
-import numpy as np
 
 def plot_diff_in_quotes(timestamps, coin_gecko_prices, actual_values, aggregator, source_chain, dest_chain):
     diff_values = actual_values - coin_gecko_prices
@@ -28,6 +28,6 @@ def plot_diff_in_quotes(timestamps, coin_gecko_prices, actual_values, aggregator
     )
 
     plot_dir = 'benchmark-plots/difference_in_quotes'
-    plot_filename = f'{aggregator}_{source_chain}_to_{dest_chain}.png'
+    plot_filename = f'{aggregator}_{source_chain}_to_{dest_chain}'
 
     create_plot_dir(fig, plot_dir, plot_filename)
