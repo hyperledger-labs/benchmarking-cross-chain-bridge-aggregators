@@ -4,6 +4,18 @@ import { CHAIN_ID_MAP, TOKEN_MAP } from '@benchmarking-cross-chain-bridges/helpe
 import { LiFiTransaction } from '@benchmarking-cross-chain-bridges/token-aggregators/lifi/types';
 import { build_route } from '@benchmarking-cross-chain-bridges/token-aggregators/lifi/route_builder';
 
+/**
+ * Generates a report for a LiFi transaction.
+ *
+ * @param quote - The LiFi transaction quote.
+ * @param fromChain - The source chain ID.
+ * @param toChain - The destination chain ID.
+ * @param fromToken - The source token symbol.
+ * @param toToken - The destination token symbol.
+ * @param fromAmount - The amount of source token.
+ * @param api_latency - The API latency.
+ * @returns The generated API report.
+ */
 export async function report_generator(quote: LiFiTransaction, fromChain: number, toChain: number, fromToken: string, toToken: string, fromAmount: string, api_latency: Latency[0]) {
     const protocol = 'lifi';
 

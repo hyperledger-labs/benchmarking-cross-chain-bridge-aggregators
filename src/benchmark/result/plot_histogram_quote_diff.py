@@ -4,6 +4,16 @@ import matplotlib.pyplot as plt
 from utils import create_plot_dir
 
 def plot_histogram_quote_diff():
+    """
+    Plots a histogram of the total over/under quotes for each range across protocols.
+
+    Reads the data from the CSV files 'benchmark-tables/price_diff_table_over.csv' and 'benchmark-tables/price_diff_table_under.csv'.
+    Combines the two datasets.
+    Defines the over/under ranges.
+    Calculates the total over/under for each range.
+    Plots the side-by-side bars using Matplotlib.
+    Saves the plot in the 'benchmark-plots' directory.
+    """
     # Read the data from the CSV files
     df_over = pd.read_csv("benchmark-tables/price_diff_table_over.csv")
     df2_under = pd.read_csv("benchmark-tables/price_diff_table_under.csv")

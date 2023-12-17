@@ -4,8 +4,14 @@ import { CHAIN_ID_MAP } from "@benchmarking-cross-chain-bridges/helper/constants
 
 import { BigNumber } from "ethers";
 import { UNISWAPMethodParameters } from "./types";
-import { assert } from "console";
 
+/**
+ * Submits a swap transaction
+ * @param sourceChain The source chain ID.
+ * @param fromToken The token to sell.
+ * @param quote The quote from the Uniswap protocol.
+ * @returns The transaction hash.
+ */
 export async function submit_order(sourceChain: number, fromToken: string, quote: UNISWAPMethodParameters) {
     const chain_name = CHAIN_ID_MAP[sourceChain];
     const signer = get_signer(chain_name);

@@ -12,10 +12,17 @@ import { CHAIN_ID_MAP } from "@benchmarking-cross-chain-bridges/helper/constants
 import { validate_keys } from "@benchmarking-cross-chain-bridges/helper/inp_validator";
 import { COWOrderRequest, COWCreateOrder, COWSignOrder } from './types';
 
+/**
+ * Signs an order.
+ * @param chainId The chain ID of the source chain.
+ * @param order The order to sign.
+ * @returns The signed order.
+ */
 export async function sign_order(chainId: number, order: Order): Promise<COWSignOrder> {
     const chain = CHAIN_ID_MAP[chainId];
     const [trader] = [get_signer(chain)];
 
+    // domain(chainId, '0x9008D19f58AAbD9eD0D60971565AA8510560ab41') is the domain separator for the COW protocol. We get this from their website.
     const raw_signature = await signOrder(
         domain(chainId, '0x9008D19f58AAbD9eD0D60971565AA8510560ab41'),
         order,
@@ -31,6 +38,15 @@ export async function sign_order(chainId: number, order: Order): Promise<COWSign
     }
 }
 
+/**
+ * Submits an order to the COW protocol.
+ * @param fromChain The source chain ID.
+ * @param toChain The destination chain ID.
+ * @param fromToken The token to sell.
+ * @param orderRequest The order request.
+ * @param order The signed order.
+ * @returns The response from the COW protocol.
+ */
 export async function submit_order(fromChain: number, toChain: number, fromToken: string, orderRequest: COWOrderRequest, order: Order) {
     const sign_order_resp = await sign_order(fromChain, order);
 

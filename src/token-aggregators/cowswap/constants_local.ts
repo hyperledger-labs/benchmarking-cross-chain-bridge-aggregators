@@ -13,6 +13,22 @@ export const TOKEN_MAP: { [key: number]: { [key: string]: string } } = {
     100: create_tokens('GNOSIS'),
 };
 
+/**
+ * Creates a COW order request.
+ * @param sourceChain The source chain ID.
+ * @param destChain The destination chain ID.
+ * @param fromToken The token to sell.
+ * @param toToken The token to buy.
+ * @param amount The amount to sell.
+ * @param receiver The receiver of the order.
+ * @param validTo The valid to timestamp.
+ * @param appData The app data.
+ * @param sellTokenBalance 
+ * @param buyTokenBalance 
+ * @param from The seller from address.
+ * @param kind The order kind (buy or sell).
+ * @returns The order request.
+ */
 export function create_order(sourceChain: number, destChain: number, fromToken: string, toToken: string, amount: string, receiver: string, validTo: number, appData: string, sellTokenBalance: string, buyTokenBalance: string, from: string, kind: string): COWOrderRequest {
     const fromToken_address = TOKEN_MAP[sourceChain][fromToken];
     const toToken_address = TOKEN_MAP[destChain][toToken];
@@ -41,6 +57,11 @@ export function create_order(sourceChain: number, destChain: number, fromToken: 
     return orderRequest;
 }
 
+/**
+ * Converts a COW quote to an order.
+ * @param quote COW quote.
+ * @returns The order.
+ */
 export function get_order_from_quote(quote: COWQuote): Order {
     const quote_obj = quote.quote;
 

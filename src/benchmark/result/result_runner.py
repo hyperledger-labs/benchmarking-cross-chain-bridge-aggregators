@@ -1,5 +1,7 @@
 import os
 import argparse
+import matplotlib
+matplotlib.use('Agg')
 
 from data_loader import load_json_data, save_obj
 from plot_feeVsgas import plot_net_fee_vs_gas_price
@@ -9,8 +11,6 @@ from table_average_latency import table_average_latency
 from table_average_price_diff import table_average_price_diff
 from table_average_net_fee import table_average_net_fee
 from plot_histogram_quote_diff import plot_histogram_quote_diff
-import matplotlib
-matplotlib.use('Agg')
 
 figs = {
     'quote_difference': {'same_chain': [], 'cross_chain': []},
@@ -19,6 +19,18 @@ figs = {
 }
 
 def plot_runner(benchmark_data_folder, aggregator, source_chain, dest_chain):
+    """
+    Plots various graphs and generates tables based on the benchmark data.
+
+    Args:
+        benchmark_data_folder (str): The folder path containing the benchmark data.
+        aggregator (str): The aggregator used for benchmarking.
+        source_chain (str): The source chain for the benchmark.
+        dest_chain (str): The destination chain for the benchmark.
+
+    Returns:
+        dict: A dictionary containing the generated tables and graphs.
+    """
     obj = load_json_data(benchmark_data_folder, aggregator, source_chain, dest_chain)
 
     timestamps_list = obj['timestamps']
@@ -29,12 +41,14 @@ def plot_runner(benchmark_data_folder, aggregator, source_chain, dest_chain):
     effective_trade_value_usd_list = obj['effective_trade_value_usd']
     latency_list = obj['latency']
 
+    # Call all the plotting functions
     fig_quote_vs_gecko = plot_quote_vs_coingecko(timestamps_list, coin_gecko_prices_list, effective_trade_value_usd_list, aggregator, source_chain, dest_chain)
 
     fig_fee_vs_gas = plot_net_fee_vs_gas_price(timestamps_list, source_gas_prices_list, dest_gas_prices_list, total_fees_list, aggregator, source_chain, dest_chain)
 
     fig_quote_diff = plot_quote_difference(timestamps_list, coin_gecko_prices_list, effective_trade_value_usd_list, aggregator, source_chain, dest_chain)
 
+    # Used to determine whether the transaction was cross-chain or not
     key_chain = 'same_chain' if source_chain == dest_chain else 'cross_chain'
 
     figs['quote_difference'][key_chain].append(fig_quote_diff[key_chain])

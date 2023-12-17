@@ -4,6 +4,14 @@ import { CHAIN_ID_MAP } from "@benchmarking-cross-chain-bridges/helper/constants
 import { approveAllow } from "@benchmarking-cross-chain-bridges/helper/token_misc";
 import { validate_api_key } from "@benchmarking-cross-chain-bridges/helper/inp_validator";
 
+/**
+ * Submits a swap transaction
+ * @param sourceChain The source chain ID.
+ * @param fromToken The token to sell.
+ * @param quote The quote from the Socket protocol.
+ * @param multiTx Whether to use a single or multi transaction.
+ * @returns The transaction hash.
+ */
 export async function submit_order(sourceChain: number, fromToken: string, quote: SocketQuote, multiTx: boolean) {
 
     if (multiTx) {
@@ -25,6 +33,14 @@ export async function submit_order(sourceChain: number, fromToken: string, quote
     }
 }
 
+/**
+ * Executes a single transaction.
+ * @param sourceChain The source chain ID.
+ * @param fromToken The token to sell.
+ * @param txData The transaction data.
+ * @returns The transaction hash.
+ * @note https://docs.socket.tech/socket-api/v2/guides/socket-api-ethers.js-examples/single-tx-example
+ */
 async function executeRouteRunnerSingle(sourceChain: number, fromToken: string, txData: SingleTxOutputDTO) {
     const chain_name = CHAIN_ID_MAP[sourceChain];
     const signer = get_signer(chain_name);
@@ -51,6 +67,13 @@ async function executeRouteRunnerSingle(sourceChain: number, fromToken: string, 
     return tx.hash;
 }
 
+/**
+ * Executes a multi transaction.
+ * @param sourceChain The source chain ID.
+ * @param execute The execute route.
+ * @returns The transaction hash.
+ * @note https://docs.socket.tech/socket-api/v2/guides/socket-api-ethers.js-examples/multi-tx-example
+ */
 async function executeRouteRunnerMulti(sourceChain: number, execute: AsyncGenerator<SocketTx, void, string>) {
     let next = await execute.next();
 

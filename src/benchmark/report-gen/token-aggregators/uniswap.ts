@@ -4,6 +4,18 @@ import { CHAIN_ID_MAP, TOKEN_MAP } from '@benchmarking-cross-chain-bridges/helpe
 import { build_route } from '@benchmarking-cross-chain-bridges/token-aggregators/uniswap/route_builder';
 import { SwapRoute } from '@uniswap/smart-order-router';
 
+/**
+ * Generates a report for a token swap using the Uniswap protocol.
+ *
+ * @param quote - The swap route quote.
+ * @param fromChain - The ID of the source chain.
+ * @param toChain - The ID of the destination chain.
+ * @param fromToken - The symbol of the source token.
+ * @param toToken - The symbol of the destination token.
+ * @param fromAmount - The amount of the source token to swap.
+ * @param api_latency - The latency of the API used for the swap.
+ * @returns The generated API report.
+ */
 export async function report_generator(quote: SwapRoute, fromChain: number, toChain: number, fromToken: string, toToken: string, fromAmount: string, api_latency: Latency[0]) {
     const protocol = 'uniswap-universal';
 

@@ -4,6 +4,21 @@ import matplotlib
 matplotlib.use('Agg')
 
 def plot_net_fee_vs_gas_price(timestamps, gas_prices_source, gas_prices_dest, total_fees, aggregator, source_chain, dest_chain):
+    """
+    Plots the net fee vs gas price for a given set of data.
+
+    Parameters:
+    - timestamps (list): List of timestamps for the data points.
+    - gas_prices_source (list): List of gas prices on the source chain.
+    - gas_prices_dest (list): List of gas prices on the destination chain.
+    - total_fees (list): List of total fees.
+    - aggregator (str): Aggregator name.
+    - source_chain (str): Source chain name.
+    - dest_chain (str): Destination chain name.
+
+    Returns:
+    - dict: A dictionary containing the plots for same_chain and cross_chain scenarios.
+    """
     # Create figure
     fig, ax1 = plt.subplots(figsize=(12, 6))
 

@@ -5,6 +5,21 @@ import numpy as np
 data = pd.DataFrame(columns=['aggregator', 'source-chain', 'dest-chain', 'avg-over', 'avg-under', 'avg-latency'])
 
 def table_average_latency(latency, coin_gecko_prices, quote_value, aggregator, source_chain, dest_chain):
+    """
+    Calculate the average latency for an aggregator when the quote value is above and below the coin gecko price.
+
+    Parameters:
+    latency (numpy.ndarray): Array of latency values.
+    coin_gecko_prices (numpy.ndarray): Array of coin gecko prices.
+    quote_value (float): Quote value.
+    aggregator (str): Aggregator name.
+    source_chain (str): Source chain name.
+    dest_chain (str): Destination chain name.
+
+    Returns:
+    pandas.DataFrame: DataFrame containing the average latency data.
+
+    """
     global data  # Ensure you are referencing the global variable
 
     # Find the average latency for an aggregator when the quote value is above and below the coin gecko price
