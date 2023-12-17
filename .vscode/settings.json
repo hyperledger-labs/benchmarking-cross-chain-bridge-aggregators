@@ -14,5 +14,6 @@
         "WMATIC",
         "YAHO",
         "YARU"
-    ]
+    ],
+    "python.analysis.typeCheckingMode": "basic"
 }

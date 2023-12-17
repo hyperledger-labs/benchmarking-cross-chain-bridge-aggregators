@@ -6,6 +6,7 @@ export interface KEY_PAIR {
 export interface CHAIN {
     chainId: number,
     name: string,
+    native_token: TOKEN,
     token_map: { [key: string]: string },
     address_map: { [key: string]: string },
 };
@@ -16,9 +17,62 @@ export interface TOKEN {
     decimals: number,
 }
 
+export const ETH: TOKEN = {
+    name: "ETH",
+    type: "NATIVE",
+    decimals: 18,
+};
+
+export const WETH: TOKEN = {
+    name: "WETH",
+    type: "WRAPPED-ERC20",
+    decimals: 18,
+};
+
+export const MATIC: TOKEN = {
+    name: "MATIC",
+    type: "NATIVE",
+    decimals: 18,
+};
+
+export const DAI: TOKEN = {
+    name: "DAI",
+    type: "STABLE-ERC20",
+    decimals: 18,
+};
+
+export const USDC: TOKEN = {
+    name: "USDC",
+    type: "STABLE-ERC20",
+    decimals: 6,
+};
+
+export const LINK: TOKEN = {
+    name: "LINK",
+    type: "ERC677",
+    decimals: 18,
+};
+
+export const WMATIC: TOKEN = {
+    name: "WMATIC",
+    type: "WRAPPED-ERC20",
+    decimals: 18,
+};
+
+export const TOKEN_MAP: { [key: string]: TOKEN } = {
+    "ETH": ETH,
+    "WETH": WETH,
+    "MATIC": MATIC,
+    "DAI": DAI,
+    "USDC": USDC,
+    "LINK": LINK,
+    "WMATIC": WMATIC,
+};
+
 export const ETHEREUM: CHAIN = {
     chainId: 1,
     name: 'ETHEREUM',
+    native_token: ETH,
     token_map: {
         "ETH": "0x0000000000000000000000000000000000000000",
         "WETH": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -33,6 +87,7 @@ export const ETHEREUM: CHAIN = {
 export const GOERLI: CHAIN = {
     chainId: 5,
     name: 'GOERLI',
+    native_token: ETH,
     token_map: {
         "ETH": "0x0000000000000000000000000000000000000000",
         "WETH": "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6",
@@ -52,6 +107,7 @@ export const GOERLI: CHAIN = {
 export const SEPOLIA: CHAIN = {
     chainId: 11155111,
     name: 'SEPOLIA',
+    native_token: ETH,
     token_map: {
         "ETH": "0x0000000000000000000000000000000000000000",
         "WETH": "0x097D90c9d3E0B50Ca60e1ae45F6A81010f9FB534",
@@ -59,7 +115,7 @@ export const SEPOLIA: CHAIN = {
         "LINK": "0x779877A7B0D9E8603169DdbD7836e478b4624789",
     },
     address_map: {
-        "CCIP_ROUTER": "0xD0daae2231E9CB96b94C8512223533293C3693Bf",
+        "CCIP_ROUTER": "0x0bf3de8c5d3e8a2b34d2beeb17abfcebaf363a59",
         "HYPERLANE_MAILBOX": "0xCC737a94FecaeC165AbCf12dED095BB13F037685",
         "HYPERLANE_IGP": "0xCC737a94FecaeC165AbCf12dED095BB13F037685"
     },
@@ -68,6 +124,7 @@ export const SEPOLIA: CHAIN = {
 export const POLYGON: CHAIN = {
     chainId: 137,
     name: 'POLYGON',
+    native_token: MATIC,
     token_map: {
         "MATIC": "0x0000000000000000000000000000000000000000",
         "WMATIC": "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
@@ -83,6 +140,7 @@ export const POLYGON: CHAIN = {
 export const MUMBAI: CHAIN = {
     chainId: 80001,
     name: 'MUMBAI',
+    native_token: MATIC,
     token_map: {
         "MATIC": "0x0000000000000000000000000000000000000000",
         "WETH": "0x47cE7E72334Fe164954D4f9dd95f3D20A26e8e2b",
@@ -91,7 +149,7 @@ export const MUMBAI: CHAIN = {
         "LINK": "0x326C977E6efc84E512bB9C30f76E30c160eD06FB",
     },
     address_map: {
-        "CCIP_ROUTER": "0x70499c328e1E2a3c41108bd3730F6670a44595D1",
+        "CCIP_ROUTER": "0x1035cabc275068e0f4b745a29cedf38e13af41b1",
         "HYPERLANE_MAILBOX": "0xCC737a94FecaeC165AbCf12dED095BB13F037685",
         "HYPERLANE_IGP": "0xCC737a94FecaeC165AbCf12dED095BB13F037685"
     },
@@ -101,6 +159,7 @@ export const MUMBAI: CHAIN = {
 export const GNOSIS: CHAIN = {
     chainId: 100,
     name: 'GNOSIS',
+    native_token: DAI,
     token_map: {
         "DAI": "0x0000000000000000000000000000000000000000",
         "WETH": "0x6A023CCd1ff6F2045C3309768eAd9E68F978f6e1",
@@ -156,54 +215,3 @@ export const CHAIN_MAP: { [key: string]: CHAIN } = {
     "GNOSIS": GNOSIS,
 };
 
-export const ETH: TOKEN = {
-    name: "ETH",
-    type: "NATIVE",
-    decimals: 18,
-};
-
-export const WETH: TOKEN = {
-    name: "WETH",
-    type: "WRAPPED-ERC20",
-    decimals: 18,
-};
-
-export const MATIC: TOKEN = {
-    name: "MATIC",
-    type: "NATIVE",
-    decimals: 18,
-};
-
-export const DAI: TOKEN = {
-    name: "DAI",
-    type: "STABLE-ERC20",
-    decimals: 18,
-};
-
-export const USDC: TOKEN = {
-    name: "USDC",
-    type: "STABLE-ERC20",
-    decimals: 6,
-};
-
-export const LINK: TOKEN = {
-    name: "LINK",
-    type: "ERC677",
-    decimals: 18,
-};
-
-export const WMATIC: TOKEN = {
-    name: "WMATIC",
-    type: "WRAPPED-ERC20",
-    decimals: 18,
-};
-
-export const TOKEN_MAP: { [key: string]: TOKEN } = {
-    "ETH": ETH,
-    "WETH": WETH,
-    "MATIC": MATIC,
-    "DAI": DAI,
-    "USDC": USDC,
-    "LINK": LINK,
-    "WMATIC": WMATIC,
-};

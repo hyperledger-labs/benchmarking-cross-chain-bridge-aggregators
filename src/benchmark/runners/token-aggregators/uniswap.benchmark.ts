@@ -13,9 +13,8 @@ describe('Benchmarking Uniswap (Pool errors may occur!)', () => {
             const fromToken = 'WETH';
             const toToken = 'USDC';
             const amount = (1 * 10 ** 18).toString();
-            const router_type = 'swap';
 
-            const report: APIReport = await make_api_report(sourceChain, destChain, fromToken, toToken, amount, router_type);
+            const report: APIReport = await make_api_report(sourceChain, destChain, fromToken, toToken, amount);
 
             expect(report).to.have.property('run_id');
         });
@@ -28,18 +27,8 @@ describe('Benchmarking Uniswap (Pool errors may occur!)', () => {
         const toToken = 'DAI';
         const amount = (1 * 10 ** 18).toString();
 
-        it('should benchmark ETH to USDC swap with swap router v2', async () => {
-            const router_type = 'swap';
-
-            const report: APIReport = await make_api_report(sourceChain, destChain, fromToken, toToken, amount, router_type);
-
-            expect(report).to.have.property('run_id');
-        });
-
-        it('should benchmark ETH to USDC swap with universal router', async () => {
-            const router_type = 'universal';
-
-            const report: APIReport = await make_api_report(sourceChain, destChain, fromToken, toToken, amount, router_type);
+        it('should benchmark ETH to DAI swap with universal router', async () => {
+            const report: APIReport = await make_api_report(sourceChain, destChain, fromToken, toToken, amount);
 
             expect(report).to.have.property('run_id');
         });

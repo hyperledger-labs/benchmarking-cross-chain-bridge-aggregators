@@ -11,7 +11,7 @@ export async function report_generator(quote: SocketQuote | SocketQuoteSingleCha
     const source_chain_name = CHAIN_ID_MAP[fromChain];
     const dest_chain_name = CHAIN_ID_MAP[toChain];
 
-    const obj = await create_report_network(source_chain_name, dest_chain_name, fromToken, toToken);
+    const obj = await create_report_network(protocol, source_chain_name, dest_chain_name, fromToken, toToken);
 
     const date_time: string = obj.date_time;
     const source_network: Network = obj.source_network;
@@ -19,7 +19,7 @@ export async function report_generator(quote: SocketQuote | SocketQuoteSingleCha
 
     const query_latency: Latency = [api_latency];
     const trade_amount = parseInt(fromAmount) / 10 ** TOKEN_MAP[fromToken].decimals;
-    const gas_price = source_network.network.gas_price;
+    const gas_price_gwei = source_network.network.gas_price_gwei;
 
     const sameChain = fromChain === toChain;
 
@@ -30,14 +30,14 @@ export async function report_generator(quote: SocketQuote | SocketQuoteSingleCha
     };
 
     if (sameChain) {
-        socket_obj = await same_chain_handler(quote as SocketQuoteSingleChain, gas_price);
+        socket_obj = await same_chain_handler(quote as SocketQuoteSingleChain, gas_price_gwei);
     } else {
-        socket_obj = await cross_chain_handler(quote as SocketQuote, gas_price);
+        socket_obj = await cross_chain_handler(quote as SocketQuote, gas_price_gwei);
     }
 
     const aggregator_fee: Aggregator["fee"] = socket_obj.aggregator_fee;
     const aggregator_name: string = socket_obj.aggregator_name;
-    const net_trade_fee: number = socket_obj.net_trade_fee;
+    let net_trade_fee: number = socket_obj.net_trade_fee;
 
     const aggregator: Aggregator = {
         name: aggregator_name,
@@ -50,9 +50,9 @@ export async function report_generator(quote: SocketQuote | SocketQuoteSingleCha
     const actual_value_usd = scale_two_decimals(quote.route.inputValueInUsd);
     const effective_trade_value_usd = scale_two_decimals(quote.route.outputValueInUsd);
     const difference_in_value = actual_value_usd - effective_trade_value_usd;
-    const approximated_gas_cost = scale_two_decimals(quote.route.totalGasFeesInUsd);
-    const gas_usd_price = gas_price;
-    const final_value_usd = effective_trade_value_usd - approximated_gas_cost;
+    const approximated_gas_cost_gwei = 0;
+    const approximated_gas_cost_usd = scale_two_decimals(quote.route.totalGasFeesInUsd);
+    const effective_trade_value_usd_with_gas = effective_trade_value_usd - approximated_gas_cost_usd;
 
     const trade_value: Asset = {
         name: fromToken,
@@ -61,22 +61,24 @@ export async function report_generator(quote: SocketQuote | SocketQuoteSingleCha
         actual_value_usd: actual_value_usd,
         effective_trade_value_usd: effective_trade_value_usd,
         difference_in_value: difference_in_value,
-        approximated_gas_cost: approximated_gas_cost,
-        gas_usd_price: gas_usd_price,
-        final_value_usd: final_value_usd,
+        approximated_gas_cost_gwei: approximated_gas_cost_gwei,
+        approximated_gas_cost_usd: approximated_gas_cost_usd,
+        effective_trade_value_usd_with_gas: effective_trade_value_usd_with_gas,
     };
 
+    net_trade_fee += approximated_gas_cost_usd;
+
     const net_fee: Fee = {
-        name: "NET-FEE",
+        name: "TOTAL FEE WITH GAS",
         amount_usd: net_trade_fee
     };
 
-    const api_report: APIReport = create_api_report(protocol, date_time, source_network, aggregator, destination_network, trade_value, net_fee, query_latency, quote);
+    const api_report: APIReport = await create_api_report(protocol, date_time, source_network, aggregator, destination_network, trade_value, net_fee, query_latency, quote);
 
     return api_report;
 }
 
-async function cross_chain_handler(quote: SocketQuote, gas_price: number) {
+async function cross_chain_handler(quote: SocketQuote, gas_price_gwei: number) {
     var net_trade_fee: number = 0;
     var aggregator_fee = [];
 
@@ -103,7 +105,7 @@ async function cross_chain_handler(quote: SocketQuote, gas_price: number) {
                 name: quote.route.userTxs[i].steps[j].type.toUpperCase() + "-FEE",
                 amount: parseInt(fee.amount),
                 percentage: undefined,
-                gas_price: gas_price,
+                gas_price_gwei: gas_price_gwei,
                 usd_price: fee.feesInUsd,
             }];
 
@@ -117,7 +119,7 @@ async function cross_chain_handler(quote: SocketQuote, gas_price: number) {
         name: "INTEGRATOR-FEE",
         amount: parseInt(quote.route.integratorFee.amount),
         percentage: undefined,
-        gas_price: gas_price,
+        gas_price_gwei: gas_price_gwei,
         usd_price: parseInt(quote.route.integratorFee.amount),
     }];
 
@@ -134,7 +136,7 @@ async function cross_chain_handler(quote: SocketQuote, gas_price: number) {
     };
 }
 
-async function same_chain_handler(quote: SocketQuoteSingleChain, gas_price: number) {
+async function same_chain_handler(quote: SocketQuoteSingleChain, gas_price_gwei: number) {
     var net_trade_fee: number = 0;
     var aggregator_fee = [];
 
@@ -142,7 +144,7 @@ async function same_chain_handler(quote: SocketQuoteSingleChain, gas_price: numb
         name: "INTEGRATOR-FEE",
         amount: parseInt(quote.route.integratorFee.amount),
         percentage: undefined,
-        gas_price: gas_price,
+        gas_price_gwei: gas_price_gwei,
         usd_price: parseInt(quote.route.integratorFee.amount),
     }];
 

@@ -10,7 +10,7 @@ export async function report_generator(quote: LiFiTransaction, fromChain: number
     const source_chain_name = CHAIN_ID_MAP[fromChain];
     const dest_chain_name = CHAIN_ID_MAP[toChain];
 
-    const obj = await create_report_network(source_chain_name, dest_chain_name, fromToken, toToken);
+    const obj = await create_report_network(protocol, source_chain_name, dest_chain_name, fromToken, toToken);
 
     const date_time: string = obj.date_time;
     const source_network: Network = obj.source_network;
@@ -29,7 +29,7 @@ export async function report_generator(quote: LiFiTransaction, fromChain: number
             name: fee.name,
             amount: parseInt(fee.amount),
             percentage: parseFloat(fee.percentage),
-            gas_price: undefined,
+            gas_price_gwei: undefined,
             usd_price: parseFloat(fee.amountUSD)
         }];
 
@@ -45,24 +45,34 @@ export async function report_generator(quote: LiFiTransaction, fromChain: number
         total_fee: net_trade_fee
     };
 
+    const actual_value = parseInt(fromAmount);
+    const actual_value_usd = scale_two_decimals(parseFloat(quote.estimate.fromAmountUSD));
+    const effective_trade_value_usd = scale_two_decimals(parseFloat(quote.estimate.toAmountUSD));
+    const difference_in_value = actual_value_usd - effective_trade_value_usd;
+    const approximated_gas_cost_gwei = parseInt(quote.estimate.gasCosts[0].amount);
+    const approximated_gas_cost_usd = parseFloat(quote.estimate.gasCosts[0].amountUSD);
+    const effective_trade_value_usd_with_gas = effective_trade_value_usd - approximated_gas_cost_usd;
+
     const trade_value: Asset = {
         name: fromToken,
         description: `Trade value of ${trade_amount} ${fromToken} from ${source_chain_name} to ${dest_chain_name} for ${toToken}`,
-        actual_value: parseInt(quote.estimate.fromAmount),
-        actual_value_usd: parseInt(quote.estimate.fromAmountUSD),
-        effective_trade_value_usd: parseInt(quote.estimate.toAmountUSD),
-        difference_in_value: parseInt(quote.estimate.fromAmountUSD) - parseInt(quote.estimate.toAmountUSD),
-        approximated_gas_cost: parseInt(quote.estimate.gasCosts[0].amount),
-        gas_usd_price: parseFloat(quote.estimate.gasCosts[0].amountUSD),
-        final_value_usd: parseInt(quote.estimate.toAmountUSD) - parseInt(quote.estimate.gasCosts[0].amountUSD),
+        actual_value: actual_value,
+        actual_value_usd: actual_value_usd,
+        effective_trade_value_usd: effective_trade_value_usd,
+        difference_in_value: difference_in_value,
+        approximated_gas_cost_gwei: approximated_gas_cost_gwei,
+        approximated_gas_cost_usd: approximated_gas_cost_usd,
+        effective_trade_value_usd_with_gas: effective_trade_value_usd_with_gas
     };
 
+    net_trade_fee += approximated_gas_cost_usd;
+
     const net_fee: Fee = {
-        name: "NET-FEE",
+        name: "TOTAL FEE WITH GAS",
         amount_usd: net_trade_fee
     };
 
-    const api_report: APIReport = create_api_report(protocol, date_time, source_network, aggregator, destination_network, trade_value, net_fee, query_latency, quote);
+    const api_report: APIReport = await create_api_report(protocol, date_time, source_network, aggregator, destination_network, trade_value, net_fee, query_latency, quote);
 
     return api_report;
 }

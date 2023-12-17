@@ -4,13 +4,13 @@ import { CHAIN_ID_MAP, TOKEN_MAP } from '@benchmarking-cross-chain-bridges/helpe
 import { build_route } from '@benchmarking-cross-chain-bridges/token-aggregators/uniswap/route_builder';
 import { SwapRoute } from '@uniswap/smart-order-router';
 
-export async function report_generator(quote: SwapRoute, fromChain: number, toChain: number, fromToken: string, toToken: string, fromAmount: string, api_latency: Latency[0], router_type: string) {
-    const protocol = 'uniswap-' + router_type;
+export async function report_generator(quote: SwapRoute, fromChain: number, toChain: number, fromToken: string, toToken: string, fromAmount: string, api_latency: Latency[0]) {
+    const protocol = 'uniswap-universal';
 
     const source_chain_name = CHAIN_ID_MAP[fromChain];
     const dest_chain_name = CHAIN_ID_MAP[toChain];
 
-    const obj = await create_report_network(source_chain_name, dest_chain_name, fromToken, toToken);
+    const obj = await create_report_network(protocol, source_chain_name, dest_chain_name, fromToken, toToken);
 
     const date_time: string = obj.date_time;
     const source_network: Network = obj.source_network;
@@ -31,7 +31,7 @@ export async function report_generator(quote: SwapRoute, fromChain: number, toCh
         name: quote.route[0].protocol + "-FEE",
         amount: fee_amount,
         percentage: fee_percentage * 100,
-        gas_price: source_network.network.gas_price,
+        gas_price_gwei: source_network.network.gas_price_gwei,
         usd_price: scale_two_decimals(parseFloat(quote.quote.toExact()) * fee_percentage)
     }];
 
@@ -39,7 +39,7 @@ export async function report_generator(quote: SwapRoute, fromChain: number, toCh
     aggregator_fee.push(fee_obj[0]);
 
     const aggregator: Aggregator = {
-        name: "Uniswap" + router_type,
+        name: "Uniswapuniversal",
         address: quote.route[0].poolAddresses[0],
         fee: aggregator_fee,
         total_fee: net_trade_fee
@@ -49,9 +49,9 @@ export async function report_generator(quote: SwapRoute, fromChain: number, toCh
     const actual_value_usd = scale_two_decimals(parseFloat(quote.quote.toExact()));
     const effective_trade_value_usd = actual_value_usd - net_trade_fee;
     const difference_in_value = actual_value_usd - effective_trade_value_usd;
-    const approximated_gas_cost = quote.estimatedGasUsed.toNumber();
-    const gas_usd_price = source_network.network.gas_price;
-    const final_value_usd = scale_two_decimals(parseFloat(quote.quoteGasAdjusted.toExact()));
+    const approximated_gas_cost_gwei = quote.estimatedGasUsed.toNumber();
+    const approximated_gas_cost_usd = 0;
+    const effective_trade_value_usd_with_gas = scale_two_decimals(parseFloat(quote.quoteGasAdjusted.toExact()));
 
     const trade_value: Asset = {
         name: fromToken,
@@ -60,25 +60,25 @@ export async function report_generator(quote: SwapRoute, fromChain: number, toCh
         actual_value_usd: actual_value_usd,
         effective_trade_value_usd: effective_trade_value_usd,
         difference_in_value: difference_in_value,
-        approximated_gas_cost: approximated_gas_cost,
-        gas_usd_price: gas_usd_price,
-        final_value_usd: final_value_usd,
+        approximated_gas_cost_gwei: approximated_gas_cost_gwei,
+        approximated_gas_cost_usd: approximated_gas_cost_usd,
+        effective_trade_value_usd_with_gas: effective_trade_value_usd_with_gas,
     };
 
     const net_fee: Fee = {
-        name: "NET-FEE",
+        name: "TOTAL FEE WITH GAS",
         amount_usd: net_trade_fee
     };
 
-    const api_report: APIReport = create_api_report(protocol, date_time, source_network, aggregator, destination_network, trade_value, net_fee, query_latency, quote);
+    const api_report: APIReport = await create_api_report(protocol, date_time, source_network, aggregator, destination_network, trade_value, net_fee, query_latency, quote);
 
     return api_report;
 }
 
-export async function make_api_report(fromChain: number, toChain: number, fromToken: string, toToken: string, fromAmount: string, router_type: string): Promise<APIReport> {
+export async function make_api_report(fromChain: number, toChain: number, fromToken: string, toToken: string, fromAmount: string): Promise<APIReport> {
     const query_start = new Date().getTime();
 
-    const quote: SwapRoute = await build_route(fromChain, toChain, fromToken, toToken, fromAmount, router_type)
+    const quote: SwapRoute = await build_route(fromChain, toChain, fromToken, toToken, fromAmount, 'universal')
 
     const query_end = new Date().getTime();
 
@@ -89,7 +89,7 @@ export async function make_api_report(fromChain: number, toChain: number, fromTo
         latency: query_end - query_start
     };
 
-    const report: APIReport = await report_generator(quote, fromChain, toChain, fromToken, toToken, fromAmount, api_latency, router_type);
+    const report: APIReport = await report_generator(quote, fromChain, toChain, fromToken, toToken, fromAmount, api_latency);
 
     return report;
 }
