@@ -3,6 +3,17 @@ import { validate_chain, validate_tokens, validate_keys } from '@benchmarking-cr
 import { COWOrderRequest, COWQuote, COWReturn } from './types';
 import { create_order, get_order_from_quote, get_support_chain_id } from './constants_local';
 
+/**
+ * Builds a route for COWswap.
+ * @param sourceChain The source chain ID.
+ * @param destChain The destination chain ID.
+ * @param fromToken The token to sell.
+ * @param toToken The token to buy.
+ * @param amount The amount to sell.
+ * @param operation The operation to perform (buy or sell).
+ * @param valid_time The valid time for the order.
+ * @returns The COWswap route.
+ */
 export async function build_route(sourceChain: number, destChain: number, fromToken: string, toToken: string, amount: string, operation: string, valid_time: number = 30): Promise<COWReturn> {
     if (sourceChain !== destChain) throw new Error("Source and destination chains must be the same for COWswap");
 

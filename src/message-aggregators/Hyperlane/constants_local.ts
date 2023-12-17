@@ -4,12 +4,14 @@ import { validate_rpc_url } from "@benchmarking-cross-chain-bridges/helper/inp_v
 
 export const HYPERLANE_GAS_AMOUNT = "100000";
 
+// Mapping of function names to the smart contract script function names.
 export enum Hyperlane_Contract_Names {
     Counter = "Counter",
     Send_SourceTx = "Send_SourceTx",
     Send_IGPGas = "Send_IGPGas"
 }
 
+// Mapping of file names to the script file names.
 const contract_script_map: { [key: string]: string } = {
     "Counter": "Hyperlane_DeployDestinationChainContracts.s.sol:DeployCounterScript",
     "Send_SourceTx": "Hyperlane_CounterSourceTx.s.sol:CounterSourceTxScript",

@@ -4,6 +4,20 @@ import matplotlib
 matplotlib.use('Agg')
 
 def plot_quote_vs_coingecko(timestamps, coin_gecko_prices, actual_values, aggregator, source_chain, dest_chain):
+    """
+    Plots the CoinGecko price and quoted values.
+
+    Args:
+        timestamps (list): List of timestamps.
+        coin_gecko_prices (list): List of CoinGecko prices.
+        actual_values (list): List of actual values.
+        aggregator (str): Aggregator name.
+        source_chain (str): Source chain name.
+        dest_chain (str): Destination chain name.
+
+    Returns:
+        dict: A dictionary containing the same_chain and cross_chain plots.
+    """
     # Create figure
     fig, ax = plt.subplots(figsize=(12, 6))
 

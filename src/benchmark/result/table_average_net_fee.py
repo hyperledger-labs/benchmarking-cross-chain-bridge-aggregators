@@ -7,6 +7,19 @@ data = pd.DataFrame(columns=['aggregator', 'source-chain', 'dest-chain',
                             ])
 
 def table_average_net_fee(net_fee, quote_value, aggregator, source_chain, dest_chain):
+    """
+    Calculate the average net fee for an aggregator when the current quote value is some percentage above or below the previous quote value.
+
+    Parameters:
+    net_fee (list): List of net fees.
+    quote_value (list): List of quote values.
+    aggregator (str): Aggregator name.
+    source_chain (str): Source chain name.
+    dest_chain (str): Destination chain name.
+
+    Returns:
+    pd.DataFrame: DataFrame containing the average net fee for the given aggregator, source chain, and destination chain.
+    """
     global data  # Ensure you are referencing the global variable
 
     # Find the average net fee for an aggregator when the current quote value is some percentage above or below the previous quote value

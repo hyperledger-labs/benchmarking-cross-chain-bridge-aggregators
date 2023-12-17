@@ -4,6 +4,18 @@ import { CHAIN_ID_MAP, TOKEN_MAP } from '@benchmarking-cross-chain-bridges/helpe
 import { XYQuote, XYRoute } from '@benchmarking-cross-chain-bridges/token-aggregators/xy/types';
 import { build_route } from '@benchmarking-cross-chain-bridges/token-aggregators/xy/route_builder';
 
+/**
+ * Generates a report for a token aggregator.
+ *
+ * @param quotes - The quotes for the token aggregator.
+ * @param fromChain - The ID of the source chain.
+ * @param toChain - The ID of the destination chain.
+ * @param fromToken - The symbol of the source token.
+ * @param toToken - The symbol of the destination token.
+ * @param fromAmount - The amount of the source token.
+ * @param api_latency - The latency of the API.
+ * @returns The generated API report.
+ */
 export async function report_generator(quotes: XYQuote, fromChain: number, toChain: number, fromToken: string, toToken: string, fromAmount: string, api_latency: Latency[0]) {
     const protocol = 'xy';
 

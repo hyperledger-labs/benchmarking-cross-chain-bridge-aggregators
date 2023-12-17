@@ -1,5 +1,7 @@
 import { CHAIN_MAP } from '@benchmarking-cross-chain-bridges/helper/constants_global';
 
+// We use the staging server url for both mainnet and testnet.
+// There is a mainnet url :  https://li.quest/v1/tokens
 enum LIFI_URLS {
     MAINNET = 'https://staging.li.quest/v1',
     TESTNET = 'https://staging.li.quest/v1',

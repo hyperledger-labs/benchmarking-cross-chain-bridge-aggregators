@@ -7,6 +7,11 @@ import { get_gas_price, get_latest_blockNum } from '@benchmarking-cross-chain-br
 
 const report_dir = 'benchmark-data';
 
+/*
+Reads the report count from the number of files in the directory. If the last report is older than the time frame, then it will return the count - 1, this is to account for creating multiple reports of the same aggregator in the same batch.
+
+Otherwise the code creates a new report id for coingecko for each new source-dest blockchain pair, and this causes rate limit issues with coingecko.
+*/
 export function report_count(input_dir: string, time_frame: number = 5): number {
     try {
         const files = fs.readdirSync(input_dir);
@@ -63,6 +68,15 @@ export async function create_api_report(protocol_name: string, creation_date_tim
     return report;
 }
 
+/**
+ * Creates a report for a network.
+ * @param protocol The protocol used for the network.
+ * @param source_chain_name The name of the source chain.
+ * @param dest_chain_name The name of the destination chain.
+ * @param fromToken The token used in the source chain.
+ * @param toToken The token used in the destination chain.
+ * @returns A promise that resolves to an object containing the date and time of the report, information about the source network, and information about the destination network.
+ */
 export async function create_report_network(protocol: string, source_chain_name: string, dest_chain_name: string, fromToken: string, toToken: string): Promise<{
     date_time: string;
     source_network: Network;
@@ -70,6 +84,15 @@ export async function create_report_network(protocol: string, source_chain_name:
 }> {
     const date_time = new Date().toISOString();
     const run_id = report_count(`${report_dir}/${protocol}/${source_chain_name}/${dest_chain_name}`) + 1;
+
+    /*
+    The following code creates a network object for the source and destination chains.
+
+    The network object contains the date_time, network information, and the block number.
+    It also gets the price of the native token in USD from coingecko, the gas price in Gwei, and the block number.
+
+    It then calculates the gas price in USD.
+    */
 
     const source_gas_price_gwei = await get_gas_price(source_chain_name) * 10e-9;
     const source_block_num = await get_latest_blockNum(source_chain_name);
@@ -122,6 +145,8 @@ export async function create_report_network(protocol: string, source_chain_name:
     }
 }
 
+// This is to match the coingecko scheme for token names
+
 const token_to_coingecko_id: { [key: string]: string } = {
     "ETH": "ethereum",
     "WETH": "weth",
@@ -152,11 +177,13 @@ export function scale_two_decimals(num: number, den: number = 1): number {
     return Math.round((num / den) * 100) / 100;
 }
 
+// Only fetches the price if the file does not exist, and if the file exists then gets the two token prices and calculates the pair price
 export async function get_coin_gecko_price(run_id: number, fromToken: string, toToken: string): Promise<CoinGeckoPrice> {
     if (!fs.existsSync(`${report_dir}/coin_gecko_price/${run_id}`)) {
         fs.mkdirSync(`${report_dir}/coin_gecko_price/${run_id}`, { recursive: true });
     }
 
+    // Gets the price for the fromToken and toToken
     const token_name = [fromToken, toToken];
     for (const token of token_name) {
         if (!fs.existsSync(`${report_dir}/coin_gecko_price/${run_id}/${token}-USD.json`)) {
@@ -177,10 +204,12 @@ export async function get_coin_gecko_price(run_id: number, fromToken: string, to
         return coin_gecko_price;
     }
 
+    // else get the two token prices and calculate the pair price
     const from_token = JSON.parse(fs.readFileSync(`${report_dir}/coin_gecko_price/${run_id}/${fromToken}-USD.json`, 'utf-8'));
     const to_token = JSON.parse(fs.readFileSync(`${report_dir}/coin_gecko_price/${run_id}/${toToken}-USD.json`, 'utf-8'));
 
 
+    // Calculate the pair price
     const coin_gecko_from_token_price = from_token.price_per;
     const coin_gecko_to_token_price = to_token.price_per;
     const coin_gecko_pair_price_per = scale_two_decimals(coin_gecko_from_token_price, coin_gecko_to_token_price);

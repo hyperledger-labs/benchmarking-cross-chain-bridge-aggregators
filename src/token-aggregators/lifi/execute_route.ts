@@ -6,6 +6,14 @@ import { CHAIN_ID_MAP } from "@benchmarking-cross-chain-bridges/helper/constants
 import { get_lifi_url } from "./constants_local";
 import { TransactionRequest } from "./types";
 
+/**
+ * Checks the status of a transaction.
+ * @param bridge Bridge name
+ * @param fromChain The source chain ID.
+ * @param toChain The destination chain ID.
+ * @param txHash The transaction hash.
+ * @returns The status of the transaction.
+ */
 const getStatus = async (bridge: string, fromChain: number, toChain: number, txHash: string) => {
     const lifi_url = get_lifi_url(fromChain);
 
@@ -20,7 +28,15 @@ const getStatus = async (bridge: string, fromChain: number, toChain: number, txH
     return result.data;
 }
 
-// NO LOW BALANCE CHECKS ON THE LIFI SMART CONTRACT
+/**
+ * Submits a swap transaction
+ * @param fromChain The source chain ID.
+ * @param toChain The destination chain ID.
+ * @param fromToken The token to sell.
+ * @param quote The quote from the LIFI protocol.
+ * @returns The transaction hash.
+ * @note NO LOW BALANCE CHECKS ON THE LIFI SMART CONTRACT
+ */
 export async function submit_order(fromChain: number, toChain: number, fromToken: string, quote: any) {
 
     const chain_name = CHAIN_ID_MAP[fromChain];

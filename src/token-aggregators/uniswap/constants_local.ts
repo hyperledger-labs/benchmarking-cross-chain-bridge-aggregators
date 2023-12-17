@@ -3,13 +3,13 @@
 import { Ether, Token } from '@uniswap/sdk-core'
 
 import { CHAIN_MAP } from '@benchmarking-cross-chain-bridges/helper/constants_global';
-// Addresses
 
+// Addresses
 export const V3_SWAP_ROUTER_ADDRESS = '0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45'
 export const WETH_CONTRACT_ADDRESS = '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6'
 
-// Currencies and Tokens
 
+// Currencies and Tokens
 export const ETH_NATIVE = Ether;
 
 function USDC_TOKEN(chainName: string): Token {

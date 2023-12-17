@@ -5,6 +5,18 @@ import { build_route } from '@benchmarking-cross-chain-bridges/token-aggregators
 import { SocketQuote } from '@socket.tech/socket-v2-sdk';
 import { SocketQuoteSingleChain } from '@benchmarking-cross-chain-bridges/token-aggregators/socket/types';
 
+/**
+ * Generates a report for a token aggregator using socket communication.
+ *
+ * @param quote - The quote object containing the trade details.
+ * @param fromChain - The ID of the source chain.
+ * @param toChain - The ID of the destination chain.
+ * @param fromToken - The symbol of the token being traded from.
+ * @param toToken - The symbol of the token being traded to.
+ * @param fromAmount - The amount of tokens being traded from.
+ * @param api_latency - The latency of the API used for the trade.
+ * @returns The generated API report.
+ */
 export async function report_generator(quote: SocketQuote | SocketQuoteSingleChain, fromChain: number, toChain: number, fromToken: string, toToken: string, fromAmount: string, api_latency: Latency[0]) {
     const protocol = 'socket';
 

@@ -7,6 +7,26 @@ import numpy as np
 from APIReport import APIReport
 
 def load_json_data(benchmark_data_folder, aggregator_name, source_chain_name, dest_chain_name, sort_by_timestamps=True):
+    """
+    Load JSON data from a specified folder and return a dictionary containing the extracted data.
+
+    Args:
+        benchmark_data_folder (str): The path to the benchmark data folder.
+        aggregator_name (str): The name of the aggregator.
+        source_chain_name (str): The name of the source chain.
+        dest_chain_name (str): The name of the destination chain.
+        sort_by_timestamps (bool, optional): Whether to sort the data by timestamps. Defaults to True.
+
+    Returns:
+        dict: A dictionary containing the extracted data, with keys:
+            - 'timestamps': List of timestamps
+            - 'total_fees': List of total fees
+            - 'coin_gecko_prices': List of CoinGecko prices
+            - 'source_gas_prices': List of source gas prices
+            - 'dest_gas_prices': List of destination gas prices
+            - 'effective_trade_value_usd': List of effective trade values in USD
+            - 'latency': List of latencies
+    """
     timestamps_list = []
     source_gas_prices_list = []
     dest_gas_prices_list = []
@@ -51,9 +71,10 @@ def load_json_data(benchmark_data_folder, aggregator_name, source_chain_name, de
     assert len(timestamps_list) == len(total_fees_list) == len(coin_gecko_prices_list) == len(source_gas_prices_list) == len(dest_gas_prices_list) == len(effective_trade_value_usd_list) == len(latency_list) != 0
 
 
-
+    # Sort the data by timestamps
     timestamps_list, total_fees_list, coin_gecko_prices_list, source_gas_prices_list, dest_gas_prices_list, effective_trade_value_usd_list, latency_list = zip(*sorted(zip(timestamps_list, total_fees_list, coin_gecko_prices_list, source_gas_prices_list, dest_gas_prices_list, effective_trade_value_usd_list, latency_list)))
 
+    # Convert the lists to numpy arrays
     timestamps_list = np.array(timestamps_list)
     total_fees_list = np.array(total_fees_list)
     coin_gecko_prices_list = np.array(coin_gecko_prices_list)

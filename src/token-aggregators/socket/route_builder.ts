@@ -6,6 +6,16 @@ import { TOKEN_MAP } from './constants_local'
 
 import { Socket, Path, SocketQuote } from "@socket.tech/socket-v2-sdk";
 
+/**
+ * Builds a route for a swap transaction.
+ * @param from_chain_id The source chain ID.
+ * @param to_chain_id The destination chain ID.
+ * @param from_token The token to sell.
+ * @param to_token The token to buy.
+ * @param amount The amount to sell.
+ * @param multiTx Whether to use a single or multi transaction.
+ * @returns The Socket route.
+ */
 export async function build_route(from_chain_id: number, to_chain_id: number, from_token: string, to_token: string, amount: string, multiTx: boolean): Promise<SocketQuote> {
 
     const SOCKET_API_KEY = validate_api_key('SOCKET');

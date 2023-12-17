@@ -6,6 +6,13 @@ import { approveAllow } from "@benchmarking-cross-chain-bridges/helper/token_mis
 import { URL_SWAP } from "./constants_local";
 import { validate_keys } from "@benchmarking-cross-chain-bridges/helper/inp_validator";
 
+/**
+ * Submits a swap transaction
+ * @param sourceChain The source chain ID.
+ * @param fromToken The token to sell.
+ * @param quote The quote from the XY protocol.
+ * @returns The transaction hash.
+ */
 export async function submit_order(sourceChain: number, fromToken: string, quote: XYRoute) {
     const chain_name = CHAIN_ID_MAP[sourceChain];
     const signer = get_signer(chain_name);
@@ -53,6 +60,11 @@ export async function submit_order(sourceChain: number, fromToken: string, quote
     }
 }
 
+/**
+ * Creates a swap transaction.
+ * @param xyTx The XY transaction.
+ * @returns The swap transaction.
+ */
 async function createSwapTx(xyTx: XYTx) {
     const queryTxParams = new URLSearchParams({
         srcChainId: xyTx.srcChainId.toString(),

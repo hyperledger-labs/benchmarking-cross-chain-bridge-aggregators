@@ -11,6 +11,11 @@ import { get_provider } from '@benchmarking-cross-chain-bridges/helper/provider'
 import { CHAIN_ID_MAP } from '@benchmarking-cross-chain-bridges/helper/constants_global';
 import { validate_keys } from '@benchmarking-cross-chain-bridges/helper/inp_validator';
 
+/**
+ * Creates a new Alpha Router.
+ * @param chainId The chain ID of the source chain.
+ * @returns The Alpha Router.
+ */
 export function define_alpha_router(chainId: number): AlphaRouter {
     return new AlphaRouter({
         chainId: chainId,
@@ -18,6 +23,11 @@ export function define_alpha_router(chainId: number): AlphaRouter {
     });
 }
 
+/**
+ * Creates a new router.
+ * @param router_type The type of router to create.
+ * @returns The router.
+ */
 export function create_router(router_type: string): SwapOptionsSwapRouter02 | SwapOptionsUniversalRouter {
     const KEY_PUBLIC = validate_keys().public;
 

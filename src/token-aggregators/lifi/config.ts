@@ -1,6 +1,7 @@
 import fetch, { Headers, Request, Response } from 'cross-fetch';
 import { LiFi } from '@lifi/sdk';
 
+// Set up globalThis.fetch for nodejs
 if (!globalThis.fetch) {
     const globalThisAny = globalThis
     globalThisAny.fetch = fetch

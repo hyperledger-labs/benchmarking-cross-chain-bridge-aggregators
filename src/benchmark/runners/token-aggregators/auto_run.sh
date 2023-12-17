@@ -78,10 +78,12 @@ function print_elapsed_time {
 
 echo "Running token aggregator benchmark $run_count times with $time_interval second intervals between each run"
 
+# Create the logs directory if it doesn't exist
 if [ ! -d "./benchmark-data/logs" ]; then
   mkdir -p ./benchmark-data/logs
 fi
 
+# Create a new directory for the logs and get the new run id
 file_count=$(ls -1 ./benchmark-data/logs | wc -l)
 file_count=$((file_count+1))
 mkdir ./benchmark-data/logs/log-$file_count

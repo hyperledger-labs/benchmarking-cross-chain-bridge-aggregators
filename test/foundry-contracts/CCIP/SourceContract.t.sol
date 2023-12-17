@@ -1,4 +1,9 @@
 // SPDX-License-Identifier: UNLICENSED
+
+/**
+ * @title SourceContractTest
+ * @dev This contract is used for testing the SourceContract functionality.
+ */
 pragma solidity ^0.8.13;
 
 import {Test, console2} from "forge-std/Test.sol";
@@ -15,12 +20,19 @@ contract SourceContractTest is Test {
 
     uint64 public destination_domain_mum = 12532609583862916517;
 
+    /**
+     * @dev Sets up the initial state of the contract.
+     */
     function setUp() public {
         deployed_ccip_sender = CCIP_Sender(
             payable(deployed_ccip_sender_addr_sep)
         );
     }
 
+    /**
+     * @dev Tests the `getFee` function of the SourceContract.
+     * @param x The input parameter for the `getFee` function.
+     */
     function testFuzz_getFee(uint256 x) public {
         uint256 fee = deployed_ccip_sender.getFee(
             destination_domain_mum,

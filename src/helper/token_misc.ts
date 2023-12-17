@@ -3,8 +3,13 @@ import { get_signer } from "./provider";
 import { CHAIN_MAP } from "./constants_global";
 
 import ERC20 from "@openzeppelin/contracts/build/contracts/ERC20.json";
-import { tokenToString } from "typescript";
 
+/**
+ * Gets the balance of a given token for a given address.
+ * @param chain_name The name of the chain.
+ * @param from_token The token to give the allowance for.
+ * @param spender_address The address to allow spending of the token.
+ */
 export async function approveAllow(
     chain_name: string,
     from_token: string,
@@ -34,6 +39,15 @@ export async function approveAllow(
     return true;
 }
 
+/**
+ * Gets the balance of a given token for a given address.
+ * @param chain_name The name of the chain.
+ * @param to_token The token to get the balance of.
+ * @param from_block The block to start the search from.
+ * @param to_block The block to end the search at.
+ * @param to_address The address to get the balance of.
+ * @returns The balance of the token.
+ */
 export async function transferEventFromBlock(
     chain_name: string,
     to_token: string,
@@ -62,6 +76,14 @@ export async function transferEventFromBlock(
     return total_amount.toNumber();
 }
 
+/**
+ * Gets the balance of a given token for a given address.
+ * @param chain_name The name of the chain.
+ * @param token_name The token to get the balance of.
+ * @param block_number The block to get the balance at.
+ * @param address The address to get the balance of.
+ * @returns The balance of the token.
+ */
 export async function getBalanceAtBlock(
     chain_name: string,
     token_name: string,

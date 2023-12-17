@@ -6,6 +6,20 @@ matplotlib.use('Agg')
 from utils import create_plot_dir
 
 def plot_quote_difference(timestamps, coin_gecko_prices, actual_values, aggregator, source_chain, dest_chain):
+    """
+    Plots the difference between actual values and coin gecko prices over timestamps.
+
+    Parameters:
+    - timestamps (list): List of timestamps.
+    - coin_gecko_prices (list): List of coin gecko prices.
+    - actual_values (list): List of actual values.
+    - aggregator (str): Aggregator name.
+    - source_chain (str): Source chain name.
+    - dest_chain (str): Destination chain name.
+
+    Returns:
+    - dict: A dictionary containing the figure for same_chain and cross_chain scenarios.
+    """
     diff_values = actual_values - coin_gecko_prices
 
     # Create figure

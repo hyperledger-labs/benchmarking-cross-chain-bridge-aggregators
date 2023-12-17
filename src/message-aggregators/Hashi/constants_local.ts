@@ -2,6 +2,7 @@ import { CHAIN_ID_MAP } from "@benchmarking-cross-chain-bridges/helper/constants
 import { _get_contract_address, _get_deployed_contract_address, _get_contract_file_name, _get_tx_hash } from "@benchmarking-cross-chain-bridges/helper/transaction_parser";
 import { validate_rpc_url } from "@benchmarking-cross-chain-bridges/helper/inp_validator";
 
+// Mapping of function names to the smart contract script function names.
 export enum Hashi_Contract_Names {
     "Yaho" = "Yaho",
     "AMBRelay" = "AMBRelay",
@@ -11,6 +12,7 @@ export enum Hashi_Contract_Names {
     "Send_SourceTx" = "Send_SourceTxLink",
 }
 
+// Mapping of file names to the script file names.
 const contract_script_map: { [key: string]: string } = {
     "Yaho": "Hashi_DeploySourceChainContracts.s.sol:DeployYahoScript",
     "AMBRelay": "Hashi_DeploySourceChainContracts.s.sol:DeployAMBRelayScript",

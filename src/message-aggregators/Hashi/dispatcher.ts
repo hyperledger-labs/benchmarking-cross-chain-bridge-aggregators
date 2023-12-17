@@ -1,10 +1,20 @@
 import { exec } from 'child_process';
 
 import { validate_chain, validate_keys } from '@benchmarking-cross-chain-bridges/helper/inp_validator';
-import { get_deployed_contract_address, get_contract_address, get_token_address, get_rpc_url, get_contract_file_name, get_domain_identifier, get_tx_hash } from './constants_local';
-import { CHAIN_ID_MAP } from '@benchmarking-cross-chain-bridges/helper/constants_global';
+import { get_deployed_contract_address, get_contract_address, get_rpc_url, get_contract_file_name, get_tx_hash } from './constants_local';
 
-// txChain: number tells us which chain we're sending the transaction on
+/**
+ * Interface for the dispatcher.sh script.
+ * @param sourceChain The source chain ID.
+ * @param destChain The destination chain ID.
+ * @param txChain The chain ID to broadcast the transaction on.
+ * @param contractName The smart contract name that we are interacting with.
+ * @param operation The operation to perform (deploy, send, call)
+ * @param val The cross chain value to send to the destination contract.
+ * @param mode The mode to run the script in (test, broadcast)
+ * @param confirmationResponse Response from the user to confirm the transaction.
+ * @returns Different values depending on the operation.
+ */
 export async function script_interface(sourceChain: number, destChain: number, txChain: number, contractName: string, operation: string, val: number = 0, mode: string = 'test', confirmationResponse: boolean = false) {
     const key_pair = validate_keys();
     validate_chain('HASHI', sourceChain, destChain, txChain);
@@ -26,6 +36,7 @@ export async function script_interface(sourceChain: number, destChain: number, t
         throw new Error(`User input confirmationResponse was ${confirmationResponse}. Aborting.`);
     }
 
+    // Creates the params string to pass to the dispatcher.sh script.
     let params = '--source_chain ' + sourceChain + ' --dest_chain ' + destChain + ' --yaho_source ' + yaho_source + ' --yaru_dest ' + yaru_dest + ' --hashi_dest ' + hashi_dest + ' --amb_relay ' + amb_relay + ' --amb_adapter ' + amb_adapter + ' --number ' + val;
 
     return new Promise((resolve, reject) => {

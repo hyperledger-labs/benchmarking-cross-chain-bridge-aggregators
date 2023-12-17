@@ -5,12 +5,26 @@ import { Order } from '@gnosis.pm/gp-v2-contracts';
 import { COWOrderRequest, COWQuote, COWReturn } from '@benchmarking-cross-chain-bridges/token-aggregators/cowswap/types';
 import { build_route } from '@benchmarking-cross-chain-bridges/token-aggregators/cowswap/route_builder';
 
+/**
+ * Generates a report for the COWSwap token aggregator.
+ *
+ * @param quote - The quote object containing trade information.
+ * @param fromChain - The ID of the source chain.
+ * @param toChain - The ID of the destination chain.
+ * @param fromToken - The symbol of the source token.
+ * @param toToken - The symbol of the destination token.
+ * @param fromAmount - The amount of the source token to trade.
+ * @param api_latency - The latency of the API used for the trade.
+ * @returns The generated API report.
+ */
 export async function report_generator(quote: COWQuote, fromChain: number, toChain: number, fromToken: string, toToken: string, fromAmount: string, api_latency: Latency[0]) {
     const protocol = 'cowswap';
 
     const source_chain_name = CHAIN_ID_MAP[fromChain];
     const dest_chain_name = CHAIN_ID_MAP[toChain];
 
+    // Create a network object for the source and destination chains.
+    // The network object contains the date_time, network information, and the block number.
     const obj = await create_report_network(protocol, source_chain_name, dest_chain_name, fromToken, toToken);
 
     const date_time: string = obj.date_time;
@@ -21,12 +35,14 @@ export async function report_generator(quote: COWQuote, fromChain: number, toCha
     const trade_amount = parseInt(fromAmount) / fromTokenDecimals;
     const query_latency: Latency = [api_latency];
 
+    // Get the run_id for the report.
     const run_id = report_count('benchmark-data/' + protocol + '/' + source_network.network.name + '/' + destination_network.network.name) + 1;
 
     const token_pair_price = await get_coin_gecko_price(run_id, fromToken, "USD")
 
     const token_usd_price = token_pair_price.price_per;
 
+    // The following is parsing the cowswap quote object to get the APIReport object.
     var net_trade_fee: number = parseInt(quote.quote.feeAmount);
     var aggregator_fee: Aggregator["fee"] = [{
         name: quote.quote.kind,
