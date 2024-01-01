@@ -24,7 +24,8 @@ const contract_script_map: { [key: string]: string } = {
 
 const domain_identifier_map: { [key: string]: string } = {
     "GOERLI": "5",
-    "GNOSIS": "100"
+    "GNOSIS": "100",
+    "CHIADO": "10200",
 };
 
 export function get_contract_address(chain_id: number, contract_name: string): string {

@@ -13,7 +13,8 @@
         "sushiswap",
         "WMATIC",
         "YAHO",
-        "YARU"
+        "YARU",
+        "CHIADO"
     ],
     "python.analysis.typeCheckingMode": "basic"
 }
