@@ -11,7 +11,7 @@ const confirmationResponse = false;
 const operation = 'send';
 const value = 20;
 const sourceChain = CHAIN_MAP.GOERLI.chainId;
-const destChain = CHAIN_MAP.GNOSIS.chainId;
+const destChain = CHAIN_MAP.CHIADO.chainId;
 
 describe.skip('Sends a cross-chain transaction to Counter', () => {
     it('should simulate sending a transaction from Goerli to Gnosis', (done) => {

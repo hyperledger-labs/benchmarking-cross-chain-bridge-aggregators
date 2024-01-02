@@ -41,7 +41,7 @@ contract CounterSourceTxScript is Script {
         DEPLOYED_AMBRELAY = helper.get_deployed_address("AMBRelay");
         DEPLOYED_AMBADAPTER = helper.get_deployed_address("AMBAdapter");
 
-        yaho = Yaho(DEPLOYED_YAHO);
+        yaho = Yaho(payable(DEPLOYED_YAHO));
     }
 
     function run() public {
@@ -54,11 +54,11 @@ contract CounterSourceTxScript is Script {
         Message[] memory messages = new Message[](1);
         messages[0] = message;
 
-        address[] memory adapters = new address[](1);
-        adapters[0] = DEPLOYED_AMBADAPTER;
-
         address[] memory destinationAdapters = new address[](1);
-        destinationAdapters[0] = DEPLOYED_AMBRELAY;
+        destinationAdapters[0] = DEPLOYED_AMBADAPTER;
+
+        address[] memory adapters = new address[](1);
+        adapters[0] = DEPLOYED_AMBRELAY;
 
         (bytes32[] memory messageIds, bytes32[] memory adapterReciepts) = yaho
             .dispatchMessagesToAdapters(

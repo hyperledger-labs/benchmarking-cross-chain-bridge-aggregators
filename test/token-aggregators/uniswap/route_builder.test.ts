@@ -78,7 +78,7 @@ describe('Perform Universal Router V2 Swaps', () => {
             const from_token = 'ETH';
             const to_token = 'USDC';
             build_route(from_chain_id, to_chain_id, from_token, to_token, amount, router_type).then((route) => {
-                fs.writeFileSync('run-data/token-routes/uniswap-route-universal.json', JSON.stringify(route));
+                fs.writeFileSync('run-data/token-routes/uniswap-route.json', JSON.stringify(route));
                 const blockNumber = parseInt(route.blockNumber._hex, 16);
                 expect(blockNumber).to.be.greaterThan(0);
                 done();

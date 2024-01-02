@@ -17,7 +17,7 @@ import { SwapRoute } from '@uniswap/smart-order-router';
  * @returns The generated API report.
  */
 export async function report_generator(quote: SwapRoute, fromChain: number, toChain: number, fromToken: string, toToken: string, fromAmount: string, api_latency: Latency[0]) {
-    const protocol = 'uniswap-universal';
+    const protocol = 'uniswap';
 
     const source_chain_name = CHAIN_ID_MAP[fromChain];
     const dest_chain_name = CHAIN_ID_MAP[toChain];

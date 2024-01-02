@@ -26,7 +26,6 @@ export async function script_interface(sourceChain: number, destChain: number, t
     const contract_file_name = paths[1].split(':')[0];
 
     const yaho_source = get_contract_address(sourceChain, 'HASHI_YAHO');
-    const yaru_dest = get_contract_address(destChain, 'HASHI_YARU');
     const hashi_dest = get_contract_address(destChain, 'HASHI_HASHI');
     const amb_relay = get_contract_address(sourceChain, 'HASHI_AMB_RELAY');
     const amb_adapter = get_contract_address(destChain, 'HASHI_AMB_ADAPTER');
@@ -37,7 +36,7 @@ export async function script_interface(sourceChain: number, destChain: number, t
     }
 
     // Creates the params string to pass to the dispatcher.sh script.
-    let params = '--source_chain ' + sourceChain + ' --dest_chain ' + destChain + ' --yaho_source ' + yaho_source + ' --yaru_dest ' + yaru_dest + ' --hashi_dest ' + hashi_dest + ' --amb_relay ' + amb_relay + ' --amb_adapter ' + amb_adapter + ' --number ' + val;
+    let params = '--source_chain ' + sourceChain + ' --dest_chain ' + destChain + ' --yaho_source ' + yaho_source + ' --hashi_dest ' + hashi_dest + ' --amb_relay ' + amb_relay + ' --amb_adapter ' + amb_adapter + ' --number ' + val;
 
     return new Promise((resolve, reject) => {
         exec(`./${dispatcher_path} ${mode} ${rpc_url} ${operation} ${contract_name} ${params}`, (err, stdout, stderr) => {

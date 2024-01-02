@@ -29,10 +29,6 @@ while [[ $# -gt 0 ]]; do
             export HASHI_YAHO_SOURCE="$2"
             shift 2
             ;;
-        --yaru_dest)
-            export HASHI_YARU_DEST="$2"
-            shift 2
-            ;;
         --hashi_dest)
             export HASHI_HASHI_DEST="$2"
             shift 2

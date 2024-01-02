@@ -44,7 +44,7 @@ contract DeployYaruScript is Script {
         vm.startBroadcast(deployerPrivateKey);
 
         // Deploy Yaru on Destination chain with Source chain as a parameter
-        yaru = new Yaru(IHashi(HASHI), address(YAHO), SOURCE_DOMAIN);
+        yaru = new Yaru(IHashi(HASHI), YAHO, SOURCE_DOMAIN);
 
         vm.stopBroadcast();
 
@@ -55,7 +55,7 @@ contract DeployYaruScript is Script {
 contract DeployAMBAdapterScript is Script {
     address AMB;
     address DEPLOYED_AMB_RELAY;
-    string SOURCE_DOMAIN;
+    uint256 SOURCE_DOMAIN;
     uint256 DESTINATION_DOMAIN;
 
     uint256 deployerPrivateKey;
@@ -67,7 +67,7 @@ contract DeployAMBAdapterScript is Script {
         isTest = vm.envBool("TEST");
         helper = new HelperScript("Hashi", isTest);
 
-        SOURCE_DOMAIN = vm.envString("HASHI_SOURCE_DOMAIN");
+        SOURCE_DOMAIN = vm.envUint("HASHI_SOURCE_DOMAIN");
         DESTINATION_DOMAIN = vm.envUint("HASHI_DESTINATION_DOMAIN");
         AMB = vm.envAddress("HASHI_AMB_ADAPTER_DEST");
         DEPLOYED_AMB_RELAY = helper.get_deployed_address("AMBRelay");
@@ -80,7 +80,7 @@ contract DeployAMBAdapterScript is Script {
         AMBAdapter ambAdapter = new AMBAdapter(
             IAMB(AMB),
             DEPLOYED_AMB_RELAY,
-            bytes32(DESTINATION_DOMAIN)
+            bytes32(SOURCE_DOMAIN)
         );
 
         vm.stopBroadcast();

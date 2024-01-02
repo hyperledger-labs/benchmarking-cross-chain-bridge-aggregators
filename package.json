@@ -10,7 +10,7 @@
     "result-gen:cowswap": "for script in src/benchmark/result/result_runner.py; do python3 $script --aggregator cowswap --source_chain all --dest_chain all; done",
     "result-gen:lifi": "for script in src/benchmark/result/result_runner.py; do python3 $script --aggregator lifi --source_chain all --dest_chain all; done",
     "result-gen:socket": "for script in src/benchmark/result/result_runner.py; do python3 $script --aggregator socket --source_chain all --dest_chain all; done",
-    "result-gen:uniswap": "for script in src/benchmark/result/result_runner.py; do python3 $script --aggregator uniswap-universal --source_chain all --dest_chain all; done",
+    "result-gen:uniswap": "for script in src/benchmark/result/result_runner.py; do python3 $script --aggregator uniswap --source_chain all --dest_chain all; done",
     "result-gen:xy": "for script in src/benchmark/result/result_runner.py; do python3 $script --aggregator xy --source_chain all --dest_chain all; done",
     "result-gen:all": "for script in src/benchmark/result/result_runner.py; do python3 $script --aggregator all --source_chain all --dest_chain all; done",
     "benchmark:auto": "./src/benchmark/runners/token-aggregators/auto_run.sh --time-interval 5 --time-scale m --run-count 3",
