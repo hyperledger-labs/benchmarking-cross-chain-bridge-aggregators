@@ -6,14 +6,14 @@ import { Hashi_Contract_Names } from '@benchmarking-cross-chain-bridges/message-
 
 import { CHAIN_MAP } from '@benchmarking-cross-chain-bridges/helper/constants_global';
 
-const mode = 'broadcast';
-const confirmationResponse = true;
+const mode = 'test';
+const confirmationResponse = false;
 const operation = 'deploy';
 const value = 0;
 const sourceChain = CHAIN_MAP.GOERLI.chainId;
 const destChain = CHAIN_MAP.CHIADO.chainId;
 
-describe.skip('Deploys Hashi Contracts', () => {
+describe('Deploys Hashi Contracts', () => {
     describe('Deploys Hashi contracts Yaho and Yaru', () => {
         it('should simulate deployment of Yaho on GOERLI', (done) => {
             const contractName = Hashi_Contract_Names.Yaho;
