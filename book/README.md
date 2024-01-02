@@ -1,6 +1,6 @@
 # Introduction
 
-Benchmarking Cross-Chain Bridges is a benchmarking framework that Benchmarks Bridge/Transaction Aggregators that was created from a Hyperledger Internship.
+Benchmarking Bridge Aggregators is a benchmarking framework that Benchmarks Bridge/Transaction Aggregators that was created from a Hyperledger Internship.
 
 [https://github.com/hyperledger-labs/benchmarking-cross-chain-bridges](https://github.com/hyperledger-labs/benchmarking-cross-chain-bridges)
 
