@@ -2,12 +2,12 @@
 
 ### Troubleshooting
 
-This project was successfully tested on the following with node version v18.17.1
+This project was successfully tested on the following with node version v18.17.1 and python 3.9.18
 
-| System         | Node     |
-| -------------- | -------- |
-| 6.4.12-arch1-1 | v18.17.1 |
-| MacOS M1 v13.4 | v18.17.1 |
+| System         | Node     | Python |
+| -------------- | -------- | ------ |
+| 6.4.12-arch1-1 | v18.17.1 | 3.9.18 |
+| MacOS M1 v13.4 | v18.17.1 | 3.9.18 |
 
 | Runtime / Package Manager | NPM | Yarn | Bun |
 | ------------------------- | --- | ---- | --- |

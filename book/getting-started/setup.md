@@ -27,6 +27,14 @@ and then re-run
 yarn setup
 ```
 
+If yarn package installation and foundry package installation are successful you will see: &#x20;
+
+```
+Run `yarn setup:conda` or `yarn setup:pip3` to install python dependencies
+```
+
+This is required for the benchmark plot and table generators. Depending on the python package manager you use, you can run either.
+
 
 
 If you only want to benchmark the token-aggregators, you're done here. If not then proceed with the optional setup which configures the benchmarking tool to execute message-aggregators and execute token-swaps
