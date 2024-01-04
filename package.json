@@ -47,7 +47,9 @@
     "clear:all": "yarn clear:benchmarks-data && yarn clear:benchmarks-tables  && yarn clear:benchmarks-plots  && yarn clear:dry-run && yarn clear:run-data",
     "setup:yarn": "yarn",
     "setup:contracts": "forge install",
-    "setup": "yarn setup:yarn && yarn setup:contracts && mkdir -p run-data/token-routes"
+    "setup:conda": "conda install --yes --file py_packages.txt",
+    "setup:pip3": "pip3 install -r py_packages.txt",
+    "setup": "yarn setup:yarn && yarn setup:contracts && mkdir -p run-data/token-routes && echo 'Run `yarn setup:conda` or `yarn setup:pip3` to install python dependencies'"
   },
   "repository": {
     "type": "git",
