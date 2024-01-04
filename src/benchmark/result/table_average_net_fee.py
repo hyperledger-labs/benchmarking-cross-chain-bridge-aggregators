@@ -3,7 +3,7 @@ import numpy as np
 
 # Create an empty DataFrame
 data = pd.DataFrame(columns=['aggregator', 'source-chain', 'dest-chain',
-                             'avg-net-fee',
+                             'net-fee ($\sigma$)', 'net-fee ($\mu$)'
                             ])
 
 def table_average_net_fee(net_fee, quote_value, aggregator, source_chain, dest_chain):
@@ -31,7 +31,8 @@ def table_average_net_fee(net_fee, quote_value, aggregator, source_chain, dest_c
         'aggregator': [aggregator],
         'source-chain': [source_chain],
         'dest-chain': [dest_chain],
-        'avg-net-fee': round(np.mean(net_fee),2)
+        'net-fee ($\mu$)': round(np.mean(net_fee),2),
+        'net-fee ($\sigma$)': round(np.std(net_fee),2)
     })
 
     # Concatenate the new data with the existing data

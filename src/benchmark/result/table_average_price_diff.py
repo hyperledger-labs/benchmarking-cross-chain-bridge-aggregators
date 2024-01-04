@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 # Create empty DataFrames
-avg_table_df = pd.DataFrame(columns=['aggregator', 'source-chain', 'dest-chain', 'avg-over', 'avg-under', 'avg-diff', 'total-count'])
+avg_table_df = pd.DataFrame(columns=['aggregator', 'source-chain', 'dest-chain', 'over ($\mu$)', 'over ($\sigma$)', 'under ($\mu$)', 'under ($\sigma$)', 'diff ($\mu$)', 'diff ($\sigma$)', 'total-count'])
 count_over_table_df = pd.DataFrame(columns=['aggregator', 'source-chain', 'dest-chain', '<1\%', '<5\%', '<10\%', '<20\%', '<30\%', '>=30\%'])
 count_under_table_df = pd.DataFrame(columns=['aggregator', 'source-chain', 'dest-chain', '<-1\%', '<-5\%', '<-10\%', '<-20\%', '<-30\%','>=-30\%'])
 
@@ -34,8 +34,13 @@ def table_average_price_diff(coin_gecko_prices, quote_value, aggregator, source_
 
     # Calculate the average price differences
     avg_price_diff_over = np.mean(price_diff_over)
-    avg_price_diff_under = -1 * np.mean(price_diff_under)
+    avg_price_diff_under = -np.mean(price_diff_under)
     avg_price_diff = np.mean(price_diff) if len(price_diff) > 0 else 0
+
+    # Calculate the variance of the price differences
+    variance_over = np.std(price_diff_over)
+    variance_under = np.std(price_diff_under)
+    variance = np.std(price_diff) if len(price_diff) > 0 else 0
 
     # Round the average price differences to 2 decimal places
     avg_price_diff_over = round(avg_price_diff_over, 2)
@@ -48,9 +53,12 @@ def table_average_price_diff(coin_gecko_prices, quote_value, aggregator, source_
         'aggregator': [aggregator],
         'source-chain': [source_chain],
         'dest-chain': [dest_chain],
-        'avg-over': [avg_price_diff_over],
-        'avg-under': [avg_price_diff_under],
-        'avg-diff': [avg_price_diff],
+        'over ($\mu$)': [avg_price_diff_over],
+        'over ($\sigma$)': [variance_over],
+        'under ($\mu$)': [avg_price_diff_under],
+        'under ($\sigma$)': [variance_under],
+        'diff ($\mu$)': [avg_price_diff],
+        'diff ($\sigma$)': [variance],
         'total-count': [total_count]
     })
 
