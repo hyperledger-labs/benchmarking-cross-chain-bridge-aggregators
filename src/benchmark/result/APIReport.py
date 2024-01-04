@@ -1,6 +1,5 @@
 from typing import TypedDict, List, Union
 
-
 class Asset(TypedDict):
     name: str
     description: str
