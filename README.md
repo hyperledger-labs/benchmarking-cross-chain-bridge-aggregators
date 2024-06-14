@@ -1,5 +1,5 @@
-## Benchmarking Cross-Chain Bridges
-This project aims to provide a systematic comparison between cross-chain bridge aggregators (message aggregators and token aggregators/DEXs).
+## Benchmarking Bridge Aggregators
+This project aims to provide a systematic comparison between bridge aggregators (message aggregators and token aggregators/DEXs).
 
 ## How to run
 GitBook: [Benchmarking Bridge Aggregators Book](https://benchmarking-aggregators.gitbook.io/benchmarking-cross-chain-bridges/) <br>
